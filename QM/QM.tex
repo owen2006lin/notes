@@ -1,0 +1,168 @@
+\documentclass[11pt]{article}
+
+% basic packages
+\usepackage[margin=1in]{geometry}
+\usepackage[pdftex]{graphicx}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{custom}
+\usepackage{lipsum}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+% page formatting
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\renewcommand{\sectionmark}[1]{\markright{\textsf{\arabic{section}. #1}}}
+\renewcommand{\subsectionmark}[1]{}
+\lhead{\textbf{\thepage} \ \ \nouppercase{\rightmark}}
+\chead{}
+\rhead{}
+\lfoot{}
+\cfoot{}
+\rfoot{}
+\setlength{\headheight}{14pt}
+
+\linespread{1.03} % give a little extra room
+\setlength{\parindent}{0.2in} % reduce paragraph indent a bit
+\setcounter{secnumdepth}{2} % no numbered subsubsections
+\setcounter{tocdepth}{2} % no subsubsections in ToC
+
+\begin{document}
+
+% make title page
+\thispagestyle{empty}
+\bigskip \
+\vspace{0.1cm}
+
+\begin{center}
+{\fontsize{22}{22} \selectfont Lecture Notes on}
+\vskip 16pt
+{\fontsize{36}{36} \selectfont \bf \sffamily Quantum Mechanics}
+\vskip 24pt
+{\fontsize{18}{18} \selectfont \rmfamily Owen Lin} 
+\vskip 6pt
+{\fontsize{14}{14} \selectfont \ttfamily owen2006lin@gmail.com} 
+\vskip 24pt
+\end{center}
+
+{\parindent0pt \baselineskip=15.5pt
+These notes cover quantum mechanics at the undergraduate level. The sources used are:
+\begin{itemize}
+    \item Griffiths: \textit{Introduction to Quantum Mechanics}
+\end{itemize}
+
+
+Potential sources to consult in the future:
+
+\begin{itemize}
+    \item Sakurai: \textit{Modern Quantum Mechanics}
+\end{itemize}
+
+}
+ 
+
+
+% make table of contents
+\newpage
+\microtoc
+\newpage
+
+% main content
+\section{The Schr\"odinger Equation}
+
+\subsection{Wave Functions}
+Classically, we work with masses and attempt to solve for their equations of motions \( x(t) \) using corresponding
+Newton's laws or energy equations. The quantum mechanics approach is different; the idea is to instead solve for a
+particle's wave function \( \psi(t) \) and from there we can do anything. The goal then is to solve the Schr\"odinger
+equation
+
+\[ 
+    i\hbar \frac{\partial \psi}{\partial t} = -\frac{\hbar}{2m}\frac{\partial^{2} \psi}{\partial t^{2}} + V\psi
+\]
+
+\noindent After solving the Schr\"odinger equation for some intial wave function \( \psi(t) \) the equation actually gives us 
+all future values of the wave function \( \psi(t) \).
+
+\noindent The statistical interpretation of the wave function goes as follows:
+\begin{itemize}
+    \item Born's statistical interpretation of the wave function states that 
+    
+    \[ 
+        \int^{a}_{b} |\psi(x,t)|^{2}dx  
+    \]
+
+    is the probability of finding the particle at \( a \leq x \leq b \) at time t. Note that while \( \psi \) is a complex valued
+    function, \( |\psi|^{2} = \psi \psi^{*}\) where \( \psi^{*} \) is the complex conjugate of \( \psi \) is always real and nonnegative.
+
+    \item An obvious consequence is this is that even if you know everything about a particle (ie; you know its wavefunction), you still
+    cannot predict with certainty the outcome of an experiment to measure its exact position. 
+
+    \item Before measurement, a particle's position is not well defined. Only after measurement can we say the particle has a "position," and
+    by doing so we collapse the particle's wavefunction to a dirac delta centered around the measured position. This is known as the\textbf{
+    Copenhagen Interpretation}
+
+    \item The integral over all possible positions must be equal to one, since the particle must be located somewhere.
+    \[ 
+        \int^{\infty}_{-\infty} |\psi(x,t)|^{2}dx = 1
+    \]
+
+    If we have a wavefunction, we need to make sure its normalized for it to be physical. We can normalize it to obey the integral by multiplying
+    it by a scale factor. A glance at the Schr\"odinger equation one can see that if \( \psi(x,t) \) is a solution, then \( A\psi(x,t) \) is also
+    a solution for nonzero constant A.
+
+    \item One can also show that the normalization integral does not change with time, so there is no need to constantly renormalized solutions as 
+    the particle evolves with time.
+
+    \item If we interpret \( |\psi(x,t)|^{2} \) to be the probability, then we can say the expectation value of position is 
+    \[ 
+        \langle x \rangle = \int^{\infty}_{-\infty} x|\psi(x,t)|^{2}dx
+    \]
+    Note that the interpretation of this quantity is the expected value of the position from measuring particles with wave function \( \psi \). Simply
+    remeasuring the same particle over again will not work, since the first measurement will collapse the particle into some other wave function with
+    exact position
+
+    \item By differentiating the expected position with respect to time, one can obtain the expectation value of the velocity. It's customary for us to
+    work using momentum so we have
+    
+    \[ 
+        \langle p \rangle = -i\hbar \int \left(\psi^{*}\frac{\partial \psi}{\partial x}\right)dx 
+    \]
+
+    \item A more illustrative way to write the expectation values for position and momentum are:
+    \[ 
+        \langle x \rangle = \int \psi^{*} \cdot x \cdot \psi dx
+    \]
+
+    \[ 
+        \langle p \rangle = -i\hbar \int \psi^{*} \cdot \left(\frac{\partial}{\partial x}\right) \cdot \psi dx 
+    \]
+    We say the the \( x \) operator "represents" position and the \( -i \hbar\frac{\partial}{\partial x} \)  operator "represents" momentum. 
+
+    \item All classical quantities can be represented as a function of position and angular momentum. Then the representation of a classical quantity \( Q(x,p) \)
+    can be written as 
+    \[ 
+        \langle Q(x,p) \rangle = \int \psi^{*} Q\left(x, -i\hbar\frac{\partial}{\partial x}\right) \psi dx. 
+    \]
+
+    \item \textbf{Ehrenfest's Theorem} states that expectation values obey their classical laws. For example, the time derivative of momentum is
+    
+    \[ 
+        \frac{d\langle p \rangle}{dt} = \langle - \frac{\partial V}{\partial x}\rangle 
+    \]
+
+    \textcolor{red}{Possible problems to include: 1.12, 1.17}
+\end{itemize}
+
+\subsection{Time Independent Schr\"odinger Equation}
+
+
+\subsection{The Quantum Harmonic Oscillator}
+
+\section{Dirac Notation}
+
+\section{The Hydrogen Atom}
+
+\section{Symmetries and Conservation Laws}
+
+\end{document}

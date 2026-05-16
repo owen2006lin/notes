@@ -1,0 +1,470 @@
+\documentclass[11pt]{article}
+
+% basic packages
+\usepackage[margin=1in]{geometry}
+\usepackage[pdftex]{graphicx}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{custom}
+\usepackage{lipsum}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+% page formatting
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\renewcommand{\sectionmark}[1]{\markright{\textsf{\arabic{section}. #1}}}
+\renewcommand{\subsectionmark}[1]{}
+\lhead{\textbf{\thepage} \ \ \nouppercase{\rightmark}}
+\chead{}
+\rhead{}
+\lfoot{}
+\cfoot{}
+\rfoot{}
+\setlength{\headheight}{14pt}
+
+\linespread{1.03} % give a little extra room
+\setlength{\parindent}{0.2in} % reduce paragraph indent a bit
+\setcounter{secnumdepth}{2} % no numbered subsubsections
+\setcounter{tocdepth}{2} % no subsubsections in ToC
+
+\begin{document}
+
+% make title page
+\thispagestyle{empty}
+\bigskip \
+\vspace{0.1cm}
+
+\begin{center}
+{\fontsize{22}{22} \selectfont Lecture Notes on}
+\vskip 16pt
+{\fontsize{36}{36} \selectfont \bf \sffamily General Relativity}
+\vskip 24pt
+{\fontsize{18}{18} \selectfont \rmfamily Owen Lin} 
+\vskip 6pt
+{\fontsize{14}{14} \selectfont \ttfamily owen2006lin@gmail.com} 
+\vskip 24pt
+\end{center}
+
+{\parindent0pt \baselineskip=15.5pt
+These notes cover general relativity at the undergraduate level. The sources used are:
+\begin{itemize}
+    \item Schutz, \textit{A First Course in General Relativity}
+\end{itemize}
+
+
+Potential sources to consult in the future:
+
+\begin{itemize}
+    \item Hartle, \textit{Gravity: An Introduction to Einstein's General Relativity}
+    \item Misner, Thorne, Wheeler, \textit{Gravitation}
+    \item Weinberg, \textit{Gravitation and Cosmology}
+    \item Wald, \textit{General Relativity}
+\end{itemize}
+
+}
+ 
+
+
+% make table of contents
+\newpage
+\microtoc
+\newpage
+
+% main content
+\section{Tensors}
+
+\subsection{Tensor Analysis}
+First, we'll establish some notation to describe how vectors transform under coordinate change. Let's define a four vector
+\( x^{\mu} \) where \( x^{0} \) is the temporal component and \( x^{i} \) (\( i \neq 0 \)) are the spacial coordinates.
+In these notes, we'll write the representation of a vector in coordinate transformation as \( x^{\mu'} \) (each source
+has their own convention). Then the matrix to transform the vector \( x^{\nu} \) into the new primed coordinates is
+\( x^{\mu'} = \Lambda^{\mu'}_\nu x^{\nu}\). We are using the Einstein convention where summations over repeated indices drop
+the \( \Sigma \).
+
+\subsection{Connection}
+\subsection{Curvature}
+
+
+
+
+\section{Gravitation}
+
+\subsection{The Newtonian Limit}
+
+\subsection{Stress-Energy Tensor}
+
+We'll be working with fluids in this section. The definition of fluids is not precise
+so we'll just say a fluid has friction force negligible in comparison to the pressure.
+\begin{itemize}
+    \item Fluid particles travelling with four-velocity $\mathbf{u}^{\alpha}$. We can choose 
+    to move to inertial frame where $\mathbf{u}^{\mu} = (1,0,0,0)$. This is called the \textbf{comoving frame}.
+
+    \item The \textbf{number current} is $\mathbf{j}^{\mu} = n\mathbf{u}^{\mu} = n(u^0, \mathbf{u}^i)$ where $n$ is the 
+    number density (particles per unit volume). The components of the number current is the number of particles
+    travelling through unit area per unit time which is the particle flux.
+
+    \item The rest \textbf{mass density} is $\mu_0 = m_0n$ where $m_0$ is the rest mass of a single particle. If there
+    is internal energy, then we have $\mu = \mu_0(1+\delta)$ where $\delta$ is the internal energy fraction.
+    
+    \item The \textbf{momentum density} is $\mathbf{\rho}^i = m_0n\mathbf{u}^{i}$. A nice exercise is to show this is equivalent 
+    to the energy flux in special relativity.
+
+\end{itemize}
+
+
+\noindent We'll now introduce the \textbf{stress-energy tensor} $\mathbf{T}^{ij}$. 
+
+\begin{itemize}
+    \item In newtonian mechanics, we have the stress tensor $\mathbf{t}^{ij}$. This represents shear: the ith component of force
+    per unit area (pressure) exerted across a surface normal to the jth direction.
+
+    \item For a fluid at rest, the force exerted across a surface is always along the normal and the same in all directions, equivalent
+    to pressure $\mathbf{t}^{ij} = p\delta^{ij}$
+
+    \item For a perfect fluid, $\mathbf{T}^{\alpha\beta} = (\rho + p)u^\alpha u^\beta + p\mathbf{g}^{\alpha\beta}$. Careful, $\rho$ is the
+    energy density! Meanwhile, $\mathbf{T}^{\alpha}_{\beta} = (\rho + p)u^\alpha u_\beta + p\mathbf{\delta}^\alpha_\beta$
+
+\end{itemize}
+
+
+\noindent Here, we'll read off some of the physical interpretations of the components of the stress-energy tensor:
+
+\begin{itemize}
+    \item $\mathbf{T}^{\alpha}_{\beta} u^\beta = -\rho u^\alpha$. Physically, this quantity's spacial components are the energy flux seen comoving 
+    with the fluid. The temporal component $\mathbf{T}^0_\beta u^\beta = -\rho$ is just the rest mass energy density.
+
+    \item $\mathbf{T}^{0}_{i}$ is the flow of the ith component of momentum in the temporal (i = 0) direction. This is the energy flux
+    Consequently, $\mathbf{T}^{i}_{0}$ is the energy crossing through the ith surface, so the energy flux. Thus, these two quantities are equivalent.
+    In the comoving frame, $\mathbf{T}^{0}_{i} = \mathbf{T}^{i}_{0} = 0$ because the fluid is at rest.
+
+\end{itemize}
+
+\noindent Now, we'll see some results that arise from the Newtonian Limit. Firstly, we assume that the fluid is travelling with low velocity $|u^{\alpha}| << 1$.
+Additionally, we have low pressure $\frac{p}{\rho} << 1$ and the speed is non-relativistic $u^{i} \approx v^{i}$.
+\begin{itemize}
+    \item Firstly, conservation of energy-momentum means that the stress-energy tensor is divergence-free. This gives us
+    $\nabla\cdot\mathbf{T} = 0 $ or equivalently $\mathbf{T}^{\alpha\beta}_{;\beta} = 0$. (why???)
+
+    \item Next, reading off the stress-energy tensor components, we have:
+        \subitem - $\mathbf{T^{00}} \approx \rho$
+        \subitem - $\mathbf{T^{j0}} \approx \rho v^{j}$
+        \subitem - $\mathbf{T^{jk}} \approx \rho v^j v^k + p \delta^{jk}$
+    
+    \item The continuity equation $\frac{\partial{\rho}}{\partial{t}} + (\rho v^k)_{;k} = 0$ effectively states conservation of mass. The rate of change of density 
+    plus the net mass flow out is 0. Combining with the divergence free condition, we obtain
+    $\frac{\del v^j}{\del t} + (v \cdot \nabla)v = -\frac{1}{\rho}\nabla p$. This is the \textbf{Euler Equation}.
+
+    \item The equations of state relate the pressure and the energy density for a fluid. There are several possible cases:
+        \subitem - Vacuum : $p = \rho = 0$ (Inflationary universe)
+        \subitem - Dust : $p = 0$  (FLRW universe)
+        \subitem - Fluid : $p = \gamma \rho$
+        \subitem - Polytropic : $p = n\rho ^{(1 + \frac{1}{n})}$ where n is the polytropic index.
+
+\end{itemize}
+
+
+\subsection{Gravitational Waves}
+\noindent Recall the form of the metric in the linearized theory $g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu}$.
+\begin{itemize}
+    \item The einstein equations give us $2(R_{\alpha\beta} - \frac{1}{2}g_{\alpha\beta}R) = 16\pi G T_{\alpha\beta}$
+    \item Introducing the trace-reversed metric perturbation, $\bar{h}_{\alpha\beta} \equiv h_{\alpha\beta} - \frac{1}{2}h$
+    and expanding the einstein equation, we can simplify this to $\Box \bar{h}_{\alpha\beta} = \bar{h}_{\alpha\beta ,\mu}^{,\mu} = -16\pi G T_{\alpha\beta}$.
+    The box is the d'Alembert operator and is the equivalent of the laplacian in spacetime. This nicely gives us a wave equation for $\bar{h}$.
+
+    \item The solution for this wave equation is $\bar{h}_{\mu\nu} = Re(A_{\mu\nu}e^{i k_{\alpha}x^{\alpha}})$ where $A_{\mu\nu}$ gives the amplitude and $k_{\alpha}$
+    is the wavevector $(w,\mathbf{k})$. From the d'Alembert operator, we have \( k_{\alpha}k^{\alpha} = 0\), or \( k \) is a null vector. This means gravitational waves
+    propogate at the speed of light.
+
+    \item We can choose a Lorentz Gauge to simplify this further (what does this mean?) with \( \overline{h_{\mu\nu}^{,\nu}} = 0 \). This gives us \( A_{\mu\alpha}k^{\alpha} = 0 \)
+    meaning these are transverse waves (why?)
+
+    \item Starting with the Symmetric 4x4 tensor, we have 10 independent coordinates. Being tranverse and traceless takes away 4 degrees of freedom (why?) and the gauge condition
+    takes away 4 more so we are left with 2 polarizations. Imposing all conditions gives us the matrix 
+    \[ 
+        \begin{pmatrix}
+        0 & 0 & 0 & 0 \\
+        0 & a & b & 0 \\
+        0 & b & -a & 0 \\
+        0 & 0 & 0 & 0 \\
+        \end{pmatrix}
+    \]
+    
+    \item Both linear and circular polarization like light (This section needs work)
+
+    
+\end{itemize}
+
+\noindent Now we'll derive the metric from a weakly gravitating source. Suppose we have a static point mass M located at point \( r = 0 \) at all times in the weak field limit.
+In the body's frame we have \( |h_{\mu\nu}| \ll 1 \). 
+\begin{itemize}
+    \item Because the body is stationary, the stress energy tensor has components \( T_{00} = \delta(x)M \), and all other 
+    components are 0. 
+    \item From the einstein equation and poisson equations, we have \(  \overline{h}_{00} = \frac{4M}{r}\) and all other components are 0. 
+    \item Converting from \( \overline{h} \) back to \( h \) and substituting into the equation for the metric \( ds^{2} = (\eta_{\mu\nu} + h_{\mu\nu})dx^{\mu}dx^{\nu} \) we 
+    obtain the metric:
+    
+    \[ 
+        ds^{2} = 1 \left( 1 - \frac{2M}{r}\right)dt^{2} +\left(1+\frac{2M}{r}\right)(dx^{2} + dy^{2} + dz^{2})
+    \]
+
+    
+
+\end{itemize}
+
+
+
+
+
+\section{Black Holes}
+Rev. John Mitchell found in 1783 that an object with $500_{\odot}$ but of same density will have its escape velocity to be greater than the speed of light. Then 
+"all light emitted from such a body would be made to return towards it."
+\begin{itemize}
+    \item Every mass has a radius such that if the mass is small enough than this radius, it will collapse into a black hole. This is the \textbf{Schwarzchild Radius}. 
+    $R_{s} = \frac{2 G M}{c^2}$
+
+\end{itemize}
+
+
+\subsection{Schwarzchild Metric}
+The Schwarzchild Metric has two forms:
+\begin{itemize}
+    \item The timelike form $d\tau^{2} = (1 - \frac{2M}{r})dt^2 - \frac{dr^2}{(1 - \frac{2M}{r})} - r^2(d\theta^2 + \sin^2\theta d\phi^2)$
+    \item The spacelike form $d\tau^{2} = (1 - \frac{2M}{r})dt^2 - \frac{dr^2}{(1 - \frac{2M}{r})} - r^2d\Omega^2$
+    \item We can see the metric reduces to flat spacetime in the case where $r \rightarrow \infty$ and $m \rightarrow \infty$
+    \item Upon examining the temporal component of the metric, we that its less than that of the temporal component in flat spacetime, so this properly predicts gravitational
+    redshift. Similarly, the spacial component is larger than that in flat spacetime, so there's spacetime curvature.
+\end{itemize}
+
+
+\subsection{Coordinates Systems}
+These are three commonly used frames:
+\begin{itemize}
+    \item Free-Float Frame: Frame free-floating in space, think unpowered spacecraft. Locally its flat minkowski space. For observers on shells, they see spacecraft infalling towards
+    the black hole.
+    \item Spherical-Shell Frame: Frame standing still on a shell of fixed radius (eg: Earth's frame). For small time lapses and regions, special relativity applies. Notice that inside a
+    black hole, $dr$ becomes time like while $dt$ becomes spacelike. This means staying on a shell at constant radius is impossible, so this frame cannot be used to describe events inside 
+    a black hole.
+    \item Schwarzchild Frame: Global book-keeping coordinates. Idea is that neither spherical shell frame nor free float frame can know all information so both send information to a Global
+    frame that puts it together.
+\end{itemize}
+
+\noindent A common result from black holes is that from the perspective of someone outside of the black hole, we see an object travel into the black hole past the event horizon. But from the perspective
+of the falling object, it takes infinite time to reach the event horizon!
+\begin{itemize}
+    \item We can calculate the Riemman tensor in the shell frame: $R_{trtr} = -\frac{2M}{r^3} = -R_{\theta\phi\theta\phi}$ and 
+    $R_{t\theta t\theta} = R_{t \phi t \phi} = \frac{M}{r^3} = -R_{r\theta r \theta} = -R_{r \phi r\phi}$
+    \item Meanwhile in the free falling frame we have $R_{trtr} = -\frac{2M}{r^3}(1-\frac{2M}{r})^{-1}$. This isn't singular at $r = 2M$ but it is at $r=0$. The curvature invariant (also known as
+    the Kretschmann scalar) $R = R_{trtr}R^{trtr} = \frac{48M^2}{r^6}$. This gives a measure of the strength of the gravitational field using curvature and this also blows up to infinity at $r = 0$.
+\end{itemize}
+
+\subsection{Orbits}
+Because the Schwarzchild metric is time independent and spherically symmetric, we must have killing vectors $\xi_{t} = (1,0,0,0)$ and $\xi_{\phi} = (0,0,0,1)$. 
+For any four-velocity $u$, $\xi \cdot u$ is constant. combining this with $p^{\mu} =m u^{\mu}$, we obtain $\frac{E}{m_0 c^2}$ is constant along a path.
+
+\begin{itemize}
+    \item Radial Infall: Let $d\tau$ be the proper time for an observer at distance r from the center of a black hole (shell frame). 
+    At $r \rightarrow \infty$, we have $\frac{E_\infty}{m_0 c^2} = \frac{dt}{d\tau}$. But $E_\infty$ is a constant. So any trajectory starting at rest from $r = \infty$ will have
+    same energy per unit mass throughout. This gives us $d\tau ^2  = (1- \frac{2M}{r})^2 dt^2$.
+
+    \item With this expression we can obtain the velocity recorded by a Schwarzchild observer:   
+    \newline$\frac{dr}{dt} = -(1-\frac{2M}{r})(\frac{2M}{r})^{\frac{1}{2}}$. At $r = 2M$, this goes to 0 so we see that the bookeeper observes the particle slowing down as it approaches the event horizon,
+    taking infinite time to reach there.
+
+    \item If we instead moved to the frame of the shell observer, we can obtain from the Schwarzchild metric: $\frac{dr_{shell}}{dt_{shell}} = -(\frac{2M}{r})^\frac{1}{2}$. For an observer at the event horizon,
+    they would see the object falling at the speed of light! The energy observed also depends on the distance from the center (while $E_{\infty}$ is constant, $E_{shell}$ is not).
+
+    \item Meanwhile, for the free falling frame, we can actually compute the time it takes for the observer to reach $r = 0$. Using the chain rule, $\frac{dr}{d\tau} = \frac{dr}{dt}\frac{dt}{d\tau}$ we can obtain 
+    $\tau = \frac{4}{3}M$. In seconds this is $\tau_{second} = \frac{4}{3}\frac{M}{M_{odot}}(5\mu sec)$. Interestingly, the time scales linearly with mass, so for larger black holes it actually takes more time to
+    fall! For reference, Sagittarius A, the supermassive black hole in the center of the galaxy, it takes roughly 1 minute to fall. Meanwhile, TON618, one of the largest black holes takes 11 days to fall to the center.
+
+\end{itemize}
+
+\noindent Now we'll go over orbits. In the case with $r > 20R_{s}$, the newtonian approximation is still accurate. For $r \leq 6M$, no free orbits are possible. The mass spirals in but still may exert enough energy to escape.
+Beyond $r \leq 2M$, no escape is possible. Inside the horizon, as mentioned before, space and time components are interchanged. Travelling to smaller r is as "inevitable" as outside a black hole we travel to greater t.
+
+\begin{itemize}
+    \item Recall the conserved quantity from earlier $\xi_t \cdot u^t$. We call this the "energy per unit mass" and we'll just set this equal to $\frac{E}{m}$. The free fall case assumes this is one but this is not true generally.
+    Write the angular momentum per unit mass as $\frac{L}{m} = r^2 \frac{d\phi}{d\tau}$. Using these, we have the equation of motion 
+    \[ 
+        \left(\frac{dr}{d\tau}\right)^2 = \left(\frac{E}{m}\right)^2 - \left(1 - \frac{2M}{r}\right)\left[1 + \frac{(L/M)^2}{r^2}\right] \equiv \left(\frac{E}{m}\right)^2 - \left(\frac{V}{m}\right)^2 
+    \].
+     This gives us an effective potential of 
+    \[
+        \left(\frac{V(r)}{m}\right)^2 \equiv \left(1 - \frac{2M}{r}\right)\left[1 + \frac{(L/m)^2}{r^2}\right]
+    \]
+    In the Newtonian case, we have an elliptical orbit. But for black holes, orbits tend to spend more time at smaller radii, the additional time near the inner edge of the orbit is the "\textbf{dwell time}."
+    
+    \item Stable circular orbits at $V_{min}$ and unstable orbits occur at $V_{max}$. Beyond $V_{max}$ the orbit precesses because of the dwell time. (this section needs work)
+\end{itemize}
+
+\subsection{Massless Particle}
+We'll now cover orbits of massless particles. This is especially important for describing the behavior of light near a black hole. The procedure for massive particles won't work here for several reasons.
+    \begin{itemize}
+        \item The spacetime interval for massless particles is 0 (why?). Solving for the coordinate velocity of light in these coordinates gives us $r\frac{d\theta}{dt} = \pm (1-\frac{2M}{r})^\frac{1}{2}$ tangentially and
+        $\frac{dr}{dt} = \pm (1 - \frac{2M}{r})$ radially. This looks like it
+        means the speed of light can even approach 0 but this actually isn't a problem because this interpretation is unphysical. Even if the Schwarzchild observer "sees" the speed of light as this, any shell observer still 
+        sees it at constant c.
+        \item At $r = \infty$, the special relativity case we have $p = p_{\infty}$. The angular momentum L can be written using this momentum as $L = bp_{\infty}$ where b is known as the \textbf{impact parameter}. (Why?)
+        Using the expression for $P$ in special relativity, we can write $b = \frac{L/m}{E/m}$
+
+        \item The impact parameter conveniently allows us to evaluate the speed even with 0 mass: 
+        \newline The radial velocity: $(\frac{dr}{dt})^2 = (1 - \frac{2M}{r})^2 - (1 - \frac{2M}{r})^3\frac{b_{photon}^2}{r^2}$ 
+        \newline The tangential velocity : $r\frac{d\phi}{dt} = \frac{b_{photon}}{r}(1 - \frac{2M}{r})$
+        \newline Thus the total speed is $v_{photon} = (1 - \frac{2M}{r})[1 + \frac{2Mb^2}{r^3}]^\frac{1}{2}$.
+        \newline With a similar technique, we can verify that in the shell coordinates, the speed of the particle is constant 1.
+
+        \item The equivalent equation of motion in the shell frame is $\frac{1}{b^2}(\frac{dr_{shell}}{dt_{shell}})^2 = \frac{1}{b^2} - \frac{(1 - \frac{2M}r)}{r^2}$. $\frac{1}{b^2}$ plays the role of the energy squared while
+        the second term is the equivalent of the effective potential.
+
+        \item This potential has no stable orbits. A photon may enter a circular "knife edge" orbit before either escaping or plunging.
+    \end{itemize}
+
+\section{Cosmology}
+\subsection{The Present Universe}
+In the last 100 years, there were many important observations about our current universe.
+\begin{itemize}
+    \item Hubble discovered the universe is expanding in 1929. The speed at which galaxies recessed from us is proportional to their distance $v = Hr$ where H is the hubble constant.
+    \item In 1965, Penzias and Wilson discovered the cosmic microwave background has temperature $T = 273^{\circ} K$. It is also highly isotropic and homogeneous. 
+    \item Matter density upper bounds at $10^{-29} g/cm^3$ and lower bound at $5 \times 10^{-31}g/cm^3$. The Baryon number Photon number ratio is $10^-{8} - 10^{-10}$
+    \item From stars, galaxies and globular clusters, the Helium-4 mass fraction is 0.2-0.3, while Deutereum is $3 \times 10^{-5}$
+    \item There is a high degree of local structure, with galaxies, galaxy clusters and galaxy filaments. Supermassive objects like galaxy filaments, voids and walls
+    put the cosmological principle into question.
+    \item Dark energy (or vacuum energy) is at 0.69, corresponding to $69\%$ of total energy density in the universe.
+\end{itemize}
+
+\noindent Now we'll derive the Einstein Equations for a Robertson-Walker Universe, and show that this satisfies the isotropy and homogeneity conditions at all points.
+\begin{itemize}
+    \item Consider an infinite, homogeneous gas cloud with mass density $\rho$. Choose an arbitrary point $A$ as the origin and consider a thin spherical shell centered around $A$ with 
+    radius $r$. By conservation of energy, we have $(\frac{\dot{r}}{r})^2 + \kappa(r) = \frac{8G\rho}{3}$. $\kappa$ is $\frac{k}{r^2}$ where k is the total energy.
+    \item By using the First Law of Thermodynamics and assuming constant entropy, we can obtain $\frac{d\rho}{dt} + \frac{3}{r}\frac{dr}{dt}(\rho + p) = 0$. Taking the first derivative of
+    the previous line and combining, we have $\frac{\ddot{r}}{r} + \frac{4\pi G}{3}(\rho + 3p) = 0$. 
+    \item Choosing a coordinate comoving with the gas cloud, we can define $\mathbf{r(t)} = a(t)\mathbf{r_0}$. $a(t)$ is the scale factor that depends only on time (no dependence on space because isotropy).
+    From this, we can rewrite our earlier equations to obtain
+    \newline $\frac{\ddot{a}}{a} + \frac{4\pi G}{3}(\rho + 3p) = 0$
+    \newline $(\frac{\dot{a}}{a})^2 + \frac{\kappa(r)}{a^2} = \frac{8G\rho}{3}$. These are the the einstein equations in component form. 
+    \item The continuity equation of the stress energy tensor can similarly be rewritten $\dot{\rho}+3(\frac{\dot{a}}{a})(\rho + p) = 0$.
+    \item These equations can be further simplified using equations of state. 
+    \newline Dust: $p = 0$
+    \newline Radiation: $p = \frac{1}{3}\rho$
+    \newline Vacuum Energy: $p = -\rho$
+\end{itemize}
+
+\subsection{History of the Universe}
+\noindent Hubble's discovery of the expansion of the universe and Penzias \( \& \) Wilson's discovery of the cosmic microwave background suggest the existence of the universe in a "hot, dense" state in
+the very beginning, before expansion. This is the popularly named "\textbf{Big Bang}" model (Gamow 1948, Dicke, Peebles 1965).
+\\
+\\
+\noindent Furthermore the existence of General Relativity combined with the energy dominance condition on matter (energy is positive, and energy-momentum doesn't travel faster than light) implies the existence
+of a cosmological singularity (Penrose, Hawking, Geroch 1966). (Why?)
+
+\begin{itemize}
+    \item Starting with the Friedmann universe, we can do a convenient change of variables by replacing the cumbersome \( (1-kr^{2})^{{-1}} \) with \( \chi \). This is known as the comoving distance. As the universe
+    expands, the proper distance between locations change with time but \( \chi \) remains constant \( D(t) = a(t)\chi \).
+    
+    \[ 
+        ds^2 = -dt^{2} + a^{2}(t)[d\chi^{2} + f^{2}(\chi)(d\theta^{2} + \sin^{2}{\theta}d\phi^{2})] 
+    \]
+
+    where \( f(\chi) = r \). This gives us nice forms for \( \chi \):
+    \begin{enumerate}[label = \roman*]
+        \item \( k = 1 \) Closed universe: \( f(\chi) = \sin{\left( \chi \right)} \)
+        \item \( k = 0 \) Flat universe: \( f(\chi) = \sinh{\chi} \)
+        \item \( k = -1 \) Open universe: \( f(\chi) = \chi \)
+    \end{enumerate}
+    
+    
+    In the case where \(f(\chi) = \sin{\left( \chi \right)} \) and \( 0 \leq \chi \leq 2\pi \) we have a closed universe. For \( f(\chi) = \chi \) and \( 0 \leq \chi \le \infty \) this
+    is a flat universe. Finally, for \( f(\chi) = sinh(\chi) \) then this is an open universe. (What do these mean?)
+    
+
+    \item Substituting the equatins of state into the continuity equation we can obtain scaling factors of the energy density with \( a \)
+    In the flat universe,
+
+    \begin{enumerate}[label = \roman*]
+        \item dust : \( \rho_{m} \sim a^{-3} \)
+        \item radiation : \( \rho_{\gamma} \sim a^{-4} \)
+        \item vacuum : \( \rho \sim const \)
+    \end{enumerate}
+
+    \item Solving the einstein equation with the Friedmann metric we obtain the following:
+    
+    \[ 
+        G_{00}  \left(\frac{\dot{a}}{a}\right)^{2} + \frac{k}{a^{2}} - \frac{\Lambda}{3} = \frac{8\pi G \rho}{3}
+    \]
+    This is the energy conservation equation, which relates the rate to energy density and
+
+    \[ 
+        G_{{ii}} \to 3\left(\frac{\ddot{a}}{a}\right) = -4 \pi G(\rho + 3p) 
+    \]
+    This is the acceleration equation. 
+
+    \item If we solve these equations using the equations of state in the flat case (\( k = 0 \)) we obtain the following:
+    \begin{enumerate}[label = \roman*]
+        \item In a matter dominated universe: \( a \sim t^{\frac{2}{3}} \)
+        \item Radiation dominated: \( a \sim t^{\frac{1}{2}} \)
+        \item Vacuum dominated: \( a \sim e^{Ht} \)
+    \end{enumerate}
+
+\end{itemize}
+
+\subsection{Singularity}
+A big bang corresponds to a scale factor of \( a = 0 \). We can ask the question if our universe was ever at this point ie: 
+does it take finite time to reach \( a = 0 \) in the past?
+\begin{itemize}
+    \item First, assume the universe is radiation-dominated (which it would've been at that time) and with \( \Lambda = 0 \)
+    Then from the \( G^{0}_{0} \) equation, we obtain \( a^{2} = \left(\frac{32}{3}\pi G B\right)^{\frac{1}{2}}(t - t_{0}) \)
+    where \( \rho = Ba^{-4} \). This means it takes finite time to reach \( a=0 \)
+    \item A similar analysis for the \( G^{i}_{i} \) equation gives us \( \frac{\dot{a}}{a} \to \infty \) at \( t = t_{0} \),
+    which implies this time has infinite expansion rate.
+    \item Causality laws: the speed of sound is always less than the speed of light imply that \( \rho \to \infty \) at this time.
+\end{itemize}
+Since the universe began at \( R = 0 \) a finite time in the past, this makes the Big Bang inevitable. This point in time is called
+the cosmological singularity. Penrose and Hawking's singularity theorems (1973) show that the universe must have been a singularity
+even if the conditions of isotropy and homogeneity were relaxed.
+
+
+\subsection{The FLRW Universe}
+
+\begin{itemize}
+    \item We define the proper distance between 2 galaxies as the integral
+    \[ 
+        d(t) = a(t) \int^{r}_{0}\frac{dr}{\sqrt{1-kr^{2}}} = a(t) 
+        \begin{cases}
+        \sin^{-1}{r} & \text{for } k = 1 \\
+        r & k = 0 \\
+        \sinh^{-1}{r} & k = -1
+        \end{cases}
+    \]
+
+    \noindent Meanwhile the proper velocity is 
+    \[ 
+        v(t) \equiv \dot{d}(t) = \frac{\dot{a}(t)}{a(t)}d(t) = H(t)d(t) 
+    \]
+
+    \noindent this is Hubble's law, where \( H_{0}(t_{0}) \) is the present value of the hubble constant.
+
+
+    \item Let \( r_{ph} \) be the coordinate of the most distant object observable, with the earliest light coming from time \( t_{min} \).
+    For light rays, we can set \( ds = 0 \) giving us 
+    \[ 
+        \chi_{p} = c\int^{t_{0}}_{t_{min}} \frac{dt}{a(t)} = \int^{r_{ph}}_0\frac{dr}{\sqrt(1-kr^{2})}
+    \]
+    The closed universe model has \( r_{ph} = \sin(\chi_{p}) \) which is a finite value, so there exists a horizon beyond which you cannot see
+    past (why?). This is called the particle horizon.
+
+\end{itemize}
+
+\subsection{The CMB}
+
+\subsection{The Early Universe}
+
+
+
+
+
+
+
+
+
+\end{document}
