@@ -1,0 +1,192 @@
+\documentclass[11pt]{article}
+
+% basic packages
+\usepackage[margin=1in]{geometry}
+\usepackage[pdftex]{graphicx}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{custom}
+\usepackage{lipsum}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+% page formatting
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\renewcommand{\sectionmark}[1]{\markright{\textsf{\arabic{section}. #1}}}
+\renewcommand{\subsectionmark}[1]{}
+\lhead{\textbf{\thepage} \ \ \nouppercase{\rightmark}}
+\chead{}
+\rhead{}
+\lfoot{}
+\cfoot{}
+\rfoot{}
+\setlength{\headheight}{14pt}
+
+\linespread{1.03} % give a little extra room
+\setlength{\parindent}{0.2in} % reduce paragraph indent a bit
+\setcounter{secnumdepth}{2} % no numbered subsubsections
+\setcounter{tocdepth}{2} % no subsubsections in ToC
+
+\begin{document}
+
+% make table of contents
+\newpage
+\microtoc
+\newpage
+
+% main content
+\section{The Schr\"odinger Equation}
+\subsection{Wave Functions}
+\textbf{Example.} An extremely common continuous distribution is the Gaussian distribution:
+\(\rho(x) = Ae^{-\lambda (x-a)^{2}}\). 
+\\
+
+\noindent To normalize the distribution, we demand: 
+\[
+    \int ^{\infty}_{-\infty} Ae^{-\lambda (x-a) ^{2}}dx = 1
+\]
+Translating to be centered around the origin does not change the integral. Then let us
+substitute \(\sqrt{\lambda}x = y\) we have
+\[
+    \frac{\sqrt{\lambda}}{A} = \int^{\infty}_{-\infty} e^{-y^2}dy = \sqrt{\pi}
+\]
+So \(A = \sqrt{\frac{\lambda}{\pi}}\). Meanwhile, to find the expected value, make the
+substitution \((x-a) = y \), giving us 
+\[
+    \langle x \rangle = A\int^{\infty}_{-\infty}ye^{-\lambda y^2}dy 
+    + aA\int^{\infty}_{-\infty}e^{-\lambda y^2}dy =  -I_1 + I_1 + a = a   
+\]
+So we can expect the particle to be located at the middle of the gaussian distribution. Meanwhile, 
+\[
+    \langle x^2 \rangle = A\int^{\infty}_{-\infty}y^2e^{-\lambda y^2}dy 
+    + A\int^{\infty}_{-\infty}2ay e^{-\lambda y^2}dy + A\int^{\infty}_{-\infty}a^2 e^{-\lambda y^2}dy = 
+    \frac{1}{2\sqrt{\lambda}} + a^2
+\]
+
+\noindent Therefore, the standard deviation \(\sigma_x \) is \(\frac{1}{2\sqrt{\lambda}}\)
+\\
+
+
+
+\noindent
+\textbf{Example.} Here, we'll examine the time dependence of \(\langle p \rangle\). 
+\\
+
+\noindent The derivative is:
+\[
+    \frac{d\langle p \rangle }{dt} = -i\hbar \int \frac{\partial}{\partial t}\left(\Psi^* \frac{\partial \Psi}{\partial x}\right)dx
+\]
+using Schr\"odinger's equation along with the product rule. Expanding using the product rule and substituting in 
+Schr\"odinger's equation gives us 
+\[
+    \int \frac{\hbar^2}{2m}\left(-\frac{\partial^2 \Psi}{\partial x^2}\frac{\partial \Psi}{\partial x} 
+    + \Psi^* \frac{\partial^3 \Psi}{\partial x^3} \right) + V\Psi^* \frac{\partial \Psi}{\partial x} 
+    - \Psi^*\frac{\partial (V\Psi)}{\partial x}dx
+\]
+
+\noindent Integrating by parts twice on the left term and applying the boundary conditions that \(\frac{\partial\Psi}{\partial x}\) and 
+\(\frac{\partial \Psi^*}{\partial x}\) go to 0 at infinity cancels the two out. Expanding the right side, we have
+\[
+    \frac{\partial (V\Psi)}{\partial x} = \Psi \frac{\partial V}{\partial x} + V \frac{\partial \Psi}{\partial x} 
+\]
+so we are left with 
+\[
+    \frac{d\langle p \rangle }{dt} = \int \Psi^* \left(- \frac{\partial V}{\partial x}\right)\Psi dx = \langle -\frac{\partial V}{\partial x}\rangle
+\]
+\noindent This is Ehrenfest's theorem for Newton's second law. 
+\\
+
+\noindent
+\textbf{Griffiths Problem 1.11 and 1.12} A classical approach to creating a wave function is by directly modeling the probability distribution
+of a classical particle using kinematics. Suppose a particle of mass \(m\) is in a classical harmonic oscillator of potential \(V(x) = \frac{kx^2}{2}\) and
+has energy \(E\). Let the fraction of time the particle spends at position \(x\) be 
+\[
+    \rho(x)dx = \frac{dt}{T} = \frac{(dt/dx)dx}{T} = \frac{1}{v(x)T}dx
+\]
+where T is the total period. Then the quantity \(\rho(x) = \frac{1}{v(x)T}\) is a close analogy to \(|\Psi|^2\). (Careful, \(T\) is the time it takes to
+travel from one side to the other, so it is half of the period)
+\\
+
+\noindent Using conservation of energy, \(v(x) = \sqrt{\frac{2(E-\frac{kx^2}{2})}{m}}\). Then we have \(\rho(x) = \frac{1}{\pi\sqrt{(a^2-x^2)}}\). Integrating from
+a to -a, \(\int^a_{-a} \frac{dx}{\pi\sqrt{a^2-x^2}} = \frac{1}{\pi}\left[arcsin(\frac{x}{a})\right]^a_{-a} = 1\) so this "wave function" satisfies the normalization
+constraint. Meanwhile we have
+\[
+    \langle x\rangle = \int^a_{-a}\frac{x}{\pi \sqrt{a^2-x^2}}dx = \left[\frac{-\sqrt{a^2-x^2}}{\pi}\right]^a_{-a} = 0
+\]
+
+\[
+    \langle x^2\rangle = \int^a_{-a}\frac{x^2}{\pi \sqrt{a^2-x^2}}dx = \frac{a^2}{\pi}\int^{\frac{\pi}{2}}_{-\frac{\pi}{2}} \sin^2{\left(\theta\right)}d\theta = \frac{a^2}{2}
+\]
+
+\noindent Thus, the standard deviation \(\sigma_x\) is \(\frac{a}{\sqrt{2}}\). Meanwhile, if we were to do the same with momentum, we can write
+\[
+    \rho(p)dp = \frac{dt}{T} = \frac{(dt/dp)dp}{T} = \frac{dp}{T|\dot{p}|}
+\]
+From conservation of energy, we have 
+\[
+    \dot{p} = -\frac{dV}{dx} = -kx = \sqrt{2Ek-\omega^2p^2}
+\]
+Then the "momentum wave" is 
+\[
+    \rho(p) = \frac{1}{(\pi/\omega)\sqrt{2kE - w^2p^2}} = \frac{1}{\pi \sqrt{2mE - p^2}} = \frac{1}{\pi \sqrt{p_0^2 - p^2}}
+\]
+
+\noindent This is in the exact same form as the position wave, so we already know 
+\[
+    \langle p \rangle = 0
+\]
+\[
+    \langle p^2 \rangle = \frac{p_0^2}{2}
+\]
+
+\noindent Then using the standard deviations, we can see that 
+\[
+    \sigma_x \sigma_p = \frac{p_0x_0}{2}
+\]
+
+\noindent This should be setting off alarm bells! From the Heisenberg Uncertainty Principle, we must have
+\[
+    \sigma_x \sigma_p \geq \frac{\hbar}{2}
+\]
+but with our classical "wave," we can pick any arbitrarily small starting position. Clearly, this classical representation does not work. 
+
+\subsection{Time Independent Schr\"odinger Equation}
+\textbf{Example.} Suppose the separation constant \(E\) is allowed to have an imaginary component. While an imaginary energy is physically
+impossible, there isn't immediately anything mathematically preventing this. 
+\\
+\\
+Let's consider a wavefunction whose energy has an imaginary 
+component \(E = E_0 + i\Gamma\) where \(\Gamma\) is strictly real. Then the wave function is \(\Psi(x,t) = \psi(x)e^{-i\hbar(E_0 + i\Gamma)/t}\).
+The normalization condition then gives us
+
+\[
+    1 = \int \Psi(x,t) = \int \psi^*\psi e^{2\Gamma t / \hbar} dx = e^{2\Gamma t \hbar}
+\]
+
+\noindent But in order for this to hold for all time \(t\), this implies \(\Gamma = 0\). Thus, as expected physically, the total energy must be 
+strictly real.
+\\
+
+\noindent \textbf{Example.} Suppose we have an imaginary solution \(\psi(x)\). Then conjugating both sides of the time independent Schr\"odinger equation give us 
+\[
+    -\frac{\hbar^2}{2m}\frac{d(\psi^{*})^2}{dx^2} + V\psi^* = E\psi^*
+\]
+since E (and consequently, V) must be strictly real. So the conjugate, real wave  \(\psi^*\)  is also a solution. But any linear combination of solutions
+is also a solution so both 
+\[
+  \psi_1 = (\psi + \psi^*)  
+\]
+\[
+    \psi_2 = i(\psi - \psi^*)
+\]
+are also solutions. Then we can rewrite \(\psi = \frac{1}{2}\psi_1 + \frac{1}{2i}\psi_2\). What this means is any time we have an imaginary solution to the 
+Schr\"odinger solution, we can simply work with its real complex conjugate, and then if needed, convert back to the imaginary solution.
+
+
+
+
+
+
+
+\end{document}

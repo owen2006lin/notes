@@ -74,26 +74,26 @@ Potential sources to consult in the future:
 \subsection{Wave Functions}
 Classically, we work with masses and attempt to solve for their equations of motions \( x(t) \) using corresponding
 Newton's laws or energy equations. The quantum mechanics approach is different; the idea is to instead solve for a
-particle's wave function \( \psi(t) \) and from there we can do anything. The goal then is to solve the Schr\"odinger
+particle's wave function \( \Psi(x,t) \) and from there we can do anything. The goal then is to solve the Schr\"odinger
 equation
 
 \[ 
-    i\hbar \frac{\partial \psi}{\partial t} = -\frac{\hbar}{2m}\frac{\partial^{2} \psi}{\partial t^{2}} + V\psi
+    i\hbar \frac{\partial \Psi}{\partial t} = -\frac{\hbar}{2m}\frac{\partial^{2} \Psi}{\partial x^{2}} + V\Psi
 \]
 
-\noindent After solving the Schr\"odinger equation for some intial wave function \( \psi(t) \) the equation actually gives us 
-all future values of the wave function \( \psi(t) \).
+\noindent After solving the Schr\"odinger equation for some intial wave function \( \Psi(x, 0) \) the equation actually gives us 
+all future values of the wave function \( \Psi(x, t) \).
 
 \noindent The statistical interpretation of the wave function goes as follows:
 \begin{itemize}
     \item Born's statistical interpretation of the wave function states that 
     
     \[ 
-        \int^{a}_{b} |\psi(x,t)|^{2}dx  
+        \int^{a}_{b} |\Psi(x,t)|^{2}dx  
     \]
 
-    is the probability of finding the particle at \( a \leq x \leq b \) at time t. Note that while \( \psi \) is a complex valued
-    function, \( |\psi|^{2} = \psi \psi^{*}\) where \( \psi^{*} \) is the complex conjugate of \( \psi \) is always real and nonnegative.
+    is the probability of finding the particle at \( a \leq x \leq b \) at time t. Note that while \( \Psi \) is a complex valued
+    function, \( |\Psi|^{2} = \Psi \Psi^{*}\) where \( \Psi^{*} \) is the complex conjugate of \( \Psi \) is always real and nonnegative.
 
     \item An obvious consequence is this is that even if you know everything about a particle (ie; you know its wavefunction), you still
     cannot predict with certainty the outcome of an experiment to measure its exact position. 
@@ -104,21 +104,21 @@ all future values of the wave function \( \psi(t) \).
 
     \item The integral over all possible positions must be equal to one, since the particle must be located somewhere.
     \[ 
-        \int^{\infty}_{-\infty} |\psi(x,t)|^{2}dx = 1
+        \int^{\infty}_{-\infty} |\Psi(x,t)|^{2}dx = 1
     \]
 
     If we have a wavefunction, we need to make sure its normalized for it to be physical. We can normalize it to obey the integral by multiplying
-    it by a scale factor. A glance at the Schr\"odinger equation one can see that if \( \psi(x,t) \) is a solution, then \( A\psi(x,t) \) is also
+    it by a scale factor. A glance at the Schr\"odinger equation one can see that if \( \Psi(x,t) \) is a solution, then \( A\Psi(x,t) \) is also
     a solution for nonzero constant A.
 
     \item One can also show that the normalization integral does not change with time, so there is no need to constantly renormalized solutions as 
     the particle evolves with time.
 
-    \item If we interpret \( |\psi(x,t)|^{2} \) to be the probability, then we can say the expectation value of position is 
+    \item If we interpret \( |\Psi(x,t)|^{2} \) to be the probability, then we can say the expectation value of position is 
     \[ 
-        \langle x \rangle = \int^{\infty}_{-\infty} x|\psi(x,t)|^{2}dx
+        \langle x \rangle = \int^{\infty}_{-\infty} x|\Psi(x,t)|^{2}dx
     \]
-    Note that the interpretation of this quantity is the expected value of the position from measuring particles with wave function \( \psi \). Simply
+    Note that the interpretation of this quantity is the expected value of the position from measuring particles with wave function \( \Psi \). Simply
     remeasuring the same particle over again will not work, since the first measurement will collapse the particle into some other wave function with
     exact position
 
@@ -126,23 +126,23 @@ all future values of the wave function \( \psi(t) \).
     work using momentum so we have
     
     \[ 
-        \langle p \rangle = -i\hbar \int \left(\psi^{*}\frac{\partial \psi}{\partial x}\right)dx 
+        \langle p \rangle = -i\hbar \int \left(\Psi^{*}\frac{\partial \Psi}{\partial x}\right)dx 
     \]
 
     \item A more illustrative way to write the expectation values for position and momentum are:
     \[ 
-        \langle x \rangle = \int \psi^{*} \cdot x \cdot \psi dx
+        \langle x \rangle = \int \Psi^{*} \cdot x \cdot \Psi dx
     \]
 
     \[ 
-        \langle p \rangle = -i\hbar \int \psi^{*} \cdot \left(\frac{\partial}{\partial x}\right) \cdot \psi dx 
+        \langle p \rangle = -i\hbar \int \Psi^{*} \cdot \left(\frac{\partial}{\partial x}\right) \cdot \Psi dx 
     \]
     We say the the \( x \) operator "represents" position and the \( -i \hbar\frac{\partial}{\partial x} \)  operator "represents" momentum. 
 
     \item All classical quantities can be represented as a function of position and angular momentum. Then the representation of a classical quantity \( Q(x,p) \)
     can be written as 
     \[ 
-        \langle Q(x,p) \rangle = \int \psi^{*} Q\left(x, -i\hbar\frac{\partial}{\partial x}\right) \psi dx. 
+        \langle Q(x,p) \rangle = \int \Psi^{*} Q\left(x, -i\hbar\frac{\partial}{\partial x}\right) \Psi dx. 
     \]
 
     \item \textbf{Ehrenfest's Theorem} states that expectation values obey their classical laws. For example, the time derivative of momentum is
@@ -151,10 +151,76 @@ all future values of the wave function \( \psi(t) \).
         \frac{d\langle p \rangle}{dt} = \langle - \frac{\partial V}{\partial x}\rangle 
     \]
 
-    \textcolor{red}{Possible problems to include: 1.12, 1.17}
 \end{itemize}
 
 \subsection{Time Independent Schr\"odinger Equation}
+Let us assume that the potential \(V(x)\) is independent of time. Then using separation of variables, we can substitute \(\Psi(x,t) = \psi(x)\phi(t)\)
+into the Schr\"odinger equation giving us 
+\(i\hbar\frac{1}{\phi}\frac{d\phi}{dt} = -\frac{\hbar^2}{2m} \frac{1}{\psi}\frac{d^2\psi}{dx^2} + V\). Then for the equality to hold, both sides must be equal to 
+some constant value \(E\) leaving us with two ordinary differential equations:
+\[
+    \frac{d\phi}{dt} = -\frac{iE}{\hbar}\phi
+\]
+
+\[
+    -\frac{\hbar^2}{2m}\frac{1}{\psi}\frac{d^2\psi}{dx^2} + V = E
+\]
+The second equation is the \textbf{Time Independent Schr\"odinger Equation}. The first equation defines the characteristic time dependence and can
+be solved trivially \(\phi(t) = e^{-iEt/\hbar}\). Separable solutions obey several important properties that we're interested in:
+
+\begin{itemize}
+    \item These solutions are \textbf{stationary states}. What this means is while the wave function is obviously time dependent, 
+    \(\Psi(x,t) = \psi(x)e^{-iEt/\hbar}\), the probability density is not:
+    \[
+        |\Psi(x,t)|^2 = \Psi \Psi^* = \psi^* e^{+iEt/\hbar}\psi e^{-iEt/\hbar} = |\psi(x)|^2
+    \]
+    We can further show that the expectation value of any classical quantity is also not time dependent in a stationary state:
+    \[ 
+        \langle Q(x,p) \rangle = \int \psi^{*} Q\left(x, -i\hbar\frac{\partial}{\partial x}\right) \psi dx. 
+    \]
+
+
+    \item The constant \(E\) represents the Hamiltonian of the system. Classically, the Hamiltonian is \(H(x,p) = \frac{p^2}{2m} + V(x)\) so the 
+    corresponding Hamiltonian operator is \(\hat{H} = -\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2} + V(x)\). So the time independent Schr\"odinger
+    equation can be rewritten as 
+    \[
+        \hat{H}\psi = E\psi
+    \]
+
+    Then the expectation values of the Hamiltonian is 
+
+    \[
+        \langle H \rangle = \int \psi^{*} \hat{H} \psi dx = \int \psi^{*} E \psi dx = E
+    \]
+
+    \[
+        \langle H^2 \rangle = \int \psi^{*} \hat{H}^2 \psi dx = \int \psi^{*} E (\hat{H}\psi) dx = \int \psi^{*} E^2 \psi dx= E^2
+    \]
+    This means the standard deviation is 0. So any ensemble of stationary states with the same wavefunction have their Hamiltonian measured to be the exact
+    same E. 
+
+    \item Every solution to the Schr\"odinger equation can be written in the form of a sum of stationary solutions. 
+    \[
+        \Psi(x,t) = \sum_{n=1}^{\infty}c_n \psi_n(x)e^{-E_n t / \hbar}     
+    \]
+    
+    So we can basically decompose any wave function into the sum of wavefunctions associated with specific energy levels. The quantity \(|c_n|^2\) represents 
+    the probability that a measurement of the energy will return value \(E_n\), so we also must demand 
+    \[
+        \sum_{n=1}^{\infty} |c_n|^2 = 1 
+    \]
+    \[
+        \langle H \rangle = \sum_{n=1}^{\infty} |c_n|^2E_n 
+    \]
+    
+    
+    
+    
+
+
+\end{itemize}
+
+
 
 
 \subsection{The Quantum Harmonic Oscillator}
