@@ -213,12 +213,55 @@ be solved trivially \(\phi(t) = e^{-iEt/\hbar}\). Separable solutions obey sever
         \langle H \rangle = \sum_{n=1}^{\infty} |c_n|^2E_n 
     \]
     
-    
-    
-    
-
 
 \end{itemize}
+
+\subsection{Infinite Potential Well}
+\noindent Consider the potential function given by 
+    \[
+    V(x) = \begin{cases}
+        0 & 0 \leq x \leq a \\
+        \infty & otherwise
+    \end{cases}        
+    \]
+
+\noindent Outside the potential well, \(\psi(x)\) must be 0 because \(V(x)\) goes to infinity. So we have \(\psi(x) = 0\) for \(x < 0\) amd \(x > a\). Inside
+the well, the Schr\"odinger equation gives us \(-\frac{\hbar}{2m}\frac{d^2\psi}{dx^2} = E\psi\). The solution is just the simple harmonic oscillator with 
+\(k = \sqrt{2mE}/\hbar\). So the general solution is \(\psi(x) = Asin(kx) + Bcos(kx)\). Using the boundary condition that the wavefunction must go to 0 at
+\(x = 0\) and \(x = a\), we obtain
+\[
+    \psi_n(x) = \sqrt{\frac{2}{a}}\sin{\left(\frac{n\pi}{a}x\right)}
+\]
+with corresponding energy 
+\[
+    E_n = \frac{n^2\pi^2\hbar^2}{2ma^2}
+\]
+
+\noindent Some properties of the \(\psi_n\) functions:
+\begin{itemize}
+    \item \(\psi_n\) alternates parity around the center of the well. \(\psi_1\), the ground state, is even, \(\psi_2\), the first excited state is odd, \(\psi_3\)
+    is even and so on.
+    \item Each \(\psi_n\) are orthonormal. Namely:
+     \[
+        \int \psi_m(x)* \psi_n(x) dx = \delta_{mn}    
+    \]
+    \item They form a complete basis for any function \(f(x)\):
+    \[
+        f(x) = \sum_{n=1}^{\infty} c_n \psi_n(x) = \sqrt{\frac{2}{a}}\sum_{n= 1}^{\infty} c_n \sin{\left(\frac{n\pi}{a}x\right)}     
+    \]
+    This is simply a fourier series for \(f(x)\), and this can represent any function \(f(x)\) by \textbf{Dirichlet's Theorem}.
+    To actually determine the coefficients, multiply both sides by \(\psi_m^*\) and then integrate
+    \[
+        \int \psi_m(x)^* f(x) dx = \sum_{n=1}^{\infty} c_n\int \psi_m(x)^* \psi_n(x)dx = \sum_{n=1}^{\infty}c_n \delta_{nm} = c_m 
+    \]
+    \[
+        c_n = \int \psi_n(x)^* f(x)dx
+    \]
+    
+    
+    
+\end{itemize}
+
 
 
 
