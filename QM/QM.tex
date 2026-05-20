@@ -262,11 +262,49 @@ with corresponding energy
     
 \end{itemize}
 
-
-
-
-
 \subsection{The Quantum Harmonic Oscillator}
+Consider the potential inside a harmonic oscillator \( V(x) = \frac{1}{2}kx^{2} \). This potential is actually very illustrative because 
+any general potential \( V(x) \) can be taylor expanded into \( V(x) \approx V(x_{0}) + V'(x_{0})(x-x_{0}) + \frac{1}{2}V''(x_{0})(x-x_{0})^{2} +\ldots\)
+but notice that we can simplify by working with \( x_{0} \) as an equilibrium point \( x_{0} \), so the \( V'(x_{0}) \) term drops, and we can also choose
+to define \( V \) up to a scalar constant such that \( V(x_{0}) = 0 \). If we assume \( x - x_{0} \) stays small, then we could describe any oscillatory motion
+with small amplitude. 
+\\
+\\
+
+\noindent The Schr\"odinger equation is now 
+\[ 
+    - \frac{\hbar}{2m}\frac{d^{2}\psi}{dx^{2}} = \frac{1}{2}m\omega^{2}x^{2} \psi = E\psi 
+\]
+where \( \omega = \sqrt{k/m}  \). To solve this we introduce the \textbf{ladder operators} \( \hat{a}_{-} \) and \( \hat{a}_{+} \)
+
+\begin{itemize}
+    \item We define the operator \( \hat{a}_{\pm} \) as
+    
+    \[ 
+        \hat{a}_{\pm} \equiv \frac{1}{\sqrt{2\hbar m \omega} }(\mp i \hat{p} + m\omega x)
+    \]
+    The product is \( \hat{a}_{-}\hat{a}_{+} = \frac{1}{2\hbar m \omega}\left[\hat{p}^{2} + (m\omega x)^{2}\right] - \frac{i}{2\hbar}(\hat{x}\hat{p} - \hat{p}\hat{x}) \). Here, 
+    \(  (\hat{x}\hat{p} - \hat{p}\hat{x}) \equiv [\hat{x},\hat{p}]\) where \( [\hat{x},\hat{p}] = i\hbar \) is what's known as the \textbf{commutator} of \( \hat{x} \) and \( \hat{p} \).
+
+    \item Using the ladder operators, notice that \( [\hat{a}_{-}, \hat{a}_{+}] = 1 \) and we can rewrite the Hamiltonian and Schr\"odinger equation as
+    \[ 
+        \hat{H} = \hbar \omega \left(\hat{a}_{+}\hat{a}_{-} + \frac{1}{2}\right)
+    \]
+
+    
+    \[ 
+        \hbar \omega \left(\hat{a}_{\pm} \hat{a}_{\mp} \pm \frac{1}{2}\right)\psi = E\psi 
+    \]
+
+
+\end{itemize}
+
+
+
+
+
+
+
 
 \section{Dirac Notation}
 
