@@ -109,7 +109,7 @@ travel from one side to the other, so it is half of the period)
 \\
 
 \noindent Using conservation of energy, \(v(x) = \sqrt{\frac{2(E-\frac{kx^2}{2})}{m}}\). Then we have \(\rho(x) = \frac{1}{\pi\sqrt{(a^2-x^2)}}\). Integrating from
-a to -a, \(\int^a_{-a} \frac{dx}{\pi\sqrt{a^2-x^2}} = \frac{1}{\pi}\left[arcsin(\frac{x}{a})\right]^a_{-a} = 1\) so this "wave function" satisfies the normalization
+a to -a, \(\int^a_{-a} \frac{dx}{\pi\sqrt{a^2-x^2}} = \frac{1}{\pi}\left[\arcsin(\frac{x}{a})\right]^a_{-a} = 1\) so this "wave function" satisfies the normalization
 constraint. Meanwhile we have
 \[
     \langle x\rangle = \int^a_{-a}\frac{x}{\pi \sqrt{a^2-x^2}}dx = \left[\frac{-\sqrt{a^2-x^2}}{\pi}\right]^a_{-a} = 0
@@ -161,7 +161,7 @@ component \(E = E_0 + i\Gamma\) where \(\Gamma\) is strictly real. Then the wave
 The normalization condition then gives us
 
 \[
-    1 = \int \Psi(x,t) = \int \psi^*\psi e^{2\Gamma t / \hbar} dx = e^{2\Gamma t \hbar}
+    1 = \int \Psi(x,t) = \int \psi^*\psi e^{2\Gamma t / \hbar} dx = e^{2\Gamma t / \hbar}
 \]
 
 \noindent But in order for this to hold for all time \(t\), this implies \(\Gamma = 0\). Thus, as expected physically, the total energy must be 
@@ -229,5 +229,32 @@ The spatial component is \( \psi_{n}(x) = \sqrt{\frac{2}{a}}\sin{\left( \frac{n\
 \]
 
 \noindent which is minimized at the ground state \( \sigma_{x} \sigma_{p} = \hbar \sqrt{\frac{\pi^{2}}{2} - \frac{1}{2}} \approx 0.5678\hbar \geq \frac{\hbar}{2} \).
+\\
+
+\noindent \textbf{Example.} In principle, we can have any wave function as our starting condition as long as it's normalizable.
+Consider the wave function 
+\[
+    \Psi(x,0) = 
+    \begin{cases}
+        Ax & 0 \leq x \leq \frac{a}{2} \\
+        A(a - x) & \frac{a}{2} \leq x \leq a 
+    \end{cases}  
+\]
+\\
+In order to be normalizable, we need \(\int \Psi^2 dx = 2(\frac{A^2a^3}{24}) = 1\) which means \(A = \frac{2 \sqrt{3} }{ a^{3/2}}\). Note that this function is even about
+the center of the well, so only the odd \(n\) components give us anything. Then using Fourier's trick: 
+\[
+    c_n = \int^{\frac{a}{2}}_0 Ax\sqrt{\frac{2}{a}}\sin{\left(\frac{n\pi}{a}x\right)} = \frac{4 \sqrt{6}}{n^2 \pi^2}\sin{\left(\frac{n\pi}{2}\right)}
+\]
+
+\noindent So the wavefunction as a function of time is simply
+\[
+    \Psi(x,t) = \frac{4 \sqrt{6}}{\pi^2}\sum_{n=1}^{\infty} \frac{(-1)^{(n-1)/2}}{n^2}\sin{\left(\frac{n\pi x}{a}\right) e^ {-iE_n t / \hbar}} 
+\]
+
+\noindent The probability of finding energy \(E_1\) is \(\frac{96}{\pi^4} \approx 0.9855\) and the expectation of energy is 
+\(\langle H \rangle = \frac{96 E_1}{\pi^4} \sum_{n=1}^{\infty}\frac{1}{n^2}  = \frac{12}{\pi^2}E_1 \approx 1.216E_1 \). Within the wave function, the \(\psi_1\) terms dominate
+and this is reflected in the expectation of energy. 
+
 
 \end{document}
