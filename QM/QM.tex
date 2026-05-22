@@ -216,7 +216,7 @@ be solved trivially \(\phi(t) = e^{-iEt/\hbar}\). Separable solutions obey sever
 
 \end{itemize}
 
-\subsection{Infinite Potential Well}
+\subsection{Bound States}
 \noindent Consider the potential function given by 
     \[
     V(x) = \begin{cases}
@@ -261,9 +261,7 @@ with corresponding energy
     
     
 \end{itemize}
-
-\subsection{The Quantum Harmonic Oscillator}
-Consider the potential inside a harmonic oscillator \( V(x) = \frac{1}{2}kx^{2} \). This potential is actually very illustrative because 
+\noindent Now consider the potential inside a harmonic oscillator \( V(x) = \frac{1}{2}kx^{2} \). This potential is actually very illustrative because 
 any general potential \( V(x) \) can be taylor expanded into \( V(x) \approx V(x_{0}) + V'(x_{0})(x-x_{0}) + \frac{1}{2}V''(x_{0})(x-x_{0})^{2} +\ldots\)
 but notice that we can simplify by working with \( x_{0} \) as an equilibrium point \( x_{0} \), so the \( V'(x_{0}) \) term drops, and we can also choose
 to define \( V \) up to a scalar constant such that \( V(x_{0}) = 0 \). If we assume \( x - x_{0} \) stays small, then we could describe any oscillatory motion
@@ -296,19 +294,127 @@ where \( \omega = \sqrt{k/m}  \). To solve this we introduce the \textbf{ladder 
         \hbar \omega \left(\hat{a}_{\pm} \hat{a}_{\mp} \pm \frac{1}{2}\right)\psi = E\psi 
     \]
 
+    \item The \(\hat{a}_+\) and \(\hat{a}_-\) are accordingly named the \textbf{raising} and \textbf{lowering} operators. If \(\psi\) is a solution with energy \(E\), then
+    \(\hat{a}_+\psi\) is also a solution with energy \(E +\hbar\omega\) and \(\hat{a}_-\psi\) is a solution with energy \(E - \hbar\omega\). Notice that at the ground state,
+    we are unable to lower the wave function any further, so we set \(\hat{a}_-\psi_0 = 0\). Solving this differential equation gives us the ground state and energy:
+    \[
+        \psi_0(x) = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4}e^{-\frac{m\omega}{\pi\hbar}x^2}
+    \]
+    \[
+        E_0 = \frac{1}{2}\hbar\omega
+    \]
+
+    \item Then we can find the nth excited states by repeatedly applying the raising/lowering operators:
+    \[
+        \hat{a}_+\psi_n  = \sqrt{n+1}\psi_{n+1}
+    \]
+    \[
+        \hat{a}_-\psi_n = \sqrt{n}\psi_{n-1}
+    \]
+
+    \item It may also be helpful to represent the position and momentum operators using the ladder operators:
+    \[
+        \hat{x} = \sqrt{\frac{\hbar}{2m\omega}}(\hat{a}_+ + \hat{a}_-)
+    \]
+    \[
+        \hat{p} = i \sqrt{\frac{\hbar m \omega}{2}}(\hat{a}_+ + \hat{a}_-)
+    \]    
 
 \end{itemize}
 
+\noindent You could also solve the Schr\"odinger's equation analytically using a power series, and obtain 
+\[
+    \psi_n(x) = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4}\frac{1}{\sqrt{2^n n!}}H_n(\xi)e^{-\xi^2 / 2}
+\]
+where \(\xi = \sqrt{\frac{m\omega}{\hbar}}x \) and \(H_n\) are the \textbf{Hermite Polynomials}.
 
 
+\subsection{Scattering States}
+In the examples above, we have the total energy is less than the potential energy at the boundaries, so solutions are bound states. However,
+we can also have states where the particle enters from infinity into a finite potential, and then leaves to infinity again. Solutions to these
+cases are called scattering states.
+\\
 
+\noindent A particle in free space isn't subject to any forces to \(V(x) = 0\). This differential equation is much easier to solve,
+with stationary solutions 
+\[
+    \Psi_k(x,t) Ae^{i\left(kx - \frac{\hbar k^2}{2m}t\right)}
+\]
+where \(k \equiv \pm \frac{\sqrt{2mE}}{\hbar}\). A positive \(k\) means the wave travelling to the right, while a negative one
+is traveling to the left. The wave travels with phase velocity 
+\[
+    v_{quantum} = \frac{\hbar|k|}{2m} = \sqrt{\frac{E}{2m}} = \frac{1}{2}v_{classical}
+\]
+It's important to distinguish the group velocity from the phase velocity. The group velocity is the speed at which the "envelope" of
+superpositions travels at which represents the motion of the particle. Here, \(v_{group} = \frac{d\omega}{dk} = v_{classical}\) so this
+problem is resolved. However, another problem is that this wave function is not even normalizable!
 
-
-
-
-\section{Dirac Notation}
+\begin{itemize}
+    \item To resolve this issue, instead of summing over separable solutions, we integrate over the variable k:
+    \[
+        \Psi(x,t) = \frac{1}{\sqrt{2\pi}}\int^{\infty}_{-\infty} \Psi(k)e^{i\left(kx - \frac{\hbar k^2}{2m}t\right)}dk
+    \]
+    \item We can use \textbf{Plancherel's theorem} to determine \(\psi(k)\) from the initial conditions:
+    \[
+        \phi(k) = \frac{1}{\sqrt{2\pi}}\int^{\infty}_{-\infty}\Psi(x,0)e^{-ikx}dx
+    \]
+       
+\end{itemize}
 
 \section{The Hydrogen Atom}
+In 3 dimensions, Hamiltonian operator is now \(\frac{1}{2m}(p_x^2 + p_y^2 + p_z^2) + V\). Notice that the momentum operator now becomes the
+gradient \(\mathbf{p} = -i\hbar \nabla\). Thus:
+\[
+    i\hbar \frac{\partial \Psi}{\partial t} = - \frac{\hbar^2}{2m}\nabla^2\Psi + V\Psi
+\]
+
+\noindent However, most of the time the potential we will work with is spherically symmetric, in that it depends only on distance from the
+radius \(V(r)\). Here it makes most sense to use spherical coordinates. By separation of variables, let 
+\[
+    \psi(r, \theta, \phi) = R(r)Y(\theta,\phi)
+\]
+
+\noindent The angular equation gives us
+\[\frac{1}{Y}\left[\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta \frac{\partial Y}{\partial\theta}\right)
++
+\frac{1}{\sin^2\theta}\frac{\partial^2 Y}{\partial\phi^2}\right]= -\ell(\ell+1)\]
+\noindent Performing separation of variables again with \(Y(\theta,\phi) = \Theta(\theta)\Phi(\phi)\) we now have
+
+    \[
+        \frac{1}{\sin\theta}\frac{d}{d\theta}\left(\sin\theta \frac{d}{d\theta}\right)
+        +
+        \ell(\ell+1)\sin^2\theta = m^2
+    \]
+    \[
+        \frac{1}{\Phi}\frac{d^2\Phi}{d\phi^2} = -m^2
+    \]
+
+\noindent The \(\phi\) equation is easy to solve. The solution is just \(\Phi(\phi) = e^{im\phi}\). Note that we also demand 
+\(\Phi(\phi+2\pi) = \Phi(\phi)\) which implies \(m\) must be integer. Meanwhile, the solution to the \(\theta\) equation is 
+\[
+    \Theta(\theta) = AP_{\ell}^m(\cos{\left(\theta\right)})
+\]
+
+\noindent where \(P_\ell^m\) are the \textbf{Legendre Functions} defined as:
+\[
+P_\ell^m(x)
+\equiv
+(-1)^m (1-x^2)^{m/2}
+\frac{d^m}{dx^m} P_\ell(x)
+\]
+\noindent and \(P_\ell^m\) are the \textbf{Legendre Polynomials}. Thus, the solution to the angular equation are the \textbf{Spherical Harmonics}:
+\[
+Y_\ell^m(\theta,\phi)
+=
+\sqrt{
+\frac{2\ell+1}{4\pi}
+\frac{(\ell-m)!}{(\ell+m)!}
+}
+\, e^{im\phi}
+P_\ell^m(\cos\theta).
+\]
+
+ 
 
 \section{Symmetries and Conservation Laws}
 
