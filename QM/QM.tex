@@ -407,7 +407,7 @@ P_\ell^m(x)
 (-1)^m (1-x^2)^{m/2}
 \frac{d^m}{dx^m} P_\ell(x)
 \]
-\noindent and \(P_\ell^m\) are the \textbf{Legendre Polynomials}. Thus, the solution to the angular equation are the \textbf{Spherical Harmonics}:
+\noindent and \(P_\ell\) are the \textbf{Legendre Polynomials}. Thus, the solution to the angular equation are the \textbf{Spherical Harmonics}:
 \[
 Y_\ell^m(\theta,\phi)
 =
@@ -419,8 +419,29 @@ Y_\ell^m(\theta,\phi)
 P_\ell^m(\cos\theta).
 \]
 
- 
+\noindent To solve the radial equation, instead we have \( V(r) = -\frac{e^{2}}{4\pi\epsilon_{0}}\frac{1}{r} \). Solving this differential equation is
+genuinely so terrible so we'll skip that. The solution is
 
+\[ 
+    \psi_{nlm} = \sqrt{\left(\frac{2}{na}\right)^3 \frac{(n-l-1)!}{2n[(n+l)!]^3}} \, e^{-r/na} \left(\frac{2r}{na}\right)^l L_{n-l-1}^{2l+1}\!\left(\frac{2r}{na}\right) Y_l^m(\theta,\phi) 
+\]
+
+\noindent where \( L^{p}_{q-p}(x) \equiv (-1)^{p}(\frac{d}{dx})^p L_{q}(x) \) is the associated \textbf{Laguerre polynomial}. Here, \( L_{q}(x) \equiv e^{x}(\frac{d}{dx})^q(e^{-x}x^{q}) \)
+is the qth Laguerre polynomial. It's quite nasty, but generally it's extremely rare for the Schr\"odinger equation to even have a closed form solution like this. Generally speaking, we won't
+have this luxury with systems like the helium atom.
+\\
+\\
+
+\noindent The allowed energies are 
+\[ 
+    E_{n} = -\left[\frac{m}{2\hbar^{2}}\left(\frac{e^{2}}{4\pi\epsilon_{0}}\right)\frac{1}{n^{2}}\right] 
+\]
+
+\noindent with the lowest possible energy state and
+\[ 
+    a \equiv \frac{4\pi \epsilon_{0}\hbar^{2}}{me^{2}} 
+\]
+is the \textbf{Bohr Radius}, the smallest possible orbit.
 \section{Symmetries and Conservation Laws}
 
 \end{document}
