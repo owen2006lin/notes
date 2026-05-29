@@ -50,6 +50,7 @@
 These notes cover general relativity at the undergraduate level. The sources used are:
 \begin{itemize}
     \item Schutz, \textit{A First Course in General Relativity}
+    \item Carroll, \textit{Spacetime and Geometry}
 \end{itemize}
 
 
@@ -75,12 +76,62 @@ Potential sources to consult in the future:
 \section{Tensors}
 
 \subsection{Tensor Analysis}
-First, we'll establish some notation to describe how vectors transform under coordinate change. Let's define a four vector
-\( x^{\mu} \) where \( x^{0} \) is the temporal component and \( x^{i} \) (\( i \neq 0 \)) are the spacial coordinates.
-In these notes, we'll write the representation of a vector in coordinate transformation as \( x^{\mu'} \) (each source
-has their own convention). Then the matrix to transform the vector \( x^{\nu} \) into the new primed coordinates is
-\( x^{\mu'} = \Lambda^{\mu'}_\nu x^{\nu}\). We are using the Einstein convention where summations over repeated indices drop
-the \( \Sigma \).
+First, we'll briefly recap special relativity using index notation. 
+    \begin{itemize}
+        \item Let's define a four vector \( x^{\mu} \) where \( x^{0} \) is the temporal component and \( x^{i} \) (\( i \neq 0 \)) are the spacial coordinates.
+        In these notes, we'll write the representation of a vector in coordinate transformation as \( x^{\mu'} \) (each source has     their own convention). 
+        
+        \item  The matrix to transform the vector \( x^{\nu} \) into the new primed coordinates is
+        \( x^{\mu'} = \Lambda^{\mu'}_\nu x^{\nu}\). We are using the Einstein convention where summations over repeated indices drop
+        the \( \Sigma \).
+    
+        \item A Lorentz Transformation is one that keeps the spacetime interval constant and fix the origin so this requires \( \eta = \Lambda^{T} \eta \Lambda \). In index notation, this is:
+        \[ 
+            \eta_{\alpha \beta} = \Lambda^{\mu'}_{\alpha} \Lambda^{{\nu'}}_{\beta}\eta_{\mu' \nu'}
+        \]
+        Note that when writing the equation using matrices, the order is important because of the limitations of matrix multiplication. However, the order is irrelevant
+        in index notation. These matrices are \textbf{Lorentz Transformations} and are elements of the \textbf{Lorentz Group}.
+
+        \item A brief aside, these matrices may seem very similar to the rotation group SO(3). The Orthogonal Group is all 3x3 matrices that satisfy \( \mathbf{R}^{\mathbf{T}}\mathbf{R} = \mathbf{1} \)
+        (SO(3) then are all special matrices in O(3), ie determinant 1). The difference between O(3) and the Lorentz group is that instead of the identity matrix, it is equal
+        to the metric \( \eta \). The identity matrix is simply the metric in \textbf{Euclidean Space}, and \( \eta \) is similarly the metric for a \textbf{Lorentzian Space}.
+        
+        \item Lorentz transformations come in two forms: rotations and boosts. Below is an example of a boost in the x direction:
+
+        \[ 
+            \Lambda^{\mu'}_{\nu'} = 
+            \begin{pmatrix}
+            \cosh \phi & -\sinh \phi & 0 & 0 \\
+            -\sinh \phi & \cosh \phi & 0 & 0 \\
+            0 & 0 & 1 & 0 \\
+            0 & 0 & 0 & 1 \\
+            \end{pmatrix}
+        \]
+
+        The transformed quantity for \( t' \) and \( x' \) are then \( t' = t\cosh\phi - x\sinh\phi \) and \( x' = -t\sinh\phi + x\cosh\phi \). The velocity follows as \( v = \tanh\phi \), and we can
+        then rewrite in more familiar form 
+        \[ 
+            t' = \gamma(t - vx) 
+        \]
+        
+        \[ 
+            x' = \gamma(x - vt) 
+        \]
+        where \( \gamma = 1/\sqrt{1 - v^{2}}  \). From here, we can proceed and obtain time dilation, length contraction, etc.
+
+        \item Another transformation that preserves the spacetime interval is a pure translation:
+        \\
+        \( x^{\mu} \rightarrow x^{\mu'} =( x^{\mu} + a^{\mu})\)
+        The set of all translations form an Abelian group but generally Lorentz transforms do not commute so the Lorentz Group is nonabelian. The set of all Lorentz transforms and translations form a larger
+        nonabelian group: the \textbf{Poincar\'e Group}.
+
+    \end{itemize}
+
+\noindent Now we'll take a look at how vectors and their components transform under a change of coordinates.
+    \begin{itemize}
+        \item Suppose in an arbitrary vector space we have a basis of vectors \( \hat{e}_{\mu} \)
+    \end{itemize}
+
 
 \subsection{Connection}
 \subsection{Curvature}
