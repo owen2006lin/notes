@@ -8,6 +8,7 @@
 \usepackage{lipsum}
 \usepackage{booktabs}
 \usepackage{enumitem}
+\usepackage{hyperref}
 
 % page formatting
 \usepackage{fancyhdr}
@@ -90,13 +91,89 @@ or \(\mathbf{M}\beta = \mathbf{\hat{y}}\). The goal then is to minimize \(\mathb
 \noindent Having products of features is also valid, however one must actually realize these features were relevant to begin with. If we didn't know, for example, our data
 followed an exponential distribution, we might not have thought to include \(e^{x_i}\) as a feature. This works best on data that is ideally uncorrelated across features, and
 we strongly know in advance the form of the relation.
+\\
+\\
+For example, suppose we wanted to predict property prices. We could infer the relation between land area and price should be polynomial, and that there might be an additional bias
+as a result of the location. The data here is low dimensional, and we can realistically infer the direct relationship between features and price.
 
 \subsection{Logistic Regression}
+\noindent Logistic Regression is the most basic classification algorithm. Assuming the data follows a bernoulli distribution, then for any given point of data \(\mathbf{x_n}\) we want
+to predict the probability it belongs to class \(C\). So we'd want the model to output the probability \(y_n = p(C|\mathbf{x_n})\). For a Bernoulli distribution, this probability is actually equal to 
+\[
+    y_n =\frac{1}{1 + e^{-\eta}}
+\]
+where \(\eta\) is also called the log odds \(\eta = \log\left(\frac{y_n}{1-y_n}\right)\). We want the log odds to be linear in our parameters for a couple reasons. One of which is to aid
+in interpretability. The equation for the output is also called the sigmoid function, and it has several nice properties in that its differentiable and continuous everywhere.
+\\
+\\
+Consider the probability our weights generated the data \(p(\mathbf{t}|\mathbf{w})\). For a Bernoulli distribution this "liklihood" is exponential
+\[
+    p(\mathbf{t}|\mathbf{w}) = \prod^N_{n = 1}\left[\exp(t_n \log(y_n) + (1-t_n)\log(1-y_n))\right]
+\]
+\\
+A more friendly way to write this is by taking the log of both sides which gives us a summation 
+\[
+    E(\mathbf{w}) = -\log(p(\mathbf{t}|\mathbf{w})) = \sum_{n=1}^{N}\left[t_n\log(y_n) + (1-t_n)\log(1-y_n)\right]
+\]
+which is the cross entropy loss for binary classification. If you are familiar with cross entropy in information theory, this looks a little different than the traditional equation but it's because we
+already summed over all possible classes (just 2 in this case). For more clarification, see \href{https://chris-said.io/2020/12/26/two-things-that-confused-me-about-cross-entropy/}{here}.
+\\
+\\
+\noindent Note that the logarithm is a monotonic function, so minimizing the negative logarithm is equivalent to maximizing the probability. Unlike linear regression, we must use gradient descent to optimize
+this because the presence of the sigmoid means there is no closed form solution.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.65\textwidth]{logistic.png}
+    \label{fig:my_image}
+\end{figure}
+
+
+
 
 \subsection{Perceptron}
+\subsection{Support Vector Machines}
+\subsection{Principal Component Analysis}
+\noindent Many classical models suffer from the curse of dimensionality. What this means is that as the number of dimensions grow, the feature space becomes sparse in data. This means we need exponentially more data
+as the number of dimensions grow. However, data tends to lie on lower dimensional manifolds. The vast majority of points outside of the manifold are meaningless.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{pca.png}
+    \label{fig:my_image}
+\end{figure}
 
-\subsection{SVMs}
+\noindent Principal component analysis aims to reduce the dimensionality of data while retaining as much information as possible. The idea is that there are many "dimensions" that are not necessary.
+In order to keep the maximum information, we aim to maximize the variance of the projected points. Suppose we wish to find the one dimension that is the most important. This means finding the single 
+unit vector \(\mathbf{u}\) that maximizes the variance. The variance comes out cleanly as
+\[
+    \mathbf{u^T S u}
+\]
+\noindent where \(\mathbf{S}\) is the covariance matrix of the data. To maximize this value we can use lagrange multipliers to maximize
+\[
+    \mathbf{u^T S u} - \lambda(\mathbf{u^T u} - 1)
+\]
+\noindent where we used the fact that \(\mathbf{u}\) is a unit vector to get the constraint \(\mathbf{u^T u} = 1\). Setting the derivative to 0, we have a stationary point at \(\mathbf{Su} = \lambda\mathbf{u}\),
+and rearranging gives us \(\mathbf{u^T S u} = \lambda\). So the variance is maximized when \(\mathbf{u}\) is eigenvector of \(\mathbf{S}\) with the largest eigenvalue. Additionally, because the covariance matrix 
+is symmetric and positive, all eigenvalues are positive and we are guaranteed to have D eigenvectors where D is the number of dimensions.
+\\
+\\
+\noindent Suppose we have a dataset of dimension D and we want to reduce it to K dimensions. Then we simply take the K largest eigenvectors, and then project the data onto the subspace spanned by those vectors
+\[
+    \mathbf{Z} = \mathbf{XW}
+\]
+where \(\mathbf{W}\) is the matrix of the K eigenvectors, \(\mathbf{X}\) is the original data matrix and \(\mathbf{Z}\) is the projected data. To properly determine the value of K, a good heuristic to use is the 
+explained variance ratio
+\[
+    \frac{\sum^K_{i = 1}\lambda_i}{\sum^D_{j = 1}\lambda_j}
+\]
+if a low value of K can explain a large percentage of the variance, then perhaps that value of K suffices. One can even plot the value of the ratio vs k and use the elbow method to determine the best value.
+\\
+\\
+\noindent While PCA is powerful, it comes with significant computational complexity. Computing the covariance matrix takes \(O(ND^2)\) time, and computing the eigenvectors takes \(O(D^3)\) time. For large datasets,
+this can be unweildy, though approximation methods such as randomized SVD can significantly redue time complexity to \(O(np\log(K))\). The space complexity is also an issue because the covariance matrix scales with
+\(D^2\), but this can also be worked around using mini batching. PCA might not be the best option for lower dimensional datasets because you risk losing a lot of variance/information when you reduce the dimensions.
 
+\subsection{K-Means Clustering}
 
 \section{Deep Learning}
 The need for more expressive machine learning models at the cost of interpretability underlies the development of deep learning models. Classical algorithms have high interpretability,
@@ -113,7 +190,7 @@ classify them in any way. For example, a linear model can shatter 3 points. Give
     \label{fig:my_image}
 \end{figure}
 \noindent Many classical algorithms have low or finite shattering capacity. This is very good not just for interpretability, but because we can actually put rigorous error bounds on how the model
-generalizes to unseen test data using VC Generalization Bounds. For very complicated tasks however, we would want more expressiveness but this usually entails a model with infinite VC dimension
+generalizes to unseen test data using VC Generalization Bounds. For very complicated tasks however, we would want more expressiveness but this usually entails a model VC dimension approaching infinity
 (finite shattering capacity is actually very restrictive), which means we lose PAC Learning and generalization bounds.   
 
 
@@ -139,12 +216,13 @@ the rectified linear unit
 \]
 
 \noindent A famous result is the universal approximation theorem. ANY continuous function can be approximated to any precision using only a shallow neural network (only 1 layer).
-So theoretically a neural network with 1 layer is enough for any task. 
+are the So theoretically a neural network with 1 layer is enough for any task. 
 \\
 \\
 However, for complex tasks, the number of hidden units in the single layer gets prohibitively large.
 It's actually better to instead of increasing the number of units, to construct more layers. Expressivity grows polynomially with hidden units per layer but exponentially with the number of hidden layers 
 (careful, this measure of expressivity is not the same as VC dimension, but the number of regions the network can partition in input space).
+\\
 
 \begin{figure}[h]
     \centering
@@ -152,7 +230,10 @@ It's actually better to instead of increasing the number of units, to construct 
     \label{fig:my_image}
 \end{figure}
 
+
 \noindent Pure neural networks have largely been replaced by later architectures. Many more advanced models are actually just subsets of these neural networks but with specific structures more tailored to the task.
+Neural networks can still be used for data that is very high dimensional and unstructured. For example, a recommender system trying to predict products its users might buy might use a neural network. The data is
+high dimensional (each product, user data, time of day etc) and also unstructured.
 
 
 \subsection{CNNs}
@@ -163,9 +244,25 @@ Convolutional neural networks were originally designed to classify image data, s
 of an image should be invariant under simple transformations such as rotation or translation. For example, an image of a cat should still be classified as a cat even if we shift or rotate it slightly.
 Secondly, image data is extremely high dimensional. A typical image with 224x224 RGB values has over 100,000 dimensions. A shallow network with only 2 layers would require over \(100,000^2 = 10 \) billion parameters.
 Thirdly, nearby pixels are highly related to each other. If we have a pixel of a cat's nose, the surrounding pixels are highly likely to be very similar.
+\\
+\\
 
+\noindent Using the idea that data should lie on a lower dimensional manifold, we have motivation to reduce the expressiveness (number of parameters) of our model while also taking into account the symmetries of 
+image data. 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{convolution.png}
+    \label{fig:my_image}
+\end{figure}
 
+\noindent Above is a schematic for how the layers in a CNN work. For each element \(z_i\) in the second layer, it only receives from \(x_{i-1}\), \(x_{i}\), and \(x_{i+1}\). All elements reuse the same weights \(w_1, w_2, w_3\). If for example,
+the 1D image is translated by a certain amount, then the output will be the same result just translated by the same amount. We can further tune the interactions between layers by adjusting the stride, kernel size and dilation:
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{stride.png}
+    \label{fig:my_image}
+\end{figure}
 
 
 
@@ -191,7 +288,7 @@ Take the sentence:
 \\
 \\
 \noindent The word "football" should have the same meaning whether its the first or last position. Having to make the first and last inputs both learn the meaning of the word "football" is a waste of information that could've been shared.
-These two reasons are the motivation behind the need to process data sequentially
+\\
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{rnn.png}
@@ -199,7 +296,7 @@ These two reasons are the motivation behind the need to process data sequentiall
     \label{fig:my_image}
 \end{figure}
 
-\noindent An example RNN is shown above. At each instance in time \(i\), this guy takes in an input vector \(\mathbf{x_i}\) and then spits out an output \(o_i\). For example, you could imagine this as 
+\noindent An example RNN is shown below. At each instance in time \(i\), this guy takes in an input vector \(\mathbf{x_i}\) and then spits out an output \(o_i\). For example, you could imagine this as 
 a device to predict the weather. Given the current temperature, humidity etc, predict whether its sunny, rainy, etc. A model that is trained on all the data at one time might learn to hardcode the weather, associating it
 with time dependence instead of actually using the features. An rnn takes this into account, and is forced to learn from the current "state" \(\mathbf{h_i}\) and current features \(\mathbf{x_i}\). 
 \\
@@ -226,6 +323,14 @@ which then multiplies the current hidden state to drop information
 how much of the previous state to use.
 \\
 \\
- 
+\noindent RNNs are obviously used for sequential data. Parameter sharing means they are data efficient, so they work well on smaller datasets, as there are a small number of parameters. Additionally, they are computationally 
+efficient at runtime because they only have to process the current input. However, when datasets get large, training times blow up quickly because of the afformentioned
+vanishing gradient problem. Even if the gradient decays by a small amount say, 0.99 due to gating, this compounds over long sequences. Over 10,000 steps this becomes \(0.99^{10,000} \approx 0.000043\). Addditionally, RNNs must be trained
+sequentially, which cannot be parallelized using GPUs. This is very slow and a lot of hardware just sits around doing nothing. Finally, because RNNs use very few parameters, it becomes difficult for them to fully capture the entire history over
+long sequences.
+
+\subsection{Transformers}
+
+\subsection{State Space Models}
 
 \end{document}
