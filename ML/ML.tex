@@ -37,7 +37,7 @@
 \newpage
 
 % main content
-\section{Classical ML}
+\section{Classical Machine Learning}
 \subsection{Linear Regression}
 Linear Regression is one of the most fundamental algorithms in machine learning. It is used to model the relationship between a dependent variable and one or more independent variables. 
 The goal of linear regression is to find the best-fitting line (or hyperplane in higher dimensions) that minimizes the sum of squared differences between the observed values and the predicted values.
@@ -102,7 +102,7 @@ to predict the probability it belongs to class \(C\). So we'd want the model to 
 \[
     y_n =\frac{1}{1 + e^{-\eta}}
 \]
-where \(\eta\) is also called the log odds \(\eta = \log\left(\frac{y_n}{1-y_n}\right)\). We want the log odds to be linear in our parameters for a couple reasons. One of which is to aid
+where \(\eta\) is also called the log odds \(\eta = \log\left(\frac{y_n}{1-y_n}\right) = \mathbf{w}^{T}\mathbf{x}\). We want the log odds to be linear in our parameters for a couple reasons. One of which is to aid
 in interpretability. The equation for the output is also called the sigmoid function, and it has several nice properties in that its differentiable and continuous everywhere.
 \\
 \\
@@ -122,25 +122,80 @@ already summed over all possible classes (just 2 in this case). For more clarifi
 \noindent Note that the logarithm is a monotonic function, so minimizing the negative logarithm is equivalent to maximizing the probability. Unlike linear regression, we must use gradient descent to optimize
 this because the presence of the sigmoid means there is no closed form solution.
 
+\iffalse
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.65\textwidth]{logistic.png}
     \label{fig:my_image}
 \end{figure}
-
-
-
+\fi
 
 \subsection{Perceptron}
+The perceptron is an example of a linear discriminant model. The idea is to produce the decision boundary distinguishing two classes.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/perceptron.png}
+    \label{fig:my_image}
+\end{figure}
+\\
+\\
+First we transform our input vector \( \mathbf{x} \) using a nonlinear transformation \( \psi(\mathbf{x}) \). After dotting with the weights 
+\( \mathbf{w} \) we send it through an activation function \( y(\mathbf{x}) = f(\mathbf{w}^{T} \psi(\mathbf{x})) \) where the activation function is 
+defined by
+
+\[ 
+    f(a) = \begin{cases}
+                +1 & a\geq 0 \\
+                -1 & a\leq0        
+            \end{cases} 
+\]
+
+\noindent The activation function treats the target value to be \( t = +1 \) for class \( C_{1} \) and \( t = -1 \) for class \( C_{2} \). A naive loss function
+can be the number of misclassified points, but this is a piecewise discontinuous function meaning the gradient is \( 0 \) everywhere. Instead, we use an error
+function known as the perceptron criterion. 
+\\
+\\
+\noindent Note that a perceptron that correctly predicts classes should have \( \mathbf{w}^{T}\phi(\mathbf{x_{n}})t_{n} > 0 \), so it makes sense to minimize the error
+function defined by
+
+\[ 
+    E_{p}(\mathbf{w}) = -\sum_{n \in M}\mathbf{w}^{T}\phi_{n}t_{n}  
+\]
+
+\noindent where \( M \) is the set of all misclassified points. The perceptron convergence theorem sates that if there exists an exact solution to correctly classify all points, then
+training will converge eventually. However, the amount of steps for convergence could be very high, and until convergence we don't know if an exact solution even exists. This means
+a dataset that takes a very long time to converge look like ones that will never converge, and we won't know unless we see it converge.
+\\
+\\
+\noindent Besides difficulty in convergence, a perceptron is only able to classify data that is linear in features. If the pattern is not a single line, the algorithm completely fails. 
+Additionally, it is only able to work on binary classification, and is not applicable for \( N > 2 \) classes. Finally, convergence occurs when it is able to classify all points properly
+but this does not guarantee extrapolating well on test data, as the decision boundary might be poor (doesn't try to minimize distance, maximize variance, etc).
+\\
+\\
+\noindent Perceptrons are incredibly important historically and underlies a tremendous amount of machine learning ideas today but there isn't really a reason to still use them. After all,
+we developed all these new algorithms for the purposes of \textit{solving} the issues of perceptrons.
+
 \subsection{Support Vector Machines}
+I don't actually know anything about Support Vector Machines, but I'm including them here anyways because they've been incredible important historically. The idea behind SVMs is that we aim to
+find a decision boundary perfectly separating the classes. Points that lie on this boundary are called support vectors and are the only ones that matter since they define the boundary. Because
+real data is rarely separable, the kernel trick is used to map data into a higher dimension where points are separable.
+\\
+\\
+\noindent SVMs work very well with extremely high dimensional data with few samples, ie small to medium scale datasets. An example is classifying texts, where there are far more words in a document
+then there are documents to analyze. However, if data is plentiful, then computation time becomes bottleneck as training scales between \( O(n^{2}) \) and \( O(n^{3}) \).
+
+
 \subsection{Principal Component Analysis}
 \noindent Many classical models suffer from the curse of dimensionality. What this means is that as the number of dimensions grow, the feature space becomes sparse in data. This means we need exponentially more data
 as the number of dimensions grow. However, data tends to lie on lower dimensional manifolds. The vast majority of points outside of the manifold are meaningless.
+
+\iffalse
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{pca.png}
     \label{fig:my_image}
 \end{figure}
+\fi
 
 \noindent Principal component analysis aims to reduce the dimensionality of data while retaining as much information as possible. The idea is that there are many "dimensions" that are not necessary.
 In order to keep the maximum information, we aim to maximize the variance of the projected points. Suppose we wish to find the one dimension that is the most important. This means finding the single 
@@ -174,6 +229,12 @@ this can be unweildy, though approximation methods such as randomized SVD can si
 \(D^2\), but this can also be worked around using mini batching. PCA might not be the best option for lower dimensional datasets because you risk losing a lot of variance/information when you reduce the dimensions.
 
 \subsection{K-Means Clustering}
+\noindent Suppose you have a dataset and \( k \) classes you know you need to classify each point into. The idea behind K-means is to assign each class \( i \) to a point \( \mathbf{r}_{i} \), and every point that is closesest
+to \( \mathbf{r}_{i} \) becomes assigned to class \( i \). We define an error function as the total square distance each point is from its class, and our objective is to minimize this function. I again am not very familiar with
+K-means so much of the mathematical detail is left out, however K-means is guaranteed to converge, though convergence can be slow.
+
+\noindent K-means work if you know your data is roughly circular/spherical in feature space, and your features are continuous. It also helps if you already know the size of k in advance. On the other hand, k-means struggles 
+when it comes to high dimensional data, especially when data becomes sparse. 
 
 \section{Deep Learning}
 The need for more expressive machine learning models at the cost of interpretability underlies the development of deep learning models. Classical algorithms have high interpretability,
@@ -183,25 +244,33 @@ effectively use them, which can be a hopelessly complicated task in the case of,
 \\
 Very loosely speaking, we can quantify the "expressiveness" of a model by the number of points it can "shatter." This means that given a set of points, the model can be trained to perfectly
 classify them in any way. For example, a linear model can shatter 3 points. Given any 3 points we can find a line that perfectly classifies them.
+\iffalse
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{shatter.png}
     \caption{A linear model can only shatter 3 points.}
     \label{fig:my_image}
 \end{figure}
+\fi
 \noindent Many classical algorithms have low or finite shattering capacity. This is very good not just for interpretability, but because we can actually put rigorous error bounds on how the model
 generalizes to unseen test data using VC Generalization Bounds. For very complicated tasks however, we would want more expressiveness but this usually entails a model VC dimension approaching infinity
 (finite shattering capacity is actually very restrictive), which means we lose PAC Learning and generalization bounds.   
-
+\\
+\\
+\noindent In reality, PAC Learning as a way to bound test error is actually near useless as the bounds are usually vacuous since it accounts for all possible data distributions. There are several newer ways to 
+model generalizability (such as Rademacher Complexity, PAC-Bayes) and this subject is an active research field. However all of these algorithms still face the same issues with modern deep learning architectures;
+as parameter size blows up, the bounds become increasingly vacuous, or in some cases, it's impossible to even find a result!
 
 
 \subsection{Neural Networks}
+\iffalse
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{nn.png}
     \caption{Shallow Neural Network.}
     \label{fig:my_image}
 \end{figure}
+\fi
 
 \noindent The basic unit of a neural network is a perceptron. Each perceptron is equipped with a weight vector \(\mathbf{w}\) and a bias \(b\). An input vector \(\mathbf{x}\) is fed into the perceptron, 
 which computes the dot product \(\mathbf{w} \cdot \mathbf{x} + b\). Finally, the perceptron passes this through an activation function before sending the output further through the network. The activation
@@ -224,12 +293,13 @@ It's actually better to instead of increasing the number of units, to construct 
 (careful, this measure of expressivity is not the same as VC dimension, but the number of regions the network can partition in input space).
 \\
 
+\iffalse
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{dnn.png}
     \label{fig:my_image}
 \end{figure}
-
+\fi
 
 \noindent Pure neural networks have largely been replaced by later architectures. Many more advanced models are actually just subsets of these neural networks but with specific structures more tailored to the task.
 Neural networks can still be used for data that is very high dimensional and unstructured. For example, a recommender system trying to predict products its users might buy might use a neural network. The data is
@@ -249,21 +319,37 @@ Thirdly, nearby pixels are highly related to each other. If we have a pixel of a
 
 \noindent Using the idea that data should lie on a lower dimensional manifold, we have motivation to reduce the expressiveness (number of parameters) of our model while also taking into account the symmetries of 
 image data. 
+\iffalse
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{convolution.png}
     \label{fig:my_image}
 \end{figure}
+\fi
 
-\noindent Above is a schematic for how the layers in a CNN work. For each element \(z_i\) in the second layer, it only receives from \(x_{i-1}\), \(x_{i}\), and \(x_{i+1}\). All elements reuse the same weights \(w_1, w_2, w_3\). If for example,
+\noindent Above is a schematic for how the convolution layers in a CNN work. For each element \(z_i\) in the second layer, it only receives from \(x_{i-1}\), \(x_{i}\), and \(x_{i+1}\). All elements reuse the same weights \(w_1, w_2, w_3\). If for example,
 the 1D image is translated by a certain amount, then the output will be the same result just translated by the same amount. We can further tune the interactions between layers by adjusting the stride, kernel size and dilation:
 
+\iffalse
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{stride.png}
     \label{fig:my_image}
 \end{figure}
-
+\fi
+\noindent If a CNN were to be built like this, obviously there would be some information being lost so we introduce the idea of multiple channels.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/cnns.png}
+    \label{fig:my_image}
+\end{figure}
+We have additional sets of hidden layers equipped with its own weights. A very common exercise is to use a CNN to classify the MNIST dataset of handwritten numbers from 0-9. Despite having less parameters than a traditionnal neural network, the 
+CNN is able to extrapolate much better to the test data, despite training slower.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/mnist.png}
+    \label{fig:my_image}
+\end{figure}
 
 
 \subsection{RNNs}
@@ -289,13 +375,14 @@ Take the sentence:
 \\
 \noindent The word "football" should have the same meaning whether its the first or last position. Having to make the first and last inputs both learn the meaning of the word "football" is a waste of information that could've been shared.
 \\
+\iffalse
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{rnn.png}
     \caption{Example RNN Architecture.}
     \label{fig:my_image}
 \end{figure}
-
+\fi
 \noindent An example RNN is shown below. At each instance in time \(i\), this guy takes in an input vector \(\mathbf{x_i}\) and then spits out an output \(o_i\). For example, you could imagine this as 
 a device to predict the weather. Given the current temperature, humidity etc, predict whether its sunny, rainy, etc. A model that is trained on all the data at one time might learn to hardcode the weather, associating it
 with time dependence instead of actually using the features. An rnn takes this into account, and is forced to learn from the current "state" \(\mathbf{h_i}\) and current features \(\mathbf{x_i}\). 
@@ -329,8 +416,39 @@ vanishing gradient problem. Even if the gradient decays by a small amount say, 0
 sequentially, which cannot be parallelized using GPUs. This is very slow and a lot of hardware just sits around doing nothing. Finally, because RNNs use very few parameters, it becomes difficult for them to fully capture the entire history over
 long sequences.
 
-\subsection{Transformers}
-
-\subsection{State Space Models}
+\section{Extra}
+\subsection{More Models}
+Gated RNNs dominated deep learning for decades until the attention mechanism was created in 2015. The landmark paper "Attention is All You Need" in 2017 completely replaced recurrence with self-attention, giving rise to the transformer.
+Again, I don't really know much about transformers but I don't believe they will be too relevant for our tasks. Transformers generally require a tremendous amount of training data and large compute times both during training and at runtime.
+Nevertheless, transformers seem to have dominated deep learning for the last 10 years for how well they handle natural language processing.
+\\
+\\
+State space models are currently an interesting alternative to transformers and are more of an optimized RNN. They maintain a hidden state and update based off their old hidden state and the current input using matrix transformations. The newest model,
+Mamba updates its matrices based off of inputs, which helps it remember important tokens while forgetting irrelevant ones. The main benefit over attention is that attention requires \( O(N^{2}) \) where \( N \) is the sequence length, while like RNNs,
+state space models process in \( O(N) \). 
+\\
+\\
+There are many important models that haven't been covered here. Decision trees process data starting from the node of a tree, and then traversing through sequential branches depending on the features. A single tree usually isn't descriptive enough so
+instead one could use forests (ensembles of trees) to be more expressive. 
+\\
+\\
+There are also a variety of generative models that I've left out here, since they aren't necessarily too related with the task. GANs have two neural networks running against each other, one producing data while the other attempts to distinguish 
+it from real data. Autoencoders work by compressing input data into lower dimensions, and then attemping to reconstruct it. This way, it learns to discard noise and only learn the important features. I'll be on the lookout for any models that would
+suit our data particularly well once I have a look at it. 
+\\
+\subsection{Paradigm Shift}
+You might've also noticed that as the models get newer, theory becomes more and and more sparse. For classical algorithms, we have deep theories on trainability, convergence, the existence of solutions and test error bounds. They also tend to be 
+quite interpretable qualitatively. For deep learning algorithms, the answer to all of these questions are ``we dont know!" The field of machine learning had a paradigm shift around the 2010s, when computing power caught up to deep learning algorithms, and
+we found out that despite being mathematically elegant, classical algorithms lost out to powerful, yet uninterpretable models. One big turning point was when AlexNet, a CNN achieved a top result in the 2012 ImageNet competition, beating out classical models.
+\\
+\\
+The truth is, vacuous theoretical bounds just aren't that useful to most people, which is why empirical progress has been so rapid. Cross validation is usually good enough to guess generalizability in most cases for most people.
+For example, if you were recommending certain advertisements to people on youtube, the price of being wrong is almost
+nothing, so there is no reason why bounds will matter to you. Meanwhile, in the medical field, a cross validation score simply isn't strong enough. For example, if your machine learning algorithm is mathematically bound to have at most 10\% error in recommending
+dosage for a certain drug, which you know is still safe, then that is important information.
+\\
+\\
+For any machine learning algorithm, while test accuracy and cross validation is usually ``good enough'' for most cases, in high stakes situations the interpretability vs accuracy tradeoff is a real concern. Or if we can't even bound error to a non-vacuous amount,
+we should ask ourselves if it's even acceptible to use machine learning in this case!
 
 \end{document}
