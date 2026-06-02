@@ -73,21 +73,24 @@ Potential sources to consult in the future:
 \newpage
 
 % main content
-\section{Tensors}
+\section{Preliminaries}
 
-\subsection{Tensor Analysis}
+\subsection{Coordinate Transformations}
 First, we'll briefly recap special relativity using index notation. 
     \begin{itemize}
         \item Let's define a four vector \( x^{\mu} \) where \( x^{0} \) is the temporal component and \( x^{i} \) (\( i \neq 0 \)) are the spacial coordinates.
         In these notes, we'll write the representation of a vector in coordinate transformation as \( x^{\mu'} \) (each source has     their own convention). 
         
         \item  The matrix to transform the vector \( x^{\nu} \) into the new primed coordinates is
-        \( x^{\mu'} = \Lambda^{\mu'}_\nu x^{\nu}\). We are using the Einstein convention where summations over repeated indices drop
-        the \( \Sigma \).
+        \[ 
+            x^{\mu'} = \Lambda^{\mu'}{}_\nu x^{\nu}
+        \]
+        An object that transforms like vector components is said to transform \textbf{contravariantly}. Note we are using the Einstein convention where summations over repeated indices drop
+        the \( \Sigma \). 
     
         \item A Lorentz Transformation is one that keeps the spacetime interval constant and fix the origin so this requires \( \eta = \Lambda^{T} \eta \Lambda \). In index notation, this is:
         \[ 
-            \eta_{\alpha \beta} = \Lambda^{\mu'}_{\alpha} \Lambda^{{\nu'}}_{\beta}\eta_{\mu' \nu'}
+            \eta_{\alpha \beta} = \Lambda^{\mu'}{}_{\alpha} \Lambda^{{\nu'}}{}_{\beta}\eta_{\mu' \nu'}
         \]
         Note that when writing the equation using matrices, the order is important because of the limitations of matrix multiplication. However, the order is irrelevant
         in index notation. These matrices are \textbf{Lorentz Transformations} and are elements of the \textbf{Lorentz Group}.
@@ -99,7 +102,7 @@ First, we'll briefly recap special relativity using index notation.
         \item Lorentz transformations come in two forms: rotations and boosts. Below is an example of a boost in the x direction:
 
         \[ 
-            \Lambda^{\mu'}_{\nu'} = 
+            \Lambda^{\mu'}{}_{\nu'} = 
             \begin{pmatrix}
             \cosh \phi & -\sinh \phi & 0 & 0 \\
             -\sinh \phi & \cosh \phi & 0 & 0 \\
@@ -113,7 +116,6 @@ First, we'll briefly recap special relativity using index notation.
         \[ 
             t' = \gamma(t - vx) 
         \]
-        
         \[ 
             x' = \gamma(x - vt) 
         \]
@@ -129,12 +131,92 @@ First, we'll briefly recap special relativity using index notation.
 
 \noindent Now we'll take a look at how vectors and their components transform under a change of coordinates.
     \begin{itemize}
-        \item Suppose in an arbitrary vector space we have a basis of vectors \( \hat{e}_{\mu} \)
+        \item Suppose in an arbitrary vector space we have a basis of vectors \( \hat{e}_{\mu} \). Then any arbitrary vector can be written as \( A = A^{\mu}\hat{e}_{\mu} \) where \( A^{\mu} \) are the components
+        of the vector. Often we will just call \( A^{\mu} \) the vector for shorthand. 
+
+        \item An example is the tangent vector \( V^{\mu} = \frac{dx^{\mu}}{d\lambda} \). Under a lorentz transformation the components change by \( \frac{dx^{\mu'}}{dx^{\mu}} \) by the chain rule so the components
+        transform as \( V^{\mu} \rightarrow V^{\mu'} = \Lambda^{\mu'}{}_\nu V^{\nu}\) but the vector itself is invariant under transformation. So we must have 
+        \(V^{\mu}\hat{e}_{\mu} = V^{\nu'}\hat{e}_{\nu'} = \Lambda^{\nu'}{}_\mu V^{\mu}\hat{e}_{\nu'} \). But this must hold for any vector no matter the components so we must have 
+        \( \hat{e}_{\mu} = \Lambda^{\nu'}{}_\mu \hat{e}_{\nu'} \). This means basis vectors transform opposite to their components.
+
+        \item Note that applying a transformation and then its inverse should result in the identity. In index notation, this means \(  \Lambda^{\mu}{}_{\nu'} \Lambda^{\nu'}{}_{\rho} = \delta^{\mu}_\rho \)
+
+        \item We can define a vector space dual to our previous vector space, which is the set of all linear maps from the original vector space to \( \mathbb{R} \). We can write a set of basis dual vectors as 
+        \( \hat{\theta}^{{\nu}}(\hat{e}_{\mu}) = \delta^{\nu}_\mu \). Then every dual vector can be written in component form \( \omega = \omega_{\mu}\hat{\theta}^{\mu}. \) (we also refer to dual vectors as "1-forms").
+
+        \item The components of dual vectors transform like basis vectors (that is, inverse to vector components) 
+        \[ 
+            \omega_{\mu'} = \Lambda^{\nu}{}_{\mu'}\omega_{\nu} 
+        \]
+        An object that transforms like this is said to transform \textbf{covariantly}. Meanwhile, dual basis vectors transform like
+        vector components \( \hat{\theta}^{\rho'} = \Lambda^{\rho'}{}_{\sigma}\hat{\theta}^{\sigma} \). The key takeaway is that the location of the index tells us how the object transforms. Upper index transform like vector
+        components, while lower transforms inverse to that. Accordingly, scalars are invariant under transformation.
+
+        \item An example is the gradient, with components \( \frac{\partial }{\partial x^{\mu}} \). Under transformation, this becomes 
+        \(\frac{\partial }{\partial x^{\mu'}} = \frac{\partial x^{\mu}}{\partial x^{\mu'}} \frac{\partial }{\partial x^{\mu}} \) by the chain rule, but this is equivalent to just \( \Lambda^{\mu}{}_{\mu'}\frac{\partial}{\partial x^{\mu}} \).
+        Since the gradient is a dual vector, we tend to write it with lower index as \( \partial_{\mu} \).
+
     \end{itemize}
 
+\subsection{Tensor Analysis}
+\noindent A tensor is a multilinear map of dual vectors and vectors to \( \mathbb{R} \). For example, \( T(a\omega, cV) = acT(\omega, V) \).
+A tensor that takes in \( k \) vectors and \( l \) dual vectors is a type \( (k, l) \) tensor. It's easy to see that scalars are \( (0,0) \) tensors
+and vectors and dual vectors are \( (1, 0) \) and \( (0, 1) \) tensors accordingly. Some important facts about tensors:
 
-\subsection{Connection}
-\subsection{Curvature}
+\begin{itemize}
+    \item Suppose \( T \) is a \( (k,l) \) tensor and \( S \) is a \( (m,n) \) tensor, Then we define the tensor product 
+    \[ T \otimes S(\omega^{1}, \ldots \omega^{k+m}, V^{1}, \ldots, V^{l+n} ) = \]
+    \[ T(\omega^{1},\ldots, \omega^{k}, V^{1}, \ldots, V^{l}) \times S(\omega^{k+1}, \ldots, w^{k+m}, V^{l+1}, \ldots V^{l+n}) \]
+    \noindent In general, the tensor product does not commute. 
+
+    \item In index notation, we can write \( T \) as Then in index notation, we can write it as \( T^{\mu_{1}\ldots \mu_{k}}{}_{\nu_{1}\ldots \nu^{l}} \). The basis for the vector space \( T \)
+    resides in can be expressed with basis \( \hat{e}_{\mu_{1}} \otimes \ldots \otimes \hat{e}_{\mu_{k}} \otimes \hat{\theta}^{\nu_{1}} \otimes \ldots \otimes \hat{\theta}^{\nu_{l}} \). The components can be found by acting
+    the tensor \( T \) on the basis vectors and dual vectors. 
+
+    \item \( T \) transforms \( k \) times contravariantly and \( l \) times covariantly: 
+    \[ T^{\mu'_1 \cdots \mu'_k}{}_{\nu'_1 \cdots \nu'_l} = \Lambda^{\mu'_1}{}_{\mu_1} \cdots \Lambda^{\mu'_k}{}_{\mu_k} \Lambda^{\nu_1}{}_{\nu'_1} \cdots \Lambda^{\nu_l}{}_{\nu'_l} T^{\mu_1 \cdots \mu_k}{}_{\nu_1 \cdots \nu_l}. \]
+
+    \item We can contract a vector by summing over a repeated upper and lower index. With this, we can use the metric to raise and lower indices: \( \eta_{\alpha \beta} T^{\alpha} = T_{\beta} \)
+    and \( \eta^{\alpha \beta}T_{\alpha} = T^{\beta} \). This is how you would convert a vector to its dual form and vice versa. In euclidean space, the metric is its own inverse so the gradient is actually both a vector and 1-form at the same time.
+
+    \item A \textbf{symmetric} tensor is one where any change of indices leaves the tensor unchanged. For example, if \( S_{\mu \nu \rho} = S_{\nu \mu \rho} \) then we say \( S \) is symmetric in the first two indices. A tensor is \textbf{antisymmetric}
+    if it changes sign when indices are changed. \( A_{\mu \nu \rho} = -A_{\nu \mu \rho} \) is antisymmetric in its first two indices.
+
+    \item Symmetric and antisymmetric tensors are very useful in that the contraction of a symmetric and antisymmetric tensor along the corresponding indices is always 0. The symmetric part is \( T_{(\mu\nu)} = \frac{1}{2}(T_{\mu \nu} + T_{\nu \mu}) \) and
+    the antisymmetric part is \( T_{[\mu \nu]} = \frac{1}{2}(T_{\mu \nu} - T_{\nu \mu}) \). We sometimes want to exclude indices from being symmetrized or antisymmetrized so we use the vertical bars. For example, to write the antisymmetrized \( R_{\alpha \beta \gamma \delta} \) 
+    in only the first and third indices we use \( R_{[\alpha |\beta| \gamma] \delta} = \frac{1}{2}(R_{\alpha \beta \gamma \delta} - R_{\gamma \beta \alpha \delta})\)
+
+    \item For a \( (1,1) \) tensor, we write the trace by leaving off the indices (just the contraction along the repeated index) 
+    \[ 
+        X = X^{\mu}{}_{\mu} 
+    \]
+    We can similarly define the trace of a \( (0,2) \) or \( (2,0) \) tensor by raising/lowering into a \( (1,1) \) tensor and then contracting. Note that in this case, the trace is not just the naive sum over the diagonal; the components change when raising/lowering
+    the index. The reason behind this is because the sum over the diagonal is not a true scalar; ie it's not invariant under coordinate transform.
+
+\end{itemize}
+
+\noindent \textbf{Example.} The metric tensor \( \eta_{\mu \nu} \) is a \( (0,2) \) tensor that takes in two vectors and outputs a scalar. The metric acting on two vectors returns the inner product
+\[ 
+     \eta(V,W) = \eta_{\mu \nu} V^{\mu}W^{\nu} = V \cdot W
+\]
+
+\noindent Properties of the inner product should be familiar. Two vectors are orthogonal if their inner product is 0. Note that because the inner product is a scalar, it's invariant under Lorentz transformations. This means that the cartesian
+basis is always orthogonal under Lorentz transformation. 
+\\
+
+\noindent Additionally, the norm, or "length" of a vector is defined by its inner product with itself \( \eta_{\mu \nu}V^{\mu}V^{\nu} \). Unlike in Euclidean space, there is no restriction for the norm to be strictly positive. A positive
+norm is \textbf{spacelike}, a negative norm is \textbf{timelike} and 0 is \textbf{lightlike} or null. 
+\\
+
+\noindent \textbf{Example.} The Kroneker delta \( \delta^{\mu}{}_\nu \) is a \( (1,1) \) tensor. It inputs a vector and a dual vector and outputs a scalar, but can also be thought of as a map from dual vectors to dual vectors and vectors to vectors.
+In this framing, the Kroneker delta is just the identity map. We can define the inverse metric \( \eta^{\mu \nu} \)as satisfying the property
+\[ 
+    \eta^{\mu \nu} \eta_{{\nu \rho}} = \eta_{\rho \nu}^{\nu \mu} = \delta^{\mu}{}_{\rho}
+\]
+
+
+
+
 
 
 
