@@ -173,11 +173,12 @@
 \let\div\relax                    % divergence, not division
 \newcommand{\div}{\nabla \cdot}
 
-\usepackage{etoolbox} % remove extra spacing around colons, for functions
-\DeclareMathSymbol{\newordinarycolon}{\mathord}{operators}{"3A} % set up ordinary colon
-\patchcmd{\colon}{:}{\newordinarycolon}{}{} % remove : in definition of \colon to avoid infinite loop
-\begingroup\lccode`~=`: \lowercase{\endgroup\let~}\colon % turn : into \colon
-\AtBeginDocument{\mathcode`:="8000 } % make : math active
+\DeclareMathSymbol{\newordinarycolon}{\mathord}{operators}{"3A}
+\AtBeginDocument{%
+  \mathcode`:="8000
+  \begingroup\lccode`~=`:\relax
+  \lowercase{\endgroup\def~}{\newordinarycolon}%
+}
 
 % algebra commands
 \newcommand{\union}{\cup}

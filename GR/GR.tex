@@ -248,10 +248,41 @@ photon from one box to the other, the photon reaches the second box at time \(\D
 \[
     \frac{\Delta\lambda}{\lambda} = \frac{az}{c^2}
 \]
-We can expect then, that in a uniform gravitational field with same magnitude, we should observe the same redshift. 
+We can expect then, that in a uniform gravitational field with same magnitude, we should observe the same redshift, which experiments have verified. A photon travelling down a gravitational field is redshifted after reflection.
+
 
 \subsection{Manifolds}
+Intuitively, a manifold is a space that locally looks Euclidean, ie looks like \( \mathbb{R}^{n} \). By ``looking Euclidean," we don't necessarily need the metric to be Euclidean, rather functions and coordinates work like they should normally. In this case, we call the dimension of
+the manifold \( n \).
+\\
+\\
+\( \mathbb{R}^{n} \) is obviously a manifold because it looks like \( \mathbb{R}^{n} \) not only locally, but globally. A sphere is of dimension \( 2 \) because locally, it looks like \( \mathbb{R}^{2} \). Meanwhile, a line conected perpendicular to a plane is not a manifold, because the 
+dimension is not well defined. A cone is a manifold, however there is a singularity at the tip. Manifolds can be differentiable, but the cone has a problem at the tip, so its not a differentiable manifold. There sphere is more well behaved, so we say it's differentiable.
+\\
+\\
+While the description of a manifold does seem intuitive, we need some heavy lifting to be able to define it more rigorously.
+\begin{itemize}
+    \item Let \( \phi \colon \mathbb{R}^{m} \rightarrow \mathbb{R}^{n} \) be a map of sets. We say \( \phi \) is \( C^{p} \) if the \textit{p}th derivative exists and is continuous. If a map is \( C^{\infty} \) then it is \textbf{smooth}.
+    
+    \item We say sets \( M \) and \( N \) are \textbf{diffeomorphic} if there exists a \( C^{\infty} \) map \( \phi \colon M \rightarrow N \) with inverse \( \phi^{-1} \colon N \rightarrow M \) that is also \( C^{\infty} \).
+    
+    \item An \textbf{open ball} is the set of all points \( x \) in \( \mathbb{R}^{n} \) such that \( |x - y| < r \) for some \( y \in \mathbb{R}^{n} \) and \( r \in \mathbb{R} \), where \( |x - y| \) is defined by the euclidean distance \( [\sum_{i}(x^{i} - y^{i})^{2}]^{1 / 2} \). Any open set
+    in \( \mathbb{R}^{n} \) can be constructed by the union of open balls. 
+    
+    \item A \textbf{chart} is a subset \( U \) of some set \( M \) equipped with a one to one map \( \phi \colon U \rightarrow \mathbb{R}^{n} \) such that the image of \( \phi(U) \) is open in \( \mathbb{R}^{n} \). We can then say \( U \) is an open set in \( M \). A chart is like a coordinate system,
+    we're able to describe any point in \( \mathbb{R}_{n} \) using elements in some abstract set.
+    
+    \item An \textbf{atlas} is a collection of charts \( \{(U_{\alpha}, \phi_{\alpha})\}  \) that satisfies two conditions. First, the union of \( U_{\alpha} \) is \( M \). Second, if any two charts overlap, \( U_{\alpha} \cap U_{\beta} \neq 0\), then the map \( \phi_{\alpha} \dot \phi_{\beta}^{-1} \)
+    maps \( \phi_{beta}(U_{\alpha} \cap U_{\beta}) \subset \mathbb{R}^{n} \) onto an open set \( \phi(U_{\alpha} \cap U_{\beta}) \subset \mathbb{R}^{n} \), where all of these maps are \( C^{\infty} \). This second condition is a way to say the charts are smoothly ``sewn together.'' If there exists
+    two different coordinate systems for the same points, then transitioning between them is smooth and well defined. This allows us to describe smoothness for functions, take derivatives etc, and their behavior shouldn't depend on the coordinate system. 
 
+    \item A \textbf{manifold} is a set \( M \) with a maximal atlas; meaning it contains every possible chart. This requirement is important, as two different atlas corresopnding to the same space shouldn't be different manifolds.
+\end{itemize}
+
+\noindent \textbf{Example.} Consider \( S^{1} \). The conventional coordinate system using angles \( \theta \colon S^{1} \rightarrow \mathbb{R} \) runs into a problem. If we include either \( \theta = 0 \) or \( \theta = 2\pi\) then we have a closed interval. But if we exclude both,
+we haven't covered the whole circle. So we need at least two charts to cover the circle.
+
+\section{Riemmannian Geometry}
 
 \section{Gravitation}
 
