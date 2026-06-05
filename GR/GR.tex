@@ -157,63 +157,7 @@ First, we'll briefly recap special relativity using index notation.
         Since the gradient is a dual vector, we tend to write it with lower index as \( \partial_{\mu} \).
 
     \end{itemize}
-
-\subsection{Tensor Analysis}
-\noindent A tensor is a multilinear map of dual vectors and vectors to \( \mathbb{R} \). For example, \( T(a\omega, cV) = acT(\omega, V) \).
-A tensor that takes in \( k \) vectors and \( l \) dual vectors is a type \( (k, l) \) tensor. It's easy to see that scalars are \( (0,0) \) tensors
-and vectors and dual vectors are \( (1, 0) \) and \( (0, 1) \) tensors accordingly. Some important facts about tensors:
-
-\begin{itemize}
-    \item Suppose \( T \) is a \( (k,l) \) tensor and \( S \) is a \( (m,n) \) tensor, Then we define the tensor product 
-    \[ T \otimes S(\omega^{1}, \ldots \omega^{k+m}, V^{1}, \ldots, V^{l+n} ) = \]
-    \[ T(\omega^{1},\ldots, \omega^{k}, V^{1}, \ldots, V^{l}) \times S(\omega^{k+1}, \ldots, w^{k+m}, V^{l+1}, \ldots V^{l+n}) \]
-    \noindent In general, the tensor product does not commute. 
-
-    \item In index notation, we can write \( T \) as Then in index notation, we can write it as \( T^{\mu_{1}\ldots \mu_{k}}{}_{\nu_{1}\ldots \nu^{l}} \). The basis for the vector space \( T \)
-    resides in can be expressed with basis \( \hat{e}_{\mu_{1}} \otimes \ldots \otimes \hat{e}_{\mu_{k}} \otimes \hat{\theta}^{\nu_{1}} \otimes \ldots \otimes \hat{\theta}^{\nu_{l}} \). The components can be found by acting
-    the tensor \( T \) on the basis vectors and dual vectors. 
-
-    \item \( T \) transforms \( k \) times contravariantly and \( l \) times covariantly: 
-    \[ T^{\mu'_1 \cdots \mu'_k}{}_{\nu'_1 \cdots \nu'_l} = \Lambda^{\mu'_1}{}_{\mu_1} \cdots \Lambda^{\mu'_k}{}_{\mu_k} \Lambda^{\nu_1}{}_{\nu'_1} \cdots \Lambda^{\nu_l}{}_{\nu'_l} T^{\mu_1 \cdots \mu_k}{}_{\nu_1 \cdots \nu_l}. \]
-
-    \item We can contract a vector by summing over a repeated upper and lower index. With this, we can use the metric to raise and lower indices: \( \eta_{\alpha \beta} T^{\alpha} = T_{\beta} \)
-    and \( \eta^{\alpha \beta}T_{\alpha} = T^{\beta} \). This is how you would convert a vector to its dual form and vice versa. In euclidean space, the metric is its own inverse so the gradient is actually both a vector and 1-form at the same time.
-
-    \item A \textbf{symmetric} tensor is one where any change of indices leaves the tensor unchanged. For example, if \( S_{\mu \nu \rho} = S_{\nu \mu \rho} \) then we say \( S \) is symmetric in the first two indices. A tensor is \textbf{antisymmetric}
-    if it changes sign when indices are changed. \( A_{\mu \nu \rho} = -A_{\nu \mu \rho} \) is antisymmetric in its first two indices.
-
-    \item Symmetric and antisymmetric tensors are very useful in that the contraction of a symmetric and antisymmetric tensor along the corresponding indices is always 0. The symmetric part is \( T_{(\mu\nu)} = \frac{1}{2}(T_{\mu \nu} + T_{\nu \mu}) \) and
-    the antisymmetric part is \( T_{[\mu \nu]} = \frac{1}{2}(T_{\mu \nu} - T_{\nu \mu}) \). We sometimes want to exclude indices from being symmetrized or antisymmetrized so we use the vertical bars. For example, to write the antisymmetrized \( R_{\alpha \beta \gamma \delta} \) 
-    in only the first and third indices we use \( R_{[\alpha |\beta| \gamma] \delta} = \frac{1}{2}(R_{\alpha \beta \gamma \delta} - R_{\gamma \beta \alpha \delta})\)
-
-    \item For a \( (1,1) \) tensor, we write the trace by leaving off the indices (just the contraction along the repeated index) 
-    \[ 
-        X = X^{\mu}{}_{\mu} 
-    \]
-    We can similarly define the trace of a \( (0,2) \) or \( (2,0) \) tensor by raising/lowering into a \( (1,1) \) tensor and then contracting. Note that in this case, the trace is not just the naive sum over the diagonal; the components change when raising/lowering
-    the index. The reason behind this is because the sum over the diagonal is not a true scalar; ie it's not invariant under coordinate transform.
-
-\end{itemize}
-
-\noindent \textbf{Example.} The metric tensor \( \eta_{\mu \nu} \) is a \( (0,2) \) tensor that takes in two vectors and outputs a scalar. The metric acting on two vectors returns the inner product
-\[ 
-     \eta(V,W) = \eta_{\mu \nu} V^{\mu}W^{\nu} = V \cdot W
-\]
-
-\noindent Properties of the inner product should be familiar. Two vectors are orthogonal if their inner product is 0. Note that because the inner product is a scalar, it's invariant under Lorentz transformations. This means that the cartesian
-basis is always orthogonal under Lorentz transformation. 
-\\
-
-\noindent Additionally, the norm, or "length" of a vector is defined by its inner product with itself \( \eta_{\mu \nu}V^{\mu}V^{\nu} \). Unlike in Euclidean space, there is no restriction for the norm to be strictly positive. A positive
-norm is \textbf{spacelike}, a negative norm is \textbf{timelike} and 0 is \textbf{lightlike} or null. 
-\\
-
-\noindent \textbf{Example.} The Kroneker delta \( \delta^{\mu}{}_\nu \) is a \( (1,1) \) tensor. It inputs a vector and a dual vector and outputs a scalar, but can also be thought of as a map from dual vectors to dual vectors and vectors to vectors.
-In this framing, the Kroneker delta is just the identity map. We can define the inverse metric \( \eta^{\mu \nu} \)as satisfying the property
-\[ 
-    \eta^{\mu \nu} \eta_{{\nu \rho}} = \eta_{\rho \nu}^{\nu \mu} = \delta^{\mu}{}_{\rho}
-\]
-
+\noindent We'll later generalize this idea of transformation under change of coordinates to any transformation, not just Lorentz transformations.
 
 \subsection{Equivalence Principles}
 The equivalence principles are important in that they describe gravity is a property of spacetime's geometry, not the result of any additional field.
@@ -272,7 +216,7 @@ While the description of a manifold does seem intuitive, we need some heavy lift
     \item A \textbf{chart} is a subset \( U \) of some set \( M \) equipped with a one to one map \( \phi \colon U \rightarrow \mathbb{R}^{n} \) such that the image of \( \phi(U) \) is open in \( \mathbb{R}^{n} \). We can then say \( U \) is an open set in \( M \). A chart is like a coordinate system,
     we're able to describe any point in \( \mathbb{R}_{n} \) using elements in some abstract set.
     
-    \item An \textbf{atlas} is a collection of charts \( \{(U_{\alpha}, \phi_{\alpha})\}  \) that satisfies two conditions. First, the union of \( U_{\alpha} \) is \( M \). Second, if any two charts overlap, \( U_{\alpha} \cap U_{\beta} \neq 0\), then the map \( \phi_{\alpha} \dot \phi_{\beta}^{-1} \)
+    \item An \textbf{atlas} is a collection of charts \( \{(U_{\alpha}, \phi_{\alpha})\}  \) that satisfies two conditions. First, the union of \( U_{\alpha} \) is \( M \). Second, if any two charts overlap, \( U_{\alpha} \cap U_{\beta} \neq 0\), then the map \( \phi_{\alpha} \phi_{\beta}^{-1} \)
     maps \( \phi_{beta}(U_{\alpha} \cap U_{\beta}) \subset \mathbb{R}^{n} \) onto an open set \( \phi(U_{\alpha} \cap U_{\beta}) \subset \mathbb{R}^{n} \), where all of these maps are \( C^{\infty} \). This second condition is a way to say the charts are smoothly ``sewn together.'' If there exists
     two different coordinate systems for the same points, then transitioning between them is smooth and well defined. This allows us to describe smoothness for functions, take derivatives etc, and their behavior shouldn't depend on the coordinate system. 
 
@@ -281,8 +225,190 @@ While the description of a manifold does seem intuitive, we need some heavy lift
 
 \noindent \textbf{Example.} Consider \( S^{1} \). The conventional coordinate system using angles \( \theta \colon S^{1} \rightarrow \mathbb{R} \) runs into a problem. If we include either \( \theta = 0 \) or \( \theta = 2\pi\) then we have a closed interval. But if we exclude both,
 we haven't covered the whole circle. So we need at least two charts to cover the circle.
+\\
+
+\subsection{Tensor Analysis}
+\noindent Now we'll describe tensors on manifolds. Unlike in flat space, vectors can't be freely moved around, so it makes more sense to describe them as associated with a single point. On a manifold, the set of all vectors associated with a single point is the tangent space to that point. 
+\begin{itemize}
+    \item The tangent space to a manifold is the space of directional derivative operators along curves that pass through that point. Namely, if \(f \colon M \rightarrow \mathbb{R}\) then its directional derivative is an element of the tangent space. This way, we can define tangent space without the notion of
+    tangent vectors, which would be circular.
+
+    \item A good basis to choose for the tangent space is the set of all partials \(\{\partial_\mu\}\). This is because 
+    \[
+        \frac{d}{d \lambda} = \frac{dx^\mu}{d\lambda}\partial_\mu   
+    \]
+    so the directional derivative can be expressed as a linear combination of the partials. We call \(\frac{dx^\mu}{d\lambda}\) the components of the tangent vector. This basis \(\hat{e}_\mu = \partial_\mu\) is the \textbf{coordinate basis}.
+
+    \item Using this definition, we can see that basis vectors transform covariantly
+    \[
+        \partial_{\mu'} = \frac{\partial x^\mu}{\partial x^{\mu'}}\partial_\mu
+    \]
+    and similarly, components transform contravariantly
+    \[
+        V^{\mu'} = \frac{\partial x^{\mu'}}{\partial x^\mu}V^\mu
+    \]
+
+    This is more general than our definition before, because we drop the need for any Lorentz transform. Here we can define tensors under any change of basis, not just linear transformations.
+    
+    \item On a manifold, all vectors are tangent vectors, which means they are associated with a directional derivative. A vector field is then defines a map from smooth functions to smooth functions over the manifold, by defining a directional derivative at each point.
+    
+    \item Given vector fields \(X\) and \(Y\), we define the commutator \([X,Y]\) by how it acts on a function \(f(x^\mu)\)
+    \[
+        [X,Y]f = X(Yf) - Y(Xf)
+    \]
+
+    \item The gradient of a function is a one-form. The set of all gradients of the coordinate functions \(x^\mu\) form a basis for the cotangent space, so the basis for one-forms is \(\{dx^\mu\}\). They transform contravariantly
+    \[
+        dx^{\mu'} = \frac{\partial x^{\mu'}}{\partial x^\mu}dx^\mu
+    \]
+    and components of one forms transform covariantly
+    \[
+        \omega_{\mu'} = \frac{\partial x^\mu}{\partial x^{\mu'}}\omega_\mu
+    \]
+    
+
+    
+\end{itemize}
+
+\noindent Finally, we can generalize our transformation laws by defining tensors. A tensor is a multilinear map of dual vectors and vectors to \( \mathbb{R} \). For example, \( T(a\omega, cV) = acT(\omega, V) \).
+A tensor that takes in \( k \) vectors and \( l \) dual vectors is a type \( (k, l) \) tensor. It's easy to see that scalars are \( (0,0) \) tensors
+and vectors and dual vectors are \( (1, 0) \) and \( (0, 1) \) tensors accordingly. Some important facts about tensors:
+
+\begin{itemize}
+    \item Suppose \( T \) is a \( (k,l) \) tensor, then under any general coordinate transformation \(T\) behaves as follows:
+    \[
+        T^{\mu_1' \cdots \mu_k'}{}_{\nu_1' \cdots \nu_l'} = \frac{\partial x^{\mu_1'}}{\partial x^{\mu_1}} \cdots \frac{\partial x^{\mu_k'}}{\partial x^{\mu_k}} \frac{\partial x^{\nu_1}}{\partial x^{\nu_1'}} \cdots \frac{\partial x^{\nu_l}}{\partial x^{\nu_l'}} T^{\mu_1 \cdots \mu_k}{}_{\nu_1 \cdots \nu_l}
+    \]
+    We say that \(T\) transforms \(k\) times contravariantly and \(l\) times covariantly
+
+    \item Suppose \( T \) is a \( (k,l) \) tensor and \( S \) is a \( (m,n) \) tensor, Then we define the tensor product 
+    \[ T \otimes S(\omega^{1}, \ldots \omega^{k+m}, V^{1}, \ldots, V^{l+n} ) = \]
+    \[ T(\omega^{1},\ldots, \omega^{k}, V^{1}, \ldots, V^{l}) \times S(\omega^{k+1}, \ldots, w^{k+m}, V^{l+1}, \ldots V^{l+n}) \]
+    \noindent In general, the tensor product does not commute. 
+
+    \item In index notation, we can write \( T \) as Then in index notation, we can write it as \( T^{\mu_{1}\ldots \mu_{k}}{}_{\nu_{1}\ldots \nu^{l}} \). The basis for the vector space \( T \)
+    resides in can be expressed with basis \( \hat{e}_{\mu_{1}} \otimes \ldots \otimes \hat{e}_{\mu_{k}} \otimes \hat{\theta}^{\nu_{1}} \otimes \ldots \otimes \hat{\theta}^{\nu_{l}} \). The components can be found by acting
+    the tensor \( T \) on the basis vectors and dual vectors. 
+
+\end{itemize}
+
+\noindent \textbf{Example.} The metric tensor \( \eta_{\mu \nu} \) is a \( (0,2) \) tensor that takes in two vectors and outputs a scalar. The metric acting on two vectors returns the inner product
+\[ 
+     \eta(V,W) = \eta_{\mu \nu} V^{\mu}W^{\nu} = V \cdot W
+\]
+
+\noindent Properties of the inner product should be familiar. Two vectors are orthogonal if their inner product is 0. Note that because the inner product is a scalar, it's invariant under Lorentz transformations. This means that the cartesian
+basis is always orthogonal under Lorentz transformation. 
+\\
+
+\noindent Additionally, the norm, or "length" of a vector is defined by its inner product with itself \( \eta_{\mu \nu}V^{\mu}V^{\nu} \). Unlike in Euclidean space, there is no restriction for the norm to be strictly positive. A positive
+norm is \textbf{spacelike}, a negative norm is \textbf{timelike} and 0 is \textbf{lightlike} or null. 
+\\
+
+\noindent The metric \(g_{\mu \nu}\) is an incredibly important tensor. It is symmetric, has nonzero determinant and is used to raise and lower indices. Some of the important roles of the metric include:
+    \begin{itemize}
+        \item[-] defines path length and proper time
+        \item[-] allows us to define a ``shortest distance'' between two points
+        \item[-] replaces the Newtonian gravitational field
+        \item[-] allows us to define local inertial frames 
+    \end{itemize}
+    
+
+\noindent We often like to put the metric into a \textbf{canonical form} which means it's a diagonal matrix with entries \(-1,-1 ..., -1, 1..., 1,0 ...0\).
+At any point \(p\) on a manifold, there exists a coordinate system \(x^{\hat{\mu}}\) such that \(g_{\hat{\mu}\hat{\nu}}\) is in canonical form and \(\partial_{\hat{\sigma}} g_{\hat{\mu}\hat{\nu}} = 0\). This is called a \textbf{local inertial frame}. This is equivalent to saying
+in curved spacetime, we can always find a local inertial frame with the Minkowski metric.
+\\
+
+
+\noindent \textbf{Example.} The Kroneker delta \( \delta^{\mu}{}_\nu \) is a \( (1,1) \) tensor. It inputs a vector and a dual vector and outputs a scalar, but can also be thought of as a map from dual vectors to dual vectors and vectors to vectors.
+In this framing, the Kroneker delta is just the identity map. We can define the inverse metric \( \eta^{\mu \nu} \)as satisfying the property
+\[ 
+    \eta^{\mu \nu} \eta_{{\nu \rho}} = \eta_{\rho \nu}^{\nu \mu} = \delta^{\mu}{}_{\rho}
+\]
+
+\noindent Some further properties of tensors:
+\begin{itemize}
+    
+    \item We can contract a vector by summing over a repeated upper and lower index. With this, we can use the metric to raise and lower indices: \( \eta_{\alpha \beta} T^{\alpha} = T_{\beta} \)
+    and \( \eta^{\alpha \beta}T_{\alpha} = T^{\beta} \). This is how you would convert a vector to its dual form and vice versa. In euclidean space, the metric is its own inverse so the gradient is actually both a vector and 1-form at the same time.
+
+    \item A \textbf{symmetric} tensor is one where any change of indices leaves the tensor unchanged. For example, if \( S_{\mu \nu \rho} = S_{\nu \mu \rho} \) then we say \( S \) is symmetric in the first two indices. A tensor is \textbf{antisymmetric}
+    if it changes sign when indices are changed. \( A_{\mu \nu \rho} = -A_{\nu \mu \rho} \) is antisymmetric in its first two indices.
+
+    \item Symmetric and antisymmetric tensors are very useful in that the contraction of a symmetric and antisymmetric tensor along the corresponding indices is always 0. The symmetric part is \( T_{(\mu\nu)} = \frac{1}{2}(T_{\mu \nu} + T_{\nu \mu}) \) and
+    the antisymmetric part is \( T_{[\mu \nu]} = \frac{1}{2}(T_{\mu \nu} - T_{\nu \mu}) \). We sometimes want to exclude indices from being symmetrized or antisymmetrized so we use the vertical bars. For example, to write the antisymmetrized \( R_{\alpha \beta \gamma \delta} \) 
+    in only the first and third indices we use \( R_{[\alpha |\beta| \gamma] \delta} = \frac{1}{2}(R_{\alpha \beta \gamma \delta} - R_{\gamma \beta \alpha \delta})\)
+
+    \item For a \( (1,1) \) tensor, we write the trace by leaving off the indices (just the contraction along the repeated index) 
+    \[ 
+        X = X^{\mu}{}_{\mu} 
+    \]
+    We can similarly define the trace of a \( (0,2) \) or \( (2,0) \) tensor by raising/lowering into a \( (1,1) \) tensor and then contracting. Note that in this case, the trace is not just the naive sum over the diagonal; the components change when raising/lowering
+    the index. The reason behind this is because the sum over the diagonal is not a true scalar; ie it's not invariant under coordinate transform.
+
+\end{itemize}
 
 \section{Riemmannian Geometry}
+\subsection{Covariant Derivative}
+The partial derivative doesn't behave like a tensor under coordinate transformation, so we need to define a new object, the \textbf{covariant derivative}, that serves as a partial derivative on manifolds and transforms like a tensor. Additionally, it should reduce to the partial derivative in inertial frames. There are
+a few motivational details to keep in mind:
+\begin{itemize}
+    \item The partial derivative \(\partial_\mu\) maps \((k,l)\) tensor fields to \((k, l+1)\) tensor fields. The covariant derivative \(\nabla\) should do the same.
+
+    \item Any good derivative should obey both linearity and the Liebniz rule:
+    \[
+        \nabla(T + S) = \nabla T + \nabla S
+    \]
+    \[
+        \nabla(T \otimes S) = (\nabla T)\otimes S + T \otimes (\nabla S)
+    \]
+    \item To obey the Liebniz rule, \(\nabla\) can be written as a partial derivative plus some linear transformation. This gives us the definition of the covariant derivative:
+    \[
+        \nabla_\mu V^\nu = \partial_\mu V^\nu + \Gamma^\nu_{\mu \lambda}V^\lambda
+    \]
+    where \(\Gamma^\nu_{\mu \lambda}\) are known as the \textbf{connection coefficients} or \textbf{Christoffel symbols}. They are there to make sure the covariant derivative transforms like a tensor, and they themselves are not tensors because they don't obey the transformation laws.
+    
+    \item The covariant derivative commutes with contraction, so \(\nabla_\mu(T^\lambda{}_{\lambda\rho}) = (\nabla T)_\mu{}^\lambda{}_{\lambda\rho}\). Additionally, it should reduce to the partial derivative for scalars
+    \(\nabla_\mu\phi = \partial_\mu \phi\)
+
+    \item One can show using the last property that the covariant derivative of one forms is given by
+    \[
+        \nabla_\mu \omega_\nu = \partial_\mu \omega_\nu - \Gamma^\lambda_{\mu \nu}\omega_\lambda
+    \]
+\end{itemize} 
+
+\noindent Of course, the connection is not unique. Any tensor satisfying the Liebniz rule, linearity, and reducing to the partial derivative can be a covariant derivative, each of which can have a connection associated with it. In general relativity, however, there are several additional constraints:
+\begin{itemize}
+    \item The connection is \textbf{torsion free}, meaning \(\Gamma^\lambda_{\mu \nu} = \Gamma^\lambda_{\nu \mu}\). This is equivalent to saying the covariant derivative of a scalar field is independent of the order of differentiation, so \(\nabla_\mu\nabla_\nu\phi = \nabla_\nu\nabla_\mu\phi\).
+
+    \item The connection is \textbf{metric compatible}, or \(\nabla_\rho g_{\mu \nu} = 0\). This further means that the covariant derivative commutes with raising and lowering of indices \(g_{\mu \lambda} \nabla_\rho V^\lambda = \nabla_\rho (g_{\mu \lambda}V^\lambda) = \nabla_\rho V_\mu\)
+
+    \item There exists a unique connection satisfying this; the Levi-civita connection
+    \[
+        \Gamma^\lambda_{\mu \nu} = \frac{1}{2} g^{\lambda \sigma} (\partial_\mu g_{\nu \sigma} + \partial_\nu g_{\mu \sigma} - \partial_\sigma g_{\mu \nu})
+    \]
+    
+\end{itemize}
+
+\subsection{Parallel Transport}
+In Euclidean space, we often say a vector doesn't have an associated "position" because we can freely move it around and it will remain unchanged. However, this is not true in curved space. The idea of moving a vector along a path while keeping it constant is called \textbf{parallel transport}. Notably,
+parallel transport depends on the path taken between points. 
+\\
+\\
+In fact, there is no ``natural'' way to compare vectors in different tangent spaces, since there are different paths to take. Thus, we can only compare two vectors if they are in the same tangent space. For example, the relative velocities of two particles on different points of a manifold is not well defined!
+\begin{itemize}
+    \item By "keeping the vector constant," we mean its components must be constant. For an arbitrary tensor, this condition is \(\frac{d}{d\lambda} T^{\mu_1 \mu_2 \cdots \mu_k}{}_{\nu_1 \nu_2 \cdots \nu_l} = \frac{dx^\mu}{d\lambda} \frac{\partial}{\partial x^\mu} T^{\mu_1 \mu_2 \cdots \mu_k}{}_{\nu_1 \nu_2 \cdots \nu_l} = 0\). 
+    Then to make this a proper tensor equation, it makes sense to replace the partial derivative with the covariant derivative so we define the \textbf{directional covariant derivative} to be
+    \[
+        \frac{D}{d\lambda} = \frac{dx^\mu}{d\lambda}\nabla_\mu
+    \]
+    The equation for parallel transport is then
+    \[
+        \left(\frac{D}{d\lambda}T\right)^{\mu_1\mu_2\cdots\mu_k}{}_{\nu_1\nu_2\cdots\nu_l} \equiv \frac{dx^\sigma}{d\lambda} \nabla_\sigma T^{\mu_1\mu_2\cdots\mu_k}{}_{\nu_1\nu_2\cdots\nu_l} = 0
+    \]
+    
+    
+\end{itemize}
 
 \section{Gravitation}
 
