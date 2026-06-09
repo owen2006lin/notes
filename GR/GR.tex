@@ -429,7 +429,7 @@ In fact, there is no ``natural'' way to compare vectors in different tangent spa
 \end{itemize}
 
 \subsection{Curvature}
-We already have some notions of curvature by the differences between Euclidean and more general spaces. For example, whether or not parallel transport leaves vectors unchanged on a closed loop. The Riemann tensor will 
+We already have some notions of curvature by the differences between Euclidean and more general spaces. For example, whether or not parallel transport leaves vectors unchanged on a closed loop. The \textbf{Riemann Tensor} will 
 formalize these ideas into a single object. 
 \begin{itemize}
     \item Consider an infinitesimal loop defined by two vectors \(A^\mu\) and \(B^\nu\). Imagine parallel transporting some vector \(V^\mu\) along \(A^\mu\), then along \(B^\nu\), then back along \(A^\mu\) and back along \(B^\nu\).
@@ -443,17 +443,64 @@ formalize these ideas into a single object.
 
     \item As per our definition above, the Riemann tensor should be related to commutator of the covariant derivative 
     \[
-        [\nabla_\mu , \nabla_\nu]V^\rho = R^\rho_{\sigma \mu \nu} - T^\lambda{\mu \nu} \nabla_\lambda V^\rho
+        [\nabla_\mu , \nabla_\nu]V^\rho = R^\rho{}_{\sigma \mu \nu} - T^\lambda{\mu \nu} \nabla_\lambda V^\rho
     \]
-    where \(R^\rho_{\sigma \mu \nu}\) is the Riemann tensor and \(T^\lambda_{\mu \nu}\) is the Torsion tensor.
+    where \(R^{\rho}{}_{\sigma \mu \nu}\) is the Riemann tensor and \(T^\lambda_{\mu \nu}\) is the Torsion tensor.
 
     \item Expanding, and eliminating terms that cancel when using the antisymmetric property, we have
     \[
-        R^\rho_{\sigma \mu \nu} = \partial_\mu \Gamma^\rho_{\nu \sigma} - \partial_\nu \Gamma^\rho_{\mu\sigma} + \Gamma^\rho_{\mu \lambda}\Gamma^\lambda_{\nu \sigma} - \Gamma^\rho_{\nu \lambda}\Gamma^\lambda_{\mu \sigma}
+        R^\rho{}_{\sigma \mu \nu} = \partial_\mu \Gamma^\rho_{\nu \sigma} - \partial_\nu \Gamma^\rho_{\mu\sigma} + \Gamma^\rho_{\mu \lambda}\Gamma^\lambda_{\nu \sigma} - \Gamma^\rho_{\nu \lambda}\Gamma^\lambda_{\mu \sigma}
+    \]
+    This holds for any connection, whether or not it is metric compatible or torsion free.
+
+    \item Using our intuition above, we can think of the Riemann tensor as a map from 3 vector fields to another vector field. The first two arguments should be the fields specifying the "direction" along our infinitessimal loop,
+    and the result should act on the third field (the one we're parallel transporting). Using the definition from the commutator, we have  
+    
+    \[ 
+        R(X,Y)Z = \nabla_{X}\nabla_{y}Z - \nabla_{Y}\nabla_{X}Z - \nabla_{[X,Y]}Z
     \]
     
+    The notation \( \nabla_{X} \) is the covariant derivative along a vector field \( X \) so we can write it in component form as \( \nabla_{X} = X^{\mu}\nabla_{\mu} \). The last term with the commutator vanishes when \( X \) and \( Y \)
+    are coordinate basis vector fields becanse \( [\partial_{\mu}, \partial_{\nu}] = 0 \).
     
 \end{itemize}
+
+\noindent Now we will analyze a few properties of the Riemann Tensor in local inertial coordinates; ie the Christoffel symbols drop. It's easier to work with it in all lower indices \( R_{\rho \sigma \mu \nu} = g_{\rho\lambda}R^{\lambda}{}_{\sigma\mu\nu} \):
+\begin{itemize}
+    \item The Riemann tensor is antisymmetric in the first two indces \( R_{\rho\sigma\mu\nu} = -R_{\sigma\rho\mu\nu}  \) and its last two indices \( R_{\rho\sigma\mu\nu} = -R_{\rho\sigma\nu\mu}  \)
+    It is also invariant under changing the first and second pairs of indices: \( R_{\rho \sigma \mu\nu} = R_{\mu \nu \rho \sigma} \).
+    
+    \item The sum of cyclic permutations of the last three indices vanishes: \( R_{\rho\sigma\mu\nu} + R_{\rho \mu\nu\sigma} + R_{\rho \nu \sigma\mu} = 0 \).
+    This is equivalent to saying the antisymmetric part of the last 3 indices is 0: \( R_{\rho[\sigma\mu\nu]} = 0 \) and equivalently \( R_{[\rho\sigma\mu\nu] = 0} \).
+    
+    \item We can imagine the tensor as a symmetric matrix \( R_{[\rho\sigma][\mu\nu]} \), where each pair corresponds to an antisymmetric matrix. Then we have
+    \( \frac{1}{2}[\frac{1}{2}n(n-1)][\frac{1}{2}n(n-1)+1] \) independent components where we used the number of components of an \( m \times m \) symmetric matrix and \( n \times n \) antisymmetric matrix. Finally, the totally antisymmetric component vanishes
+    so this reduces the number of independent components to \( \frac{1}{12}n^{2}(n^{2}-1)  \)
+    
+    \item Taking the covariant derivative, we see the sum of cyclic permutations also vanish so \( \nabla_{\lambda}R_{\rho\sigma\mu\nu} + \nabla_{\rho}R_{\sigma\lambda\mu\nu} + \nabla_{\sigma}R_{\lambda\rho\mu\nu} = 0\). By antisymmetry in the first two indices, we can 
+    write 
+    \[ 
+        \nabla_{[\lambda}R_{\rho\sigma]\mu\nu} = 0
+    \]
+    known as the \textbf{Bianchi Identity}.
+
+
+    \item We define the \textbf{Ricci Tensor} as the contraction
+    
+    \[ 
+        R_{\mu\nu} = R^{\lambda}{}_{\mu\lambda\nu} 
+    \]
+    For the Christoffel connection, the Ricci tensor is symmetric \( R_{\mu\nu} = R_{\nu\mu} \).
+    
+    \item The contraction of the Ricci Tensor is the \textbf{Ricci Scalar}:
+    \[ 
+        R = R^{\mu}{}_{\mu} = g^{\mu\nu}R_{\mu\nu} 
+    \]
+\end{itemize}
+
+\noindent Finally we define the \textbf{Einstein Tensor} as \( G_{\mu\nu}  = R_{\mu\nu} - \frac{1}{2}Rg_{\mu\nu} \). 
+
+\subsection{Killing Vectors}
 
 
 \section{Gravitation}
