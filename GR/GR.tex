@@ -465,7 +465,7 @@ formalize these ideas into a single object.
     
 \end{itemize}
 
-\noindent Now we will analyze a few properties of the Riemann Tensor. It's easier to work with it in all lower indices \( R_{\rho \sigma \mu \nu} = g_{\rho\lambda}R^{\lambda}{}_{\sigma\mu\nu} \):
+\noindent Now we will analyze a few properties of the Riemann Tensor in local inertial coordinates; ie the Christoffel symbols drop. It's easier to work with it in all lower indices \( R_{\rho \sigma \mu \nu} = g_{\rho\lambda}R^{\lambda}{}_{\sigma\mu\nu} \):
 \begin{itemize}
     \item The Riemann tensor is antisymmetric in the first two indces \( R_{\rho\sigma\mu\nu} = -R_{\sigma\rho\mu\nu}  \) and its last two indices \( R_{\rho\sigma\mu\nu} = -R_{\rho\sigma\nu\mu}  \)
     It is also invariant under changing the first and second pairs of indices: \( R_{\rho \sigma \mu\nu} = R_{\mu \nu \rho \sigma} \).
@@ -477,6 +477,14 @@ formalize these ideas into a single object.
     \( \frac{1}{2}[\frac{1}{2}n(n-1)][\frac{1}{2}n(n-1)+1] \) independent components where we used the number of components of an \( m \times m \) symmetric matrix and \( n \times n \) antisymmetric matrix. Finally, the totally antisymmetric component vanishes
     so this reduces the number of independent components to \( \frac{1}{12}n^{2}(n^{2}-1)  \)
     
+    \item Taking the covariant derivative, we see the sum of cyclic permutations also vanish so \( \nabla_{\lambda}R_{\rho\sigma\mu\nu} + \nabla_{\rho}R_{\sigma\lambda\mu\nu} + \nabla_{\sigma}R_{\lambda\rho\mu\nu} = 0\). By antisymmetry in the first two indices, we can 
+    write 
+    \[ 
+        \nabla_{[\lambda}R_{\rho\sigma]\mu\nu} = 0
+    \]
+    known as the \textbf{Bianchi Identity}.
+
+
     \item We define the \textbf{Ricci Tensor} as the contraction
     
     \[ 
