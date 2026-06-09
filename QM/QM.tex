@@ -5,7 +5,6 @@
 \usepackage[pdftex]{graphicx}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{custom}
-\usepackage{lipsum}
 \usepackage{booktabs}
 \usepackage{enumitem}
 
@@ -71,6 +70,50 @@ Potential sources to consult in the future:
 % main content
 \section{Fundamentals}
 \subsection{The Stern-Gerlach Experiment}
+
+We'll begin by demonstrating the inadequacies of classical theory in its failure to explain the results of the Stern-Gerlach experiment. 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.65\textwidth]{images/sga.png}
+    \caption{The Stern-Gerlach apparatus}
+    \label{fig:my_image}
+\end{figure}
+
+\begin{itemize}
+    \item Silver atoms contain 47 electrons, 46 of which form a spherically symmetric electron cloud with no angular momentum. The 47th atom produces
+    no orbital angular momentum so all angular momentum of the atom is due to the electron's spin. Thus we have the magnetic moment is proportional to the
+    electron spin \(\mathbf{\mu} \propto \mathbf{S}\).
+
+    \item The atom is then heated in an oven and sent through a magnetic field \(\mathbf{B}\) in the \(z\) direction. The interaction energy is then \(-\mathbf{\mu} \cdot \mathbf{B}\)
+    so the force it experiences is \(F = \mu_z\frac{\partial B_z}{\partial z}\)
+
+    \item Since the atom is randomly oriented when leaving the oven, we'd expect a continuous distribution of possible trajectories depending on the amount of spin lying
+    on the z axis. However, we observe the trajectories splitting into two distinct components, such that \(\mathbf{\mu}\) can only be identified with two possible values of the 
+    z component of \(\mathbf{S}\), \(S_z = \hbar/2\) or \(S_z = -\hbar/2\). This allows us to deduce that electron spin angular momentum is quantized.
+
+    \item Suppose we block off the negative \(S_z\) beam, and then send this through another Stern-Gerlach apparatus with magnetic field in the \(x\) direction. We observe that
+    50\% of the particles separate into the positive x beam and the other 50\% separate the negative x beam. Finally, selecting either resulting beam through a final apparatus in the 
+    z direction, it splits off into two equal beams! This appears impossible classically because the first apparatus blocked all atoms with negative z spin yet we still observe
+    them after measuring their x spin. 
+
+    \item This means the atoms entering the third beam cannot simultaneously have \(S_z + \) and \(S_x +\) spin simultaneously, which allows us to conjecture that we cannot determine both
+    \(S_x\) and \(S_z\) simultaneously. In fact, measuring the spin in the x direction destroys previous information about the z direction.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.65\textwidth]{images/sterngerlach.png}
+    \caption{Several Stern-Gerlach apparatus chained together}
+    \label{fig:my_image}
+\end{figure}
+
+\noindent We can make an analogy of this behavior with the polarization of light. If we sent light through an x filter and then a y filter, no light passes through. However if we place in between
+an \(x'\) filter oriented at an angle of \(45^{\circ}\) from the x direction in the xy plane, light passes through the y filter! Even though the x filter destroyed all y polarized light initially, 
+the \(x'\) filter destroyed all previous information of that.
+
+
+
+
 \subsection{Bra-ket Notation}
 
 
