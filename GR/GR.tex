@@ -501,6 +501,56 @@ formalize these ideas into a single object.
 \noindent Finally we define the \textbf{Einstein Tensor} as \( G_{\mu\nu}  = R_{\mu\nu} - \frac{1}{2}Rg_{\mu\nu} \). 
 
 \subsection{Killing Vectors}
+Symmetries allow us to solve problems that would otherwise have been painfully difficult. Even if a situation is slightly deviated from a symmetry, we can still account for this through perturbations. We say a manifold \( M \) possesses a symmetry if the metric is perserved under a transformation
+mapping \( M \) onto itself. A symmetry of the metric is called an \textbf{isometry}.
+
+\begin{itemize}
+    \item Lorentz transformations and translations are isometries of Minkowski space. This is because the metric coefficients \( \eta_{\mu\nu} \) are independent of coordinates \( x^{\mu} \). For some coordinate \( \sigma \):
+    
+    \[ 
+        \partial_{\sigma}g_{\mu\nu} = 0 \implies x^{\sigma} \rightarrow x^{\sigma} + a^{\sigma} \text{is a symmetry} 
+    \]    
+
+    \item For a timelike path, the geodesic equation can be written as \( p^{\lambda}\nabla_{\lambda}p^{\mu} = 0 \). By metric compatibility, we can lower the index and expand the covariant derivative to get
+    
+    \[ 
+        p^{\lambda}\partial_{\lambda}p_{\mu} - \Gamma^{\sigma}_{\lambda\mu}p^{\lambda}p_{\sigma} = 0 
+    \]
+    The first term determines how the components of momentum change along the path \( p^{\lambda}\partial_{\lambda}p_{\mu} = m\frac{dp_{\mu}}{d\tau} \) while the second term reduces to
+    \( \frac{1}{2}(\partial_{\mu} g_{\nu\lambda})p^{\lambda}p^{\nu} \) so the geodesic equation can be written as 
+    
+    \[ 
+         m\frac{dp_{\mu}}{d\tau} = \frac{1}{2}(\partial_{\mu} g_{\nu\lambda})p^{\lambda}p^{\nu}
+    \]
+    But if the metric is independent of the coordinates \( x^{\sigma} \), then the isometry implies \( \frac{dp_{\sigma}}{d\tau} = 0 \) so the momentum four vector is conserved along a geodesic. 
+
+\end{itemize}
+
+\noindent It is important to note that while invariance of the metric implies a symmetry, the converse is not. There are four types of translations and six types of Lorentz transformations, which is ten total symmetries. But this is greater than the number
+of dimensions the metric can be independent of. Instead, we'll need a more formal procedure:
+\begin{itemize}
+    \item Suppose \( g_{\mu\nu} \) is independent of \( x^{\sigma} \). Then let us define \( K = \partial_{\sigma} \), which in component notation is
+    
+    \[ 
+        K^{\mu} = (\partial_{\sigma})^{\mu} = \delta^{\mu}_\sigma 
+    \]
+
+    Then \( K^{\mu} \) generates the isometry, namely any transformation of this form can be expressed as motion in the direction of \( K^{\mu} \).
+
+    \item Any four momentum along the direction of \( K^{\nu} \) then obeys \( p_{\sigma} = K^{\nu}p_{\mu} = K_{\nu}p^{\nu} \). Careful! We've specified \( \sigma \) as a specific direction in which the metric is invariant of, so \( p_{\sigma} \) is in fact a scalar;
+    it's the component of the four momentum in the direction of \( K^{\nu} \)
+
+    \item The scalar being constant along the path is equivalent to saying the directional derivative along the geodesic is 0, so \( p^{\mu}\nabla_{\mu}(K_{\nu}p^{\nu}) = 0 \). This is because of the chain rule, because covariant derivatives of scalars reduces to the partial 
+    derivative. By expanding this equation, we get:
+    
+    \[ 
+        \nabla_{(\mu}K_{\nu)} = 0 \implies p^{\mu}\nabla_{\mu}(K_{\nu}p^{\nu}) = 0 
+    \]
+
+    where the left side is \textbf{Killing's equation} and vector fields \( K \) that satisfy it are called \textbf{Killing vector fields}.
+
+    \item Killing vector fields on a manifold are in one-to-one correspondence with the continuous symmetries of the metric on that manifold. 
+\end{itemize}
 
 
 \section{Gravitation}
