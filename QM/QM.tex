@@ -7,6 +7,8 @@
 \usepackage{custom}
 \usepackage{booktabs}
 \usepackage{enumitem}
+\usepackage{float}
+\usepackage{braket}
 
 % page formatting
 \usepackage{fancyhdr}
@@ -64,8 +66,6 @@ These notes cover quantum mechanics at the undergraduate level. The sources used
 % main content
 \section{Fundamentals}
 \subsection{The Stern-Gerlach Experiment}
-<<<<<<< HEAD
-
 We'll begin by demonstrating the inadequacies of classical theory in its failure to explain the results of the Stern-Gerlach experiment. 
 \begin{figure}[h]
     \centering
@@ -95,29 +95,179 @@ We'll begin by demonstrating the inadequacies of classical theory in its failure
     \(S_x\) and \(S_z\) simultaneously. In fact, measuring the spin in the x direction destroys previous information about the z direction.
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.65\textwidth]{images/sterngerlach.png}
     \caption{Several Stern-Gerlach apparatus chained together}
-    \label{fig:my_image}
+    \label{fig:my_image1}
 \end{figure}
 
 \noindent We can make an analogy of this behavior with the polarization of light. If we sent light through an x filter and then a y filter, no light passes through. However if we place in between
 an \(x'\) filter oriented at an angle of \(45^{\circ}\) from the x direction in the xy plane, light passes through the y filter! Even though the x filter destroyed all y polarized light initially, 
 the \(x'\) filter destroyed all previous information of that.
 
-
-
-=======
-We'll first motivate the need for a quantum mechanical framework by demonstrating the inadequacy of classical mechanics in explaining the Stern-Gerlach Experiment. 
-The setup is this:
 \begin{itemize}
-    \item 
-\end{itemize}
+    \item We first conjecture that there is a correspondance between angular momentum and light polarization as follows:
+    \[
+        S_z \pm \text{atoms} \leftrightarrow \text{x, y polarized light}
+    \]
+    \[
+        S_x \pm \text{atoms} \leftrightarrow \text{x', y' polarized light}
+    \]
 
->>>>>>> eb0b6a2098fb17eb8b1f39092fc448e6c3bc0fa9
+    \item The electric field of x polarized light is \(\mathbf{E} = E_0 \mathbf{\hat{x}} \cos(kz-\omega t)\) and likewise for y polarized. Then x' and y' polarized light can be expressed as
+    \(\mathbf{E_{x'}} = \frac{1}{\sqrt{2}}\mathbf{E_x} + \frac{1}{\sqrt{2}}\mathbf{E_y}\) and \(\mathbf{E_{y'}} = -\frac{1}{\sqrt{2}}\mathbf{E_x} + \frac{1}{\sqrt{2}}\mathbf{E_y}\)
+    
+    \item We represent the ``state'' of positive x spin using a ket in Dirac notation \(\ket{S_x; +}\). Using the correspondance above, we might represent the positive and negative spin states as:
+    \[
+        \ket{S_x; +} = \frac{1}{\sqrt{2}}\ket{S_z; +} + \frac{1}{\sqrt{2}}\ket{S_z; -}
+    \]
+    \[
+        \ket{S_x; -} = -\frac{1}{\sqrt{2}}\ket{S_z; +} + \frac{1}{\sqrt{2}}\ket{S_z; -}
+    \]
+    
+    The atoms coming out of the positive x spin filter are in a superposition of the \(S_z +\) and \(S_z -\) states so when sending them through the final filter, we observe both cases even though the
+    negative spin should've been ``filtered out'' already.
+    
+    \item By symmetry, decomposition of \(S_y\) into \(S_z\) components should be very similar, but we've already used all possible linear combinations of \(S_z\) kets. The idea instead is to make a correspondance
+    with circularly polarized light, where the y component is out of phase with the x component: \(\mathbf{E} = E_0\left[\frac{1}{\sqrt{2}}\mathbf{\hat{x}}\cos(kz - \omega t) + \frac{1}{\sqrt{2}}\mathbf{\hat{y}}\cos(kz - \omega t + \frac{\pi}{2})\right]\).
+    We can use complex notation by writing \(\Re(\mathbf{\epsilon}) = \mathbf{E}\). So for right circularly polarized light we have
+    \[
+        \mathbf{\epsilon} = E_0\left[\frac{1}{\sqrt{2}}\mathbf{\hat{x}}e^{i(kz -\omega t)} + \frac{i}{\sqrt{2}}\mathbf{\hat{y}}e^{i(kz - \omega t)}\right]
+    \]
+
+    \item Now by correspondance, we can express the spin in the y direction as 
+    \[
+        \ket{S_y; \pm} = \frac{1}{\sqrt{2}}\ket{S_z; +} \pm \frac{i}{\sqrt 2}\ket{S_z; -}
+    \]
+\end{itemize}
+\noindent The main idea is that restricting ourselves to the real numbers is not expressive enough to be able to decompose both \(S_y\) and \(S_x\) into \(S_z\) components. So our ket vectors necessarily belong to some
+complex vector space.
 
 \subsection{Bra-ket Notation}
+Now we will lay down some formalism for Dirac notation. We postulate that a state ket \(\ket{\alpha}\) contains all the information about a physical state. Kets are elements of a Hilbert space meaning all the properties of
+vector spaces apply.
+\begin{itemize}
+    \item Multiplying a ket by a scalar \(c\ket{\alpha}\) represents the same physical state. Only the direction is significant.
+
+    \item Elements of the dual space are denoted as bras \(\bra{\alpha}\), with a one to one correspondence with elements in the ket space:
+    \[
+        \ket{\alpha} \leftrightarrow \bra{\alpha}
+    \]
+    \[
+        \ket{\alpha} + \ket{\beta} \leftrightarrow \bra{\alpha} + \bra{\beta}    
+    \]
+    
+    Meanwhile, under scalar multiplication, the dual vector uses the complex conjugate
+
+    \[
+        c\ket{\alpha} \leftrightarrow c^*\bra{\alpha}
+    \]
+
+    \item We denote the inner product of a bra and a ket as \(\braket{\alpha | \beta}\). Note the inner product is not symmetric in its arguments:
+    \[
+        \braket{\beta|\alpha} = \braket{\alpha|\beta}^*
+    \] 
+    A consequence of this is that \(\braket{\alpha|\alpha}\) is necessarily real.
+    
+    \item A vector's inner product with itself is strictly positive
+    \[
+        \braket{\alpha|\alpha}\geq 0
+    \]
+    The equality holds iff \(\ket{\alpha}\) is a null ket. This is equivalent to saying the metric is positive definite.   
+    \\
+\end{itemize}
+
+
+\noindent Real world values like position and momentum are also known as observables. An observable can be represented by an operator \(A\) on the vector \(A\ket{\alpha}\). An eigenket obeys \(A\ket{a} = a\ket{a}\) where \(a\) is a real scalar value. In this case, \(\ket{a}\) is what's called an eigenket.
+The physical state corresponding to an eigenket is an eigenstate. For example, the spin 1/2 eigenstates obey \(S_z\ket{S_z; \pm} = \pm\frac{\hbar}{2}\ket{S_x; \pm}\). Some futher properties of observables:
+\begin{itemize}
+    \item Two observables are equal iff \(X\ket{\alpha} = Y\ket{\alpha}\) for any ket. We call \(X\) a null operator of \(X\ket{\alpha} = 0\) for any ket.
+
+    \item Observables are both commutative and associative under addition
+    \[
+        X + Y = Y + X
+    \]
+    \[
+        X + (Y + Z) = (X + Y) + Z
+    \] 
+    All observables except for the time reversal operator are linear:
+    \[
+        X(c\ket{\alpha} + d\ket{\beta}) = cX\ket{\alpha} + dX\ket{\beta}
+    \]
+
+    \item The dual correspondance of operators acting on kets/bras is:
+    \[
+        X\ket{\alpha} \leftrightarrow \bra{\alpha}X^\dagger
+    \]
+    where \(X^\dagger\) is the Hermitian adjoint of \(X\). An operator is Hermitian if 
+    \[
+        X = X^\dagger
+    \]
+    
+    \item Operators are generally not commutative under multiplication, but are associative. The Hermitian adjoint of a product is
+    \[
+        (XY)^\dagger = Y^\dagger X^\dagger
+    \]
+    which can be shown using the dual correspondance. 
+
+    \item The \textbf{associative axiom} states that any legal multiplication with kets, bras and operators is associative. For example, consider 
+    the outer product \(\ket{\beta}\bra{\alpha}\). If we were to act this on a ket, \((\ket{\beta}\bra{\alpha})\ket{\gamma}\), by the associative
+    axiom we can rewrite this as \(\ket{\beta} (\braket{\alpha|\gamma})\) which is just a scalar times a ket. Thus, the outer product is an operator.
+
+    \item By the associative axiom, we have the equality \(\bra{\beta}(X\ket{\alpha}) = (\bra{\beta}X)\ket{\alpha}\). Since there is no distinction between
+    the two, we just drop the parenthesis and write \(\braket{\beta|X|\alpha}\). Using the property of the inner product,
+    \[
+        \braket{\beta|X|\alpha} = \braket{\alpha|X^\dagger|\beta}^*
+    \]
+        
+\end{itemize}
+
+\noindent Hermitian operators are of special importance to us. An especially important theorem is that the eigenvalues of Hermitian operators are real, and eigenkets
+corresponding to different eigenvalues are orthogonal.
+\\
+\\
+\noindent Suppose we have the dual eigenvectors \(A\ket{a} = a\ket{a}\) and \(\bra{b}A = \bra{b}b^*\), Multiplying the first equation by \(\bra{b}\) on the left and the 
+second by \(\ket{a}\) on the right and subtracting, we have \((a - b^*)\braket{a|b} = 0\). Suppose \(a = b\). Then we have \(a = a*\) so the eigenvalues must be real. Suppose
+\(a \neq b\). Then because we've shown the reality condition, the difference \(a - b*\) cannot vanish, so to satisfy the equation, the inner product \(\braket{a|b} = 0\) must vanish.
+So different eigenkets must be orthogonal. 
+\\
+\\
+Some important consequences of this result:
+\begin{itemize}
+    \item We conventionally normalize the eigenkets to form an orthonormal set. Additionally, the set of eigenkets is complete ie; it spans the entire ket space. 
+
+    \item Any arbitrary ket \(\ket{\alpha}\) can be expanded in eigenkets \(\ket{\alpha} = \sum_{i} c_i \ket{a_i}\) where the coefficients are \(c_i = \braket{a_i | \alpha}\).
+    This means the expansion is \(\alpha = \sum_i \ket{a_i}\braket{a_i|\alpha}\) But by the associative axiom, we can factor the \(\ket{\alpha}\) out, giving us
+    \[
+        \sum_i \ket{a_i}\bra{a_i} = 1
+    \]
+    which is known as the \textbf{completeness relation}. \(1\) is known as the identity operator. This fact is very useful because we can place it in the middle of any equation.
+    \\
+    \\
+    \textbf{Example.} Inserting the completeness relation between \(\braket{\alpha|\alpha}\) we have \(\bra{\alpha}\left(\sum_{i}\ket{a_i}\bra{a_i}\right)\ket{\alpha} == \sum_i |\braket{a_i|\alpha}|^2\)
+    But if \(\ket{\alpha}\) is normalized, then the coefficient expansion satisfies \(\sum_i |c_i|^2 = \sum_i |\braket{a_i|\alpha}|^2 = 1\)
+
+    \item The outer product \(\ket{a_i}\bra{a_i}\) is also known as the \textbf{projection operator}, also denoted as \(\Lambda_{a_i} \equiv \ket{a_i}\bra{a_i}\). The completeness relation 
+    can also be written as \(\sum_i \Lambda_{a_i} = 1\). This makes sense as the sum of all projections should return the original vector, so in this way this formulation of a projection is
+    more ``natural''.
+
+    \item By using the completeness relation twice, we can express an operator \(X = \sum_i \sum_j \ket{a_i}\bra{a_i} X \ket{a_j}\bra{a_j}\) as a matrix. The components of the matrix are 
+    \(\braket{a_i|X|a_j}\) where \(i\) indexes the row and \(j\) indexes the columns. Note that the kets correspond to column vectors and bras correspond to row vectors by duality. We also already
+    have that \(\braket{a_i|X|a_j} = \braket{a_j|X^\dagger|a_j}^*\). But if \(X\) is hermitian, then this gives us
+    \[
+        \braket{a_i|X|a_j} = \braket{a_j|X|a_i}^*
+    \]
+    meaning \(X\) is its own conjugate transpose, which is the more colloquial definition of Hermitian adjoint. 
+    
+\end{itemize}
+
+
+
+
+
+
+
 
 
 \section{The Schr\"odinger Equation}
