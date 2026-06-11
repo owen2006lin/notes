@@ -554,8 +554,56 @@ of dimensions the metric can be independent of. Instead, we'll need a more forma
 
 
 \section{Gravitation}
+\subsection{Minimal Coupling}
+The motivation behind the use of manifolds was because of several of the postulates established before. The Einstein equivalence principle
+stated that in small regions of spacetime, the laws of physics reduce that to special relativity, and that local experiments cannot detect the
+existence of gravity. This is very similar to our ability of finding locally inertial coordinates on manifolds; ie where the metric reduces to 
+the Minkowski metric and first derivatives vanish. The \textbf{Minimal Coupling Principle} allows us to use this fact to generalize laws of physics
+in curved spacetime.
 
-\subsection{The Newtonian Limit}
+\begin{enumerate}
+    \item Take a law of physics in inertial coordinates in flat spacetime
+    \item Convert it into a coordinate-invariant tensor equation
+    \item Assert the law holds in curved spacetime
+\end{enumerate}
+
+\noindent \textbf{Example.} Consider the equation of motion of a free particle travelling in flat space along a parametrized straight line \(x^\mu(\lambda)\). 
+This is expressed with the equation 
+\[
+    \frac{d^2 x^\mu}{d \lambda^2} = 0
+\]
+\noindent We can rewrite this using the chain rule: \(\frac{d^2 x^\nu}{d \lambda^2} = \frac{d x^\mu}{d \lambda}\partial_\nu \frac{d x^\mu}{d\lambda}\), but the 
+partial derivative is not a tensor, so we replace it with the coordinate invariant form; the covariant derivative:
+\[
+    \frac{d x^\nu}{d\lambda} \nabla_\nu \frac{d x^\mu}{d \lambda} = \frac{d^2x^\mu}{d\lambda^2} + \Gamma^\mu_{\rho \sigma}\frac{dx^\rho}{d\lambda}\frac{dx^\sigma}{d\lambda}
+\]
+
+\noindent which is just the geodesic equation. 
+\\
+\\
+\noindent \textbf{Example.}We should also check to see if curvature alone is sufficient to explain gravity in the Newtonian limit. We assume particles are moving slowly, and that
+the gravitational field is weak and static. 
+\\
+\\
+By moving slowly, we demand the velocity to be much less than one (working in natural units), \(\frac{dx^i}{d\tau} \ll \frac{dt}{d\tau}\), which simplifies the geodesic equation to be
+\[
+    \frac{d^2 x^\mu}{d\tau^2} + \Gamma^\mu_{0 0}\left(\frac{dt}{d\tau}\right)^2 = 0
+\]
+\noindent In a static field, the components of \(g_{\mu\nu}\) are unchanging with time so \(\partial_0 g_{\mu\nu} = 0\), which means the christoffel symbols simplify to
+\[
+    \Gamma^\mu_{0 0} = -\frac{1}{2}g^{\mu\nu}\partial_\lambda g_{0 0}
+\]
+Finally, in a weak field, we can represent the metric as a small perturbation in the minkowski metric:
+\[
+    g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu}
+\]
+where \(|h_{\mu\nu}| \ll 1\). We can then write the christoffel symbols to first order in \(h_{\mu\nu}\), giving us \(\frac{d^2 x^\mu}{d\tau^2} = \frac{1}{2}\eta^{\mu\nu}\partial_{\lambda}h_{0 0}\left(\frac{dt}{d\tau}\right)^2\)
+But since \(\partial_0 g_{0 0} = 0\), the timelike component of the geodesic equation is just \(\frac{d^2 t}{d\tau}^2 = 0\). Meanwhile, the spacial component gives us 
+\[
+    \frac{d^2 x^i}{dt^2} = \frac{1}{2}\partial_i h_{0 0}
+\]
+This reduces to the Newtonian limit if we let \(h_{0 0} = -2\mathbf{\Phi}\). You can see this matches Poisson's equation \(\nabla^2 \mathbf{\Phi} = 4\pi G \rho\) exactly. 
+
 
 \subsection{Stress-Energy Tensor}
 
@@ -628,8 +676,24 @@ Additionally, we have low pressure $\frac{p}{\rho} << 1$ and the speed is non-re
 
 \end{itemize}
 
+\subsection{The Einstein Equations}
+Poisson's equation relates gravitational fields to the mass density. However, we've been building up to the idea that gravity can be explained by curvature alone. Thus, a more
+fundamental equation relating curvature and mass.
+\begin{itemize}
+    \item First, we should replace gravitational potential with a tensorial object; the metric immediately comes to mind, as in the newtonian limit we were able to reproduce gravity
+    by perturbations in the metric. Meanwhile, the left side is second order in the derivatives of the potential, so we should look for something similarly second order in the metric
+    that describes curvature; the Riemann curvature tensor.
 
-\subsection{Gravitational Waves}
+    \item The tensorial equivalent of mass is the stress energy tensor so we may postulate
+    \[
+        R_{\mu\nu} = \kappa T_{\mu\nu}
+    \]
+    where we've contracted the Riemann tensor into the Ricci tensor so that the number of indices line up. 
+\end{itemize}
+
+
+
+\section{Gravitational Waves}
 \noindent Recall the form of the metric in the linearized theory $g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu}$.
 \begin{itemize}
     \item The einstein equations give us $2(R_{\alpha\beta} - \frac{1}{2}g_{\alpha\beta}R) = 16\pi G T_{\alpha\beta}$
