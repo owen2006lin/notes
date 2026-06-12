@@ -457,7 +457,7 @@ formalize these ideas into a single object.
     and the result should act on the third field (the one we're parallel transporting). Using the definition from the commutator, we have  
     
     \[ 
-        R(X,Y)Z = \nabla_{X}\nabla_{y}Z - \nabla_{Y}\nabla_{X}Z - \nabla_{[X,Y]}Z
+        \boxed{R(X,Y)Z = \nabla_{X}\nabla_{y}Z - \nabla_{Y}\nabla_{X}Z - \nabla_{[X,Y]}Z}
     \]
     
     The notation \( \nabla_{X} \) is the covariant derivative along a vector field \( X \) so we can write it in component form as \( \nabla_{X} = X^{\mu}\nabla_{\mu} \). The last term with the commutator vanishes when \( X \) and \( Y \)
@@ -626,17 +626,26 @@ so we'll just say a fluid has friction force negligible in comparison to the pre
 \end{itemize}
 
 
-\noindent We'll now introduce the \textbf{stress-energy tensor} $\mathbf{T}^{ij}$. 
+\noindent We'll now introduce the \textbf{stress-energy tensor} $\mathbf{T}^{\mu\nu}$. 
 
 \begin{itemize}
-    \item In newtonian mechanics, we have the stress tensor $\mathbf{t}^{ij}$. This represents shear: the ith component of force
-    per unit area (pressure) exerted across a surface normal to the jth direction.
 
-    \item For a fluid at rest, the force exerted across a surface is always along the normal and the same in all directions, equivalent
-    to pressure $\mathbf{t}^{ij} = p\delta^{ij}$
 
-    \item For a perfect fluid, $\mathbf{T}^{\alpha\beta} = (\rho + p)u^\alpha u^\beta + p\mathbf{g}^{\alpha\beta}$. Careful, $\rho$ is the
-    energy density! Meanwhile, $\mathbf{T}^{\alpha}_{\beta} = (\rho + p)u^\alpha u_\beta + p\mathbf{\delta}^\alpha_\beta$
+    \item We can think of the components of \(T^{\mu\nu}\) as the flux of four momentum \(p^\mu\) across a surface of constant \(x^\nu\). The
+    temporal component is \(T^{0 0}\), the flux of \(p^0\) energy across the \(x^0\) time dimension. This is just the rest frame energy density.
+
+    \item \(T^{i 0}\) are the momentum flux across the temporal dimension, which is just the rest momentum density. Meanwhile, \(T^{0 i}\) is the 
+    energy flux across a spacial dimension. To show these are equivalent, recall that energy and momentum in relativity are \(E = \gamma m c^2\) and
+    \(p = \gamma mv\). Then the energy density \(\epsilon\) and momentum density \(g\) are related by \(g = \frac{1}{c^2}\epsilon v\). If we consider energy
+    \(E\) crossing a cuboid of thickenss \(L\) across area \(A\) in time \(\Delta t\), then the energy flux is \(\frac{E}{A\Delta t} = \frac{E}{AL/v} = \epsilon v\),
+    which is just the momentum density up to a constant factor. Thus, in the rest frame, the \(T^{i 0}\) and \(T^{0 i}\) components are equivalent.
+
+    \item The \(T^{i j}\) components reduce to the classical stress tensor \(t^{i j}\)from newtonian mechanics. Non diagonal terms represents shear: the ith component of force
+    per unit area (pressure) exerted across a surface normal to the jth direction. For a fluid, this could represent forces such as viscocity. The diagonal terms
+    give us the pressure \(p_i = T^{i i}\).
+
+    \item For a perfect fluid at rest, the force exerted across a surface is always along the normal and the same in all directions, equivalent
+    to pressure $\mathbf{t}^{ij} = p\delta^{ij}$.
 
 \end{itemize}
 
@@ -677,19 +686,58 @@ Additionally, we have low pressure $\frac{p}{\rho} << 1$ and the speed is non-re
 \end{itemize}
 
 \subsection{The Einstein Equations}
-Poisson's equation relates gravitational fields to the mass density. However, we've been building up to the idea that gravity can be explained by curvature alone. Thus, a more
+Poisson's equation \(\nabla^2 \Phi = 4\pi G\rho\) relates gravitational fields to the mass density. However, we've been building up to the idea that gravity can be explained by curvature alone. Thus, a more
 fundamental equation relating curvature and mass.
-\begin{itemize}
-    \item First, we should replace gravitational potential with a tensorial object; the metric immediately comes to mind, as in the newtonian limit we were able to reproduce gravity
-    by perturbations in the metric. Meanwhile, the left side is second order in the derivatives of the potential, so we should look for something similarly second order in the metric
-    that describes curvature; the Riemann curvature tensor.
+\\
+\\
+First, we should replace gravitational potential with a tensorial object; the metric immediately comes to mind, as in the newtonian limit we were able to reproduce gravity
+by perturbations in the metric. Meanwhile, the left side is second order in the derivatives of the potential, so we should look for something similarly second order in the metric
+that describes curvature; the Einstein tensor.
+\\
+\\
+The einstein tensor \(G_{\mu\nu} = R_{\mu\nu} - \frac{1}{2}g_{\mu\nu}\) always obeys 
+\[
+    \nabla^{\mu}G_{\mu\nu} = 0
+\]
+so we may postulate an equation in the form
+\[
+    G_{\mu\nu} = \kappa T_{\mu\nu}
+\]
+since it would automatically satisfy conservation of stress energy. Contracting both sides gives us \(R = -\kappa T\), so we can rewrite the Ricci tensor as 
+\[
+    R_{\mu\nu} = \kappa(T_{\mu\nu} - \frac{1}{2}T g_{\mu\nu})
+\]
+To determine the constant factor, we'll take the case of a dust in the Newtonian limit. Working in the rest frame, the energy momentum tensor is 
+\[
+    T_{\mu\nu} = \rho U_\mu U_\nu
+\]
+where \(U^{mu} = (U^0,0,0,0)\). But in the rest frame, we can take \(U_0 \approx 1\), so we have \(T_{0 0} = \rho\). Note that in the rest frame, the \(T_{0 0}\)
+term dominates all the other terms, so the trace to lowest order is just \(    T = g^{0 0}T_{0 0} = -T_{0 0} = -\rho\) which gives us \(R_{0 0} = \frac{1}{2}\kappa \rho\). To solve for the metric, we need to evaluate \(R_{0 0} = R^{\lambda}{}_{0\lambda 0}\) but \(R^0{}_{0 0 0 } = 0\)
+so we only need the spacial components. Now we have
+\[
+    R^{i}_{0 j 0} = \partial_j \Gamma^i_{0 0} - \partial_0 \Gamma^i_{j 0} + \Gamma^i_{j \lambda}\Gamma^\lambda_{0 0}- \Gamma^i_{0 \lambda}\Gamma^\lambda_{j 0}
+\]
+The second term vanishes for static fields, while the third and fourth terms are second order in perturbation so they can be neglected. Thus,
+\[
+    R_{0 0} = R^i{}_{0 i 0} = \partial_i \left[\frac{1}{2} g^{i \lambda}(\partial_0 g_{\lambda 0} + \partial_0 g_{0 \lambda} - \partial_\lambda g_{0 0})\right]
+\]
+But to first order and for static fields, the temporal derivatives vanish, reducing the equation to
+\[
+    = -\frac{1}{2}\delta^{i j}\partial_i \partial_j h_{0 0} = -\frac{1}{2}\nabla^2 h_{0 0} = \frac{1}{2}\kappa \rho
+\]
+which gives us Poisson's equation if \(\kappa = 8 \pi G\). Thus, we've determined Einstein's equation as 
+\[
+    \boxed{R_{\mu\nu} - \frac{1}{2}R g_{\mu\nu} = 8\pi G T_{\mu\nu}}
+\]
+\noindent Using \(R = -8\pi G T\), it's sometimes helpful to write it in this form
+\[
+    R_{\mu\nu} = 8\pi G\left(T_{\mu\nu} - \frac{1}{2} T g_{\mu\nu}\right)
+\]
+where we can see in a perfect vacuum, the equations reduce to \(R_{\mu\nu} = 0\)
 
-    \item The tensorial equivalent of mass is the stress energy tensor so we may postulate
-    \[
-        R_{\mu\nu} = \kappa T_{\mu\nu}
-    \]
-    where we've contracted the Riemann tensor into the Ricci tensor so that the number of indices line up. 
-\end{itemize}
+
+
+
 
 
 
