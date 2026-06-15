@@ -605,28 +605,9 @@ But since \(\partial_0 g_{0 0} = 0\), the timelike component of the geodesic equ
 This reduces to the Newtonian limit if we let \(h_{0 0} = -2\mathbf{\Phi}\). You can see this matches Poisson's equation \(\nabla^2 \mathbf{\Phi} = 4\pi G \rho\) exactly. 
 
 
-\subsection{Stress-Energy Tensor}
+\subsection{The Stress-Energy Tensor}
 
-We'll be working with fluids in this section. The definition of fluids is not precise
-so we'll just say a fluid has friction force negligible in comparison to the pressure.
-\begin{itemize}
-    \item Fluid particles travelling with four-velocity $\mathbf{u}^{\alpha}$. We can choose 
-    to move to inertial frame where $\mathbf{u}^{\mu} = (1,0,0,0)$. This is called the \textbf{comoving frame}.
-
-    \item The \textbf{number current} is $\mathbf{j}^{\mu} = n\mathbf{u}^{\mu} = n(u^0, \mathbf{u}^i)$ where $n$ is the 
-    number density (particles per unit volume). The components of the number current is the number of particles
-    travelling through unit area per unit time which is the particle flux.
-
-    \item The rest \textbf{mass density} is $\mu_0 = m_0n$ where $m_0$ is the rest mass of a single particle. If there
-    is internal energy, then we have $\mu = \mu_0(1+\delta)$ where $\delta$ is the internal energy fraction.
-    
-    \item The \textbf{momentum density} is $\mathbf{\rho}^i = m_0n\mathbf{u}^{i}$. A nice exercise is to show this is equivalent 
-    to the energy flux in special relativity.
-
-\end{itemize}
-
-
-\noindent We'll now introduce the \textbf{stress-energy tensor} $\mathbf{T}^{\mu\nu}$. 
+\noindent We'll now introduce the \textbf{stress-energy tensor} $\mathbf{T}^{\mu\nu}$, which is the tensorial equialent to mass.  
 
 \begin{itemize}
 
@@ -648,45 +629,83 @@ so we'll just say a fluid has friction force negligible in comparison to the pre
     to pressure $\mathbf{t}^{ij} = p\delta^{ij}$.
 
 \end{itemize}
-
-
-\noindent Here, we'll read off some of the physical interpretations of the components of the stress-energy tensor:
-
+\noindent \textbf{Example.} Dust is a collection of particles at rest with respect toeach other, travelling at constant four velocity \( U^{{\mu}} \),
+We can choose  to move to inertial frame where $U^{\mu} = (1,0,0,0)$. This is called the \textbf{comoving frame}.
 \begin{itemize}
-    \item $\mathbf{T}^{\alpha}_{\beta} u^\beta = -\rho u^\alpha$. Physically, this quantity's spacial components are the energy flux seen comoving 
-    with the fluid. The temporal component $\mathbf{T}^0_\beta u^\beta = -\rho$ is just the rest mass energy density.
-
-    \item $\mathbf{T}^{0}_{i}$ is the flow of the ith component of momentum in the temporal (i = 0) direction. This is the energy flux
-    Consequently, $\mathbf{T}^{i}_{0}$ is the energy crossing through the ith surface, so the energy flux. Thus, these two quantities are equivalent.
-    In the comoving frame, $\mathbf{T}^{0}_{i} = \mathbf{T}^{i}_{0} = 0$ because the fluid is at rest.
-
-\end{itemize}
-
-\noindent Now, we'll see some results that arise from the Newtonian Limit. Firstly, we assume that the fluid is travelling with low velocity $|u^{\alpha}| << 1$.
-Additionally, we have low pressure $\frac{p}{\rho} << 1$ and the speed is non-relativistic $u^{i} \approx v^{i}$.
-\begin{itemize}
-    \item Firstly, conservation of energy-momentum means that the stress-energy tensor is divergence-free. This gives us
-    $\nabla\cdot\mathbf{T} = 0 $ or equivalently $\mathbf{T}^{\alpha\beta}_{;\beta} = 0$. (why???)
-
-    \item Next, reading off the stress-energy tensor components, we have:
-        \subitem - $\mathbf{T^{00}} \approx \rho$
-        \subitem - $\mathbf{T^{j0}} \approx \rho v^{j}$
-        \subitem - $\mathbf{T^{jk}} \approx \rho v^j v^k + p \delta^{jk}$
     
-    \item The continuity equation $\frac{\partial{\rho}}{\partial{t}} + (\rho v^k)_{;k} = 0$ effectively states conservation of mass. The rate of change of density 
-    plus the net mass flow out is 0. Combining with the divergence free condition, we obtain
-    $\frac{\del v^j}{\del t} + (v \cdot \nabla)v = -\frac{1}{\rho}\nabla p$. This is the \textbf{Euler Equation}.
+    \item The \textbf{number current} is $N^{\mu} = nU^{\mu} = n(u^0, \mathbf{u}^i)$ where $n$ is the 
+    number density (particles per unit volume). The components of the number current is the number of particles
+    travelling through unit area per unit time which is the particle flux.
 
-    \item The equations of state relate the pressure and the energy density for a fluid. There are several possible cases:
-        \subitem - Vacuum : $p = \rho = 0$ (Inflationary universe)
-        \subitem - Dust : $p = 0$  (FLRW universe)
-        \subitem - Fluid : $p = \gamma \rho$
-        \subitem - Polytropic : $p = n\rho ^{(1 + \frac{1}{n})}$ where n is the polytropic index.
-
+    \item The rest \textbf{mass density} is $\mu_0 = m_0n$ where $m_0$ is the rest mass of a single particle. If there
+    is internal energy, then we have $\mu = \mu_0(1+\delta)$ where $\delta$ is the internal energy fraction. The \textbf{momentum density} 
+    is $\mathbf{\rho}^i = m_0n\mathbf{u}^{i}$. 
+    
+    \item In the rest frame, \( \rho \) is the \( \mu = 0 \), \( \nu = 0 \) component of the tensor product \( p^{\mu} \otimes N^{\nu} \) so we conjecture
+    that the stress energy tensor for dust is 
+    
+    \[ 
+        T^{\mu\nu}_{\\text{dust}} = p^{\mu}N^{\nu} = m n U^{\mu}U^{\nu} = \rho U^{\mu}U^{\nu} 
+    \]
 \end{itemize}
+
+\noindent \textbf{Example.} A perfect fluid has isotropic rest frame pressure \( p \) and energy density \( \rho \). Because of isotropy, the stress energy tensor
+is diagonal
+\[ 
+    T^{{\mu\nu}} = 
+    \begin{pmatrix}
+    \rho & 0 & 0 & 0 \\
+    0 & p & 0 & 0 \\
+    0 & 0 & p & 0 \\
+    0 & 0 & 0 & p \\
+    \end{pmatrix}
+\]
+We can further simplify this expression depending on the type of fluid we are dealing with by using the equations of state \( p = p(\rho) \)
+\begin{itemize}
+    \item For dust, we saw that \( p = 0 \)
+    \item An isotropic gas has \( p = \frac{1}{3}\rho \)
+    \item The vacuum energy has \( p = -\rho \) which means the stress tensor is proportional to the metric \( T^{\mu\nu} = -\rho_{\text{vac}}\eta^{\mu\nu} \)
+    Energy in a vacuum is irrelevent in special relativity because energy can be always be changed up to a scalar value. However, this fact is not true in general relativity
+    because all energy couples to gravity.
+\end{itemize}
+
+\noindent A covariant expression that reduces to this in the rest frame is then 
+
+\[ 
+    T^{\mu\nu} = (\rho + p)U^{\mu}U^{\nu} + p\eta^{\mu\nu} 
+\]
+
+
+\noindent Some additional properties of the stress tensor:
+\begin{itemize}
+    \item As we've seen, \( T^{\mu\nu}\) is symmetric. Additionally, the stress tensor is conserved, meaning it is ``divergence free.''
+    \[ 
+        \partial_{\mu}T^{\mu\nu} = 0 
+    \]
+
+    \item Expanding this equation and contracting in the \( U_{\nu} \) component, we obtain \( U_{\nu}\partial_{\mu}T^{\mu\nu} = -\partial_{\mu}(\rho U^{\mu}) - \partial_{\mu}U^{\mu} = 0 \).
+    In the nonrelativistic case,the four velocity is \( U^{\mu}  = (1, v^{i})\), where \( |v^{i}| \ll 1 \) and \( p \ll \rho \). The second term drops and we are left with
+
+    \[ 
+        \partial_{t} \rho + \nabla \cdot (\rho \mathbf{v}) = 0
+    \]
+
+    which is also known as the continuity equation
+
+    \item Meanwhile, using the projection operator \( P^{\sigma}{}_{\nu} = \delta^{\sigma}_\nu + U^{\sigma}U_{\nu} \) and applying it to conservation of the stress tensor, eliminating all terms first
+    order in \( \mathbf{v} \) which are small, we have
+    
+    \[ 
+        \rho\left[\partial_{t}\mathbf{v} + (\mathbf{v} \cdot \nabla)\mathbf{v}\right] = -\nabla p 
+    \]
+    which is the Euler equation from fluid mechanics.
+\end{itemize}
+
 
 \subsection{The Einstein Equations}
-Poisson's equation \(\nabla^2 \Phi = 4\pi G\rho\) relates gravitational fields to the mass density. However, we've been building up to the idea that gravity can be explained by curvature alone. Thus, a more
+\textbf{Derivation of the Einstein Equations}
+\\
+\noindent Poisson's equation \(\nabla^2 \Phi = 4\pi G\rho\) relates gravitational fields to the mass density. However, we've been building up to the idea that gravity can be explained by curvature alone. Thus, a more
 fundamental equation relating curvature and mass.
 \\
 \\
@@ -734,7 +753,9 @@ which gives us Poisson's equation if \(\kappa = 8 \pi G\). Thus, we've determine
     R_{\mu\nu} = 8\pi G\left(T_{\mu\nu} - \frac{1}{2} T g_{\mu\nu}\right)
 \]
 where we can see in a perfect vacuum, the equations reduce to \(R_{\mu\nu} = 0\)
-
+\\
+\\
+\noindent Because the metric is
 
 
 
