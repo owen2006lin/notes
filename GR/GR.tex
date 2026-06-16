@@ -8,6 +8,12 @@
 \usepackage{lipsum}
 \usepackage{booktabs}
 \usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,      % internal links (sections, pages, etc.)
+}
+\newcommand{\bluelink}[2]{\hyperref[#1]{\textcolor{blue}{#2}}}
 
 % page formatting
 \usepackage{fancyhdr}
@@ -193,7 +199,21 @@ photon from one box to the other, the photon reaches the second box at time \(\D
     \frac{\Delta\lambda}{\lambda} = \frac{az}{c^2}
 \]
 We can expect then, that in a uniform gravitational field with same magnitude, we should observe the same redshift, which experiments have verified. A photon travelling down a gravitational field is redshifted after reflection.
+\\
+\\
+\noindent Some direct consequences of the equivalence principles:
+\begin{itemize}
+    \item Laws of physics should be expressed in coordinate invariant form. Under coordinate transformation, the form of the equation should remain the same. For example, Maxwell's equations \(\partial_\mu F^{\nu\mu} = J^{\nu}\) is not in covariant form because the
+    partial derivative is not a tensor. The coordinate invariant form of this equation is \(\nabla_{\mu}F^{\nu\mu} = J^{\nu}\), which is the unique tensorial equation that is equivalent in inertial coordinates. It is not the unique generalization in curved spacetime
+    but additional terms in \(R^\rho{}_{\sigma\mu\nu}\) are  undesirable by \bluelink{Minimal Coupling}{minimal coupling}.
 
+    \item There exist a \bluelink{metric}{metric} on spacetime whose curvature alone is responsible for gravity.
+    
+    \item There do not exist any other fields that resemble gravity.
+
+    \item The interactions of matter fields to curvature are minimal, and do not involve direct couplings to the \bluelink{Riemann}{Riemann tensor} or its contractions. This is more of an approximation, for example if we suppose the geodesic equation is equal to a factor of the \bluelink{Ricci}{Ricci scalar},
+    by dimensional analysis, the correction term is on order of \(10^{-102}\).
+\end{itemize}
 
 \subsection{Manifolds}
 Intuitively, a manifold is a space that locally looks Euclidean, ie looks like \( \mathbb{R}^{n} \). By ``looking Euclidean," we don't necessarily need the metric to be Euclidean, rather functions and coordinates work like they should normally. In this case, we call the dimension of
@@ -292,7 +312,7 @@ and vectors and dual vectors are \( (1, 0) \) and \( (0, 1) \) tensors according
 
 \end{itemize}
 
-\noindent \textbf{Example.} The metric tensor \( \eta_{\mu \nu} \) is a \( (0,2) \) tensor that takes in two vectors and outputs a scalar. The metric acting on two vectors returns the inner product
+\noindent \label{metric}\textbf{Example.} The metric tensor \( \eta_{\mu \nu} \) is a \( (0,2) \) tensor that takes in two vectors and outputs a scalar. The metric acting on two vectors returns the inner product
 \[ 
      \eta(V,W) = \eta_{\mu \nu} V^{\mu}W^{\nu} = V \cdot W
 \]
@@ -428,7 +448,7 @@ In fact, there is no ``natural'' way to compare vectors in different tangent spa
     
 \end{itemize}
 
-\subsection{Curvature}
+\subsection{Curvature}\label{Riemann}
 We already have some notions of curvature by the differences between Euclidean and more general spaces. For example, whether or not parallel transport leaves vectors unchanged on a closed loop. The \textbf{Riemann Tensor} will 
 formalize these ideas into a single object. 
 \begin{itemize}
@@ -485,7 +505,7 @@ formalize these ideas into a single object.
     known as the \textbf{Bianchi Identity}.
 
 
-    \item We define the \textbf{Ricci Tensor} as the contraction
+    \item We define the \label{Ricci}\textbf{Ricci Tensor} as the contraction
     
     \[ 
         R_{\mu\nu} = R^{\lambda}{}_{\mu\lambda\nu} 
@@ -554,7 +574,7 @@ of dimensions the metric can be independent of. Instead, we'll need a more forma
 
 
 \section{Gravitation}
-\subsection{Minimal Coupling}
+\subsection{Minimal Coupling}\label{Minimal Coupling}
 The motivation behind the use of manifolds was because of several of the postulates established before. The Einstein equivalence principle
 stated that in small regions of spacetime, the laws of physics reduce that to special relativity, and that local experiments cannot detect the
 existence of gravity. This is very similar to our ability of finding locally inertial coordinates on manifolds; ie where the metric reduces to 
@@ -645,7 +665,7 @@ We can choose  to move to inertial frame where $U^{\mu} = (1,0,0,0)$. This is ca
     that the stress energy tensor for dust is 
     
     \[ 
-        T^{\mu\nu}_{\\text{dust}} = p^{\mu}N^{\nu} = m n U^{\mu}U^{\nu} = \rho U^{\mu}U^{\nu} 
+        T^{\mu\nu}_{\text{dust}} = p^{\mu}N^{\nu} = m n U^{\mu}U^{\nu} = \rho U^{\mu}U^{\nu} 
     \]
 \end{itemize}
 
@@ -755,11 +775,36 @@ which gives us Poisson's equation if \(\kappa = 8 \pi G\). Thus, we've determine
 where we can see in a perfect vacuum, the equations reduce to \(R_{\mu\nu} = 0\)
 \\
 \\
-\noindent Because the metric is
+\noindent Now that we have the Einstein field equations, we can examine them more closely:
+\begin{itemize}
+    \item The metric is a symmetric 4 x 4 tensor which has 10 independent components. The Bianchi identity
+    \(\nabla^\mu G_{\mu\nu} = 0\) gives us 4 independent equations so we drop down to 6 independent equations. 
+    Another way to think of this is that if a metric is a solution in one coordinate system, it should also be 
+    a solution in another coordinate system, so there are four unphysical degrees of freedom in \(g^{\mu\nu}\).
+
+    \item The equations are very complex, since the Ricci scalar and tensor are contractions of the Riemann tensor,
+    which itself involves products of the christoffel symbols which themselves involve derivatives of the metric. The
+    equations are also nonlinear, meaning the sum of solutions is generally not a solution.
+
+    \item In classical physics, the value of energy doesn't matter since we can always define it with respect to an arbitrary
+    reference frame. However, this is not the case with the stress energy tensor. Suppose the vacuum has some rest energy \(T_{\mu\nu}^{(\text{vac})}\).
+    This energy should not have a preferred direction so it should locally be Lorentz invariant; ie proportional to the metric
+    \[
+        T_{\mu\nu}^{(\text{vac})} = -\rho_{\text{vac}}g_{\mu\nu}
+    \]
+    Using the equation of state \(p_{\text{vac}} = - \rho_{\text{vac}}\), einstein's equation becomes 
+    \[
+        R_{\mu\nu} = \frac{1}{2}Rg_{\mu\nu} + \Lambda G_{\mu\nu} = 8\pi G T_{\mu\nu}
+    \]
+    where the cosmological constant \(\Lambda\) is equal to the vacuum energy density \(\rho_{\text{vac}} = \frac{\Lambda}{8\pi G}\)
+    
+
+    
+\end{itemize}
 
 
 
-
+\section{The Schwarzchild Solution}
 
 
 \section{Gravitational Waves}
