@@ -65,7 +65,121 @@ emphasis on statistical learning theory and online learning.
 \newpage
 
 % main content
-\section{Fundamentals}
-\subsection{The Stern-Gerlach Experiment}
+\section{Dunno}
+\subsection{Premise of Learning}
+To begin, we'll present some illustrative examples. Suppose we desire to train a model to classify spam e-mails.
+\begin{itemize}
+    \item A naive approach is to simply memorize all previous e-mails that have been classified as spam by a human user.
+    Then, when a new email arrives, we search for this e-mail in the dataset of all past e-mails and classify accordingly. 
+    A problem with this ``\textbf{learning by memorization}'' is that this doesn't generalize well do data outside of the original 
+    dataset.
+
+    \item A better approach is to look at the previous set of all emails, an then extract a set of words that correlates strongly
+    with classification. Then we apply this rule for all future e-mails. ``\textbf{Inductive reasoning}'' allows us to generalize to data
+    outside of the original dataset.
+
+    \item Inductive reasoning may lead us to false conclusions. An example is the \textbf{Pigeon Superstition}. The experiment placed food
+    at random intervals initially. Pigeons associated whatever action they did when food arrived and engaged in that activity more.
+    Over time, they began to associate the action with the food delivery even though the true pattern was random.
+
+\end{itemize}
+
+\noindent The goal of course, is to develop performant learners. Human learners can filter out this pigeon superstition from common sense,
+and we'd desire principles that allow a learner to reject useless conclusions. One powerful tool is the incorporation of \textbf{prior knowledge}
+to bias the learning mechanism. The idea is to develop domain specific knowledge, and then translate it into a way to bias the learning
+to agree. 
+
+
+\subsection{Empirical Risk Minimization}
+First, we'll lay down some formal notation for learning. In the classical setting:
+\begin{itemize}
+    \item The learner has access to several datasets for inputs. The \textbf{domain set} \( X \) contains the set of objects to label. Each point may be
+    represented using a vector of features. The \textbf{label set} \( y \) contains all possible labels, for now we'll restrict it to a two element set: \( y = \{-1, +1\}   \). 
+    Finally, the \textbf{training data} \( S \) consists of a set of \( (x_{m}, y_{m}) \) pairs, the training examples the learner has access to. Namely, 
+    \( S = ((x_{1}, y_{1}) \ldots (x_{m}, y_{m})) \).
+ 
+    \item The learner should output a prediction rule \( h \colon X \to y \) that can be used to predict the label of domain points. The function is also known as a 
+    \textbf{hypothesis} or a \textbf{predictor}. We also write this hypothesis of some output of our learning algorithm \( A \) upon receiving training sample \( S \).
+
+    \item To generate the data, we sample some points in \( X \) with probability distribution \( D \). Then, we use the true labeling function \( f \colon X \to y \),
+    and create labels \( y_{i} = f(x_{i}) \).
+
+    \item The error \( L \) of a classifier is the probability it does not predict the correct label of a random data point over \( D \). Namely,
+    
+    \[ 
+        L_{D, f}(h) \equiv \mathbb{P}_{x \sim D}[h(x) \neq f(x)] \equiv D(\{x: h(x) \neq f(x)\}) 
+    \]
+    \( L \) is also called the \textbf{generalization error} or the \textbf{risk} or the \textbf{true error}. 
+    How we use the distribution D is, if we have some subset \( A \subset X\) then \( D(A) \) gives us how likely it is to observe a point 
+    \( x \in A \). 
+
+\end{itemize}
+
+\noindent A good learner should try to minimize the error with respect to some unknown \( D \) and truth \( f \). Because the learner doesn't know \( D \) and \( f \),
+we can use a heuristic for the loss called the \textbf{training error}:
+
+\[ 
+    L_{S}(h) \equiv \frac{|\{i \in [m] : h(x_{i}) \neq y_{i}\} |}{m} 
+\]
+
+\noindent This paradigm, in finding a predictor \( h \) to minimize the training error is \textbf{Empirical Risk Minimization}.
+
+
+\begin{itemize}
+    \item Overfitting is obviously a big problem. A hypothesis that works very well on the training set can generalize very poorly 
+    over all data. Additionally, there may exist multiple possible hypothesis that perform equally on the training set, and choosing one is unclear.
+    \item A solution is to restrict ERM over a finite set of hypotheses, also called the \textbf{hypothesis class} \( h \in H \). This is a form of 
+    inductive bias, but is not always sufficient to guarantee we don't overfit. 
+    \item The \textbf{Realizability Assumption} states there exists \( h* \in H \) such that \( L_{(D,f)}(h*) = 0 \). For any random sample \( S \), it's
+    possible to find a perfect hypothesis.
+    \item The \textbf{i.i.d assumption} assumes the examles in the training set are independently and identically distributed. We denote \( S \sim  D^{m} \)
+    where \( D^{m} \) is the probability over m-tuples by applying \( D \) to pick each element of the tuple independently.
+\end{itemize}
+
+\noindent Some important metrics to keep in mind are \textbf{confidence} and \textbf{accuracy}. We can denote the probabiltiy of sampling a training set is not 
+representative of the underlying \( D \) using the confidence \( (1 - \delta) \). The accuracy parameter can be denoted as \( \epsilon \), where we note a training failure
+when \( L_{(D,f)}(h_{S}) \leq \epsilon \)
+
+\begin{itemize}
+    \item We'd like to upper bound the probability that some sample will lead to learning failure. Namely, we want to find the bound for
+    
+    \[ 
+        D^{m}(\{S|_{x} \colon L_{(D,f)}(h_{s}) > \epsilon\} ) 
+    \]
+    \item By the realizability assumption, ERM gives us a hypothesis \( h_{s} \) such that \( L_{S}(h_{s}) = 0\), so the only time learning fails is when 
+    our sample is in the set of misleading samples, where there exists hypothesis with 0 training error, but nonzero generalization error. The set of all such samples is also called \( M \), so
+    we wish to solve 
+    
+    \[ 
+        D^{m}(\{S|_{x} \colon L_{(D,f)}(h_{s}) > \epsilon\} )  \leq D^{m}(M)
+    \]
+
+    \item Since each element is sampled i.i.d, the probability a sampled point is one where a bad hypothesis looks correct is \( 1 - L_{(D,f)}(h) \), which is less than \( 1 - \epsilon \). If we note
+    that \( 1 - \epsilon \leq e^{-\epsilon} \) and note that each element is independent, then multiplying the probability over all points in the training set, the probability that a bad hypothesis leads to failure
+    over a sample is 
+    \[ 
+        D^{m}(\{S|_{x} \colon L_{s}(h) = 0\}) \leq (1-\epsilon)^{m} \leq e^{-\epsilon m} 
+    \]
+
+    Applying the union bound inequality, we have 
+    \[ 
+        D^{m}(\{S|_{x} \colon L_{(D,f)}(h_{s}) > \epsilon\} ) \leq |H|e^{\epsilon m}
+    \]
+
+    \item For a finite hypothesis class, if we have an integer \( m \) such that \( m\geq\frac{\log{\left( |H|/\delta \right)}}{\epsilon} \), then for any labeling function \( f \) and distribution \( D \)
+    where the realizability assumption holds, we have probability of at least \( 1 - \delta \) that we have a bad hypothesis:
+    
+    \[ 
+        Pr_{S\sim D^{m}}[L_{(D,f)}(h_{S}) \leq \epsilon] \geq 1-\delta 
+    \]
+
+    In other words, for sufficiently large m, the ERM rule over a finite hypothesis class will be probably (with confidence \( 1-\delta \)) approximately (up to error \( \epsilon \)) correct.
+
+\end{itemize}
+
+\subsection{PAC Learning}
+
+
+
 
 \end{document}
