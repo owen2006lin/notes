@@ -9,7 +9,13 @@
 \usepackage{enumitem}
 \usepackage{float}
 \usepackage{braket}
-
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,       % False for boxes, True for colored text
+    linkcolor=blue,        % Color for internal links (sections, equations)
+    urlcolor=cyan,         % Color for external websites
+    citecolor=red          % Color for citations (\cite)
+}
 % page formatting
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -65,7 +71,7 @@ emphasis on statistical learning theory and online learning.
 \newpage
 
 % main content
-\section{Dunno}
+\section{Basics?}
 \subsection{Premise of Learning}
 To begin, we'll present some illustrative examples. Suppose we desire to train a model to classify spam e-mails.
 \begin{itemize}
@@ -130,15 +136,21 @@ we can use a heuristic for the loss called the \textbf{training error}:
     over all data. Additionally, there may exist multiple possible hypothesis that perform equally on the training set, and choosing one is unclear.
     \item A solution is to restrict ERM over a finite set of hypotheses, also called the \textbf{hypothesis class} \( h \in H \). This is a form of 
     inductive bias, but is not always sufficient to guarantee we don't overfit. 
-    \item The \textbf{Realizability Assumption} states there exists \( h* \in H \) such that \( L_{(D,f)}(h*) = 0 \). For any random sample \( S \), it's
-    possible to find a perfect hypothesis.
+    \item The \textbf{Realizability Assumption} states there exists \( h* \in H \) such that \( L_{(D,f)}(h*) = 0 \). More formally, we say that a distribution \( D \)
+    is realizable with respect to hypothesis class \( H \) if the there exists a perfect hypothesis with no true error. In other words, the solution for our distribution
+    belongs to our hypothesis class.
     \item The \textbf{i.i.d assumption} assumes the examles in the training set are independently and identically distributed. We denote \( S \sim  D^{m} \)
     where \( D^{m} \) is the probability over m-tuples by applying \( D \) to pick each element of the tuple independently.
 \end{itemize}
 
+\noindent The process for empirical risk minimization is as follows: we've narrowed down our set of hypotheses to a hypothesis class \( H \). We want to minimize the empirical
+risk over a training set \( S \), and can choose to assume the realizability assumption. If we do, then ERM selects any hypothesis \( h \) that achieves 0 training error. Note 
+that if we don't assume the realizability assumption, it's not guaranteed that this will be the case, leading us into \textbf{Agnostic Learning}.
+\\
+
 \noindent Some important metrics to keep in mind are \textbf{confidence} and \textbf{accuracy}. We can denote the probabiltiy of sampling a training set is not 
 representative of the underlying \( D \) using the confidence \( (1 - \delta) \). The accuracy parameter can be denoted as \( \epsilon \), where we note a training failure
-when \( L_{(D,f)}(h_{S}) \leq \epsilon \)
+when \( L_{(D,f)}(h_{S}) \geq \epsilon \)
 
 \begin{itemize}
     \item We'd like to upper bound the probability that some sample will lead to learning failure. Namely, we want to find the bound for
@@ -178,7 +190,107 @@ when \( L_{(D,f)}(h_{S}) \leq \epsilon \)
 \end{itemize}
 
 \subsection{PAC Learning}
+In this section, we concern ourselves with hypotheses that are \textbf{P}robably \textbf{A}pproximately \textbf{C}orrect. 
+\\
 
+\noindent We say a hypothesis class \( H \) is \textbf{PAC learnable} if there exists a function \( m_{H} : (0,1)^{2} \to \mathbb{N} \) and a learning algorithm obeying:
+ \( \forall \epsilon,\delta \in (0,1) \), for every distribution \( D \) over \( X \) and for every labeling function \( f : X \to \{0,1\}   \), if the realizability
+ assumption holds w.r.t. \( H, D, f \), then when A is given \( m \geq m_{H}(\epsilon, \delta) \) i.i.d examples drawn from \( D \) and labeled with f, it returns a hypothesis
+ \( h \) satisfying 
+ \[ 
+     err_{D,f}(h) \leq \epsilon 
+ \]
+with probability at least \( 1-\delta \) over random training sample. we call \( m_{H} \) the \textbf{sample complexity} of learning \( H \), basically it specifies how many training examples
+are sufficient to guarantee a PAC solution. Some things to note:
+\begin{itemize}
+    \item You may wonder why an algorithm can't just find the perfect solution each time if it belongs to the hypothesis class anyways. Because the training set is randomly generated, it might not
+    be representative of the distribution \( D \). For example, a case could be that the same point is simply resampled over and over again. 
+    \item Even if the sample is representative of \( D \), the size is finite and less than the whole domain. Thus, there may be some details of \( D \) that simply can't be captured by the sample. We
+    introduce accuracy paramter \( \epsilon \) to allow for these minor mistakes. 
+    \item If we assume that \( S \) is perfect and of good size, we're still not guaranteed to find the best hypothesis, since our learning algorithm might not be deterministic. Thus, we introduce the 
+    confidence parameter \( \delta \) to describe how likely we're able to reach the target accuracy.
+\end{itemize}
+
+\noindent If we note the theorem from above, every finite hypothesis class is actually PAC learnable, with sample complexity  
+\[ 
+    m_{H}(\epsilon, \delta) \leq \left[\log{\left( \frac{(|H|/\delta)}{\epsilon} \right)}\right] 
+\]
+\\
+
+\noindent \textbf{Example} Consider the class of all one-dimensional threshholds. Let the domain be \( \mathbb{R} \), and restrict our hypothesis class \( H \) to be all thresholds of form 
+
+\[ 
+    h_{a}(x) =  
+    \begin{cases}
+        1, &\text{if } x \leq a\\
+        0, &\text{if } x \geq a    
+    \end{cases}
+\]
+
+\noindent Assume the realizable setting, and assume that our learned threshold \( \hat{a} \) is less than the true threshold \( a^{*} \). Choose a point \( a_{L} \) to the left of \( a^{{*}} \) such that
+the probability mass of the interval \( (a_{L}, a^{*}] \) is exactly \( \epsilon \). If our algorithm picks a threshold \( \hat{a} \) to the left of \( a_{L} \), then the generalization error will be greater than
+\( \epsilon \). Now for this to happen, all \( m \) training samples must  must miss this interval, because if one fell in the correct interval, ERM would automatically select \( \hat{a} \) to fall under the \( < \epsilon \) 
+range. The probability this happens is \( (1-\epsilon)^{m} \). Applying this logic to the other side, we have \( \mathbb{P}(L_{D}(h_{\hat{a}})) \leq 2(1-\epsilon)^{m} \). If we let this failure probability be at most 
+\( \delta \), then rearanging gives us
+
+\[ 
+    m \geq \frac{1}{\epsilon}\ln{\left( \frac{2}{\delta} \right)} 
+\]
+\\
+
+\noindent \textbf{Example}: For a finite hypothesis class, we've shown that the upper bound of the probability that some sample will fail is 
+\( \delta \geq |H|e^{-m\epsilon} \). Rearranging, the lower bound for the sample size needed to achieve \( \epsilon \) error with probability \( 1-\delta \) is 
+
+\[ 
+    m \geq \frac{1}{\epsilon}\left(\ln{\left( |H| \right)} + \ln{\left( \frac{1}{\delta} \right)}\right) 
+\] 
+\\
+
+\subsection{Sample Complexity}
+
+\noindent The \textbf{sample complexity} \( m \) is the number of training data examples an algorithm needs to successfully learn a target function.
+Note that for an infinite hypothesis class size, these bounds that we found for the sample complexity are vacuous. In this case, we instead focus on the number of ways to label samples rather than on the size of a hypothesis class. 
+\\
+
+\noindent We define the \textbf{Growth Function} as follows: For an unlabled sample \( T = \{x_{1}, x_{2}, \ldots x_{n}\}  \), let \( H[T] \) denote the set of all ways (sequences) to label our sample using hypotheses from \( H \). 
+Namely, \( H[T] = \{h(x_{1}), \ldots h(x_{n}) : h \in H\}  \). Then we define the growth function \( \Pi_{H}(n) \) as 
+
+\[ 
+    \Pi_{H}(n) = max_{T \in X^{n}} |H[T]| 
+\]
+\\
+\noindent Colloquially, it's the number of ways to labe an n size sample using hypotheses from class \( H \). For binary classification, the max is trivially \( 2^{n} \). 
+\\
+
+\noindent \textbf{Example}: for the class of one dimensional thresholds, the growth function is \( n+1 \). This is because to choose a labeling, we must choose a point \( a^{*} \) such that any points left of this 
+is 0, and any point to the right is 1. For n points, there are \( n + 1 \) spaces we can choose for \( a^{*} \). 
+\\
+
+\noindent We can use the growth function as a replacement for the size of our hypothesis class. Any hypothesis class is PAC learnable if the sample complexity satisfies
+
+\[ 
+    m\geq\frac{2}{\epsilon}\left(\log_{2}{\left( 2\Pi_{H}(2m) \right)} + \log_{2}{\left( \frac{1}{\delta} \right)}\right) 
+\]
+\\
+
+\noindent The proof is quite long, and linked \href{https://www.cs.umd.edu/~hanshao/848p/3-scub.pdf}{here}. Some clever tricks to take away:
+\begin{itemize}
+    \item We can upper bound the probability that Bernoulli random variables using \textbf{Chernoff Bound}. If we let \( X_{1},\ldots,X_{m} \) be a sequence of Bernoulli random variables with expectation \( \mu \),
+    the probability they are far from the mean is
+    
+    \[ 
+        \text{Pr}\left[\frac{1}{m}\sum_{k=1}^{m}X_{k} \leq \frac{\mu}{2}\right] \leq \text{exp}\left(-\frac{m\mu}{8}\right)
+    \]
+
+    Meanwhile, for any \( \epsilon > 0 \), \textbf{Hoeffding's bound} gives us
+    
+    \[ 
+        \text{Pr}\left[\left\lvert\frac{1}{m}\sum_{k=1}^{m}X_{i} - \mu \right\rvert \geq \epsilon \right] \leq 2\text{exp}(-2m\epsilon^{2}) 
+    \]
+
+    \item Using a \textbf{ghost sample}. Still don't understand this one\ldots
+
+\end{itemize}
 
 
 
